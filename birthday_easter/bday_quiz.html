@@ -409,6 +409,13 @@ body.party .aurora{display:none}
 .opt.right .opt-l{background:#5fd3b3;color:#fff}
 .opt:disabled{cursor:default}
 .opt:disabled:not(.right){opacity:.55}
+
+/* ---------- v9: one try per visit ---------- */
+.dots .dot.miss{background:#ffb48a}
+.prow.miss{border-color:#ffd9c2}
+.prow.miss .ic{background:#ffb48a}
+.prow .ic{font-size:14px}
+.answer.bad[readonly]{background:#fff3f5;border-color:#f3c1cf;color:var(--bad);text-decoration:line-through}
 </style>
 </head>
 <body>
@@ -442,13 +449,14 @@ body.party .aurora{display:none}
       <p class="lede"><span id="in-count">7</span> stages. Can you clear them all?</p>
       <ol class="rules">
         <li><span class="n">01</span><div>Each stage is a brain teaser.</div></li>
-        <li><span class="n">02</span><div>One hint per stage.</div></li>
-        <li><span class="n">03</span><div>No time limit.</div></li>
-        <li><span class="n">04</span><div>Don’t share the QR codes with anyone.</div></li>
+        <li><span class="n">02</span><div>One try per question. Miss it? Move on and come back to it later.</div></li>
+        <li><span class="n">03</span><div>One hint per stage.</div></li>
+        <li><span class="n">04</span><div>No time limit.</div></li>
+        <li><span class="n">05</span><div>Don’t share the QR codes with anyone.</div></li>
       </ol>
       <button class="btn btn-main" id="btn-start" type="button">Let’s go</button>
       <div class="progress" id="home-progress" hidden><h3>Your progress</h3><ul class="plist" id="home-plist"></ul></div>
-      <p class="fine">Wrong answer? Just try again, as many times as you like. Progress saves on this device.</p>
+      <p class="fine">Progress saves on this device.</p>
     </section>
 
     <!-- Stage (play / solved / review) -->
@@ -458,8 +466,8 @@ body.party .aurora{display:none}
         <h2 id="st-title" tabindex="-1">Title</h2>
         <div class="q" id="st-body"></div>
         <form id="st-form" autocomplete="off" novalidate>
-          <p class="fmt" id="st-fmt">Choose one answer</p>
-          <div class="opts" id="st-opts" role="radiogroup" aria-labelledby="st-fmt"></div>
+          <p class="fmt" id="st-fmt">Format</p>
+          <div class="inputs" id="st-inputs"></div>
           <button class="btn btn-main" type="submit" id="st-submit" style="margin-top:12px">Check answer</button>
         </form>
         <div class="feedback" id="st-feedback" role="status" aria-live="polite"></div>
@@ -472,6 +480,7 @@ body.party .aurora{display:none}
         <button class="btn btn-soft" type="button" id="st-solbtn" aria-expanded="false" aria-controls="st-sol">📖 Show solution</button>
         <div class="card sol" id="st-sol" hidden></div>
         <button class="btn btn-main" type="button" id="st-continue">Continue 🎁</button>
+        <button class="btn btn-main" type="button" id="st-move">Next question →</button>
         <button class="btn btn-soft" type="button" id="st-giftbtn">🎁 View this gift</button>
         <div id="st-gift" class="qr-wrap" hidden></div>
         <button class="btn btn-soft" type="button" id="st-back">Continue where you left off →</button>
@@ -487,7 +496,7 @@ body.party .aurora{display:none}
         <div class="amount-sub">gift unlocked</div>
         <p class="so-far" id="rw-sofar"><span>Collected so far</span><span>$0</span></p>
         <dl class="rows">
-          <dt>Attempts</dt><dd id="rw-tries">—</dd>
+          <dt>Tries</dt><dd id="rw-tries">—</dd>
           <dt>Hint used</dt><dd id="rw-hint">—</dd>
           <dt>Ref</dt><dd><span class="code" id="rw-id">—</span></dd>
         </dl>
@@ -629,12 +638,12 @@ var CONFIG = {
   // How long the apparent ending lingers before "one more thing" appears (ms).
   egg_delay_ms: 2000,
 
-  storageKey: "birthday-easter-v8"
+  storageKey: "birthday-easter-v9"
 };
 
 /* =====================================================================
    STAGES. "k" is a salted SHA-256 of the normalised value(s); no plaintext.
-   Each stage is multiple choice; only the correct option hashes to "k".
+   "d" = decimal places compared. "fields" = labels when there are 2+ inputs.
    ===================================================================== */
 function F(a, b) { return '<span class="fr"><span>' + a + '</span><span>' + b + '</span></span>'; }
 
@@ -645,14 +654,11 @@ var STAGES = [
     body: "<p>Tomorrow, it will rain in City A with probability <em>0.3</em> and in City B with probability <em>0.4</em>.</p>" +
           "<p>Nobody knows how the weather in the two cities is related.</p>" +
           "<p>What are the minimum and maximum possible probabilities that it stays dry in <em>both</em> cities tomorrow?</p>",
-    opts: [
-      { t: "Min 0, max 0.3", v: "a1" },
-      { t: "Min 0.12, max 0.42", v: "a2" },
-      { t: "Min 0.3, max 0.6", v: "a3" },
-      { t: "Min 0.3, max 0.7", v: "a4" }
-    ],
+    fmt: "Two probabilities: fraction, decimal or percentage",
+    fields: ["Minimum probability", "Maximum probability"],
+    d: 2,
     hint: "Draw the rain in each city as a circle in a Venn diagram. “Dry in both” is everything outside both circles. What happens to that outside area as you slide the circles from fully separate (never rains in both) to one sitting inside the other (as overlapping as possible)?",
-    k: "00e5286c7a56460b4cfa81c7e3548e0936b518528f90e1ab0c5fc4e54b2d82f6",
+    k: "a0b38926c93443938bdd2f4c6c0a95e2c3787eee94345da334f25bd8b97f2665",
     sol: function () { return '' +
       '<p>Call the events <b>A</b> (rain in City A) and <b>B</b> (rain in City B). “Dry in both” is everything <i>outside</i> both circles:</p>' +
       '<span class="eq">P(dry in both) = 1 − P(A ∪ B)<br>= 1 − [0.3 + 0.4 − P(A ∩ B)]<br>= 0.3 + P(A ∩ B)</span>' +
@@ -678,14 +684,10 @@ var STAGES = [
     body: "<p>A red packet holds three coins: two are fair, and one has heads on both sides.</p>" +
           "<p>You pull one out at random and flip it three times. It lands <em>heads, heads, heads</em>.</p>" +
           "<p>What is the probability that a fourth flip of the same coin is also heads?</p>",
-    opts: [
-      { t: F(1, 2), v: "b1" },
-      { t: F(2, 3), v: "b2" },
-      { t: F(4, 5), v: "b3" },
-      { t: F(9, 10), v: "b4" }
-    ],
+    fmt: "Probability: fraction, decimal or percentage",
+    d: 2,
     hint: "Do it in two steps. First update your belief about which coin you’re holding after three heads. Then average the chance of a fourth head over the two possibilities.",
-    k: "77a47a271830498d21955deb1378570ecd1e283b33d26de291085557028d4ea0",
+    k: "4e1a5cebdf4bde100e5d9312be86f8f54e327722de9d3495f306f00de059aaa6",
     sol: function () { return '' +
       '<h3>Step 1 · Which coin is it? (Bayes)</h3>' +
       '<p>Before flipping, P(double-headed) = ' + F(1, 3) + '. A double-headed coin gives HHH for sure; a fair coin gives HHH with probability ' + F(1, 8) + '.</p>' +
@@ -701,14 +703,10 @@ var STAGES = [
     body: "<p>Sixteen friends enter a knockout ping-pong tournament at the party: 8 first-round matches, then 4, then 2, then the final. The bracket is drawn uniformly at random.</p>" +
           "<p>You and your best friend are by far the two best players: either of you <em>always</em> beats anyone else, and a match between you two is 50/50.</p>" +
           "<p>What is the probability that you two meet in the final?</p>",
-    opts: [
-      { t: F(1, 8), v: "c1" },
-      { t: F(7, 15), v: "c2" },
-      { t: F(1, 2), v: "c3" },
-      { t: F(8, 15), v: "c4" }
-    ],
+    fmt: "Probability: fraction, decimal or percentage",
+    d: 2,
     hint: "You two only ever lose to each other. So when do you meet in the final rather than in an earlier round? Think about which half of the bracket each of you lands in.",
-    k: "8d3e7c5c308d6a295b3b3b8e724564fb4818e8ed8fd0289cb49c1dbf4d7a0de4",
+    k: "43637eab9f4be017e8fa04bf410ed97cfd6f56afdfcfe69db0d73c7f59ac6c17",
     sol: function () { var c = "", j; for (j = 0; j < 8; j++) { c += '<circle cx="' + (40 + j * 34) + '" cy="40" r="11" fill="' + (j ? "#e9dfe6" : "#e8457f") + '"/>'; c += '<circle cx="' + (40 + j * 34) + '" cy="100" r="11" fill="#5fd3b3"/>'; }
       return '' +
       '<p>Neither of you ever loses to anyone else, so you both keep winning until you face each other.</p>' +
@@ -729,14 +727,10 @@ var STAGES = [
     body: "<p>Mei and her friend agree to meet at a café. Each arrives at a uniformly random time between 7:00 and 8:00 pm, independently.</p>" +
           "<p>Mei will wait <em>20 minutes</em> for her friend. Her friend will only wait <em>10 minutes</em> for Mei. Whoever arrives first leaves if the other hasn’t shown up by then.</p>" +
           "<p>What is the probability that they meet?</p>",
-    opts: [
-      { t: F(11, 36) + " ≈ 0.31", v: "d1" },
-      { t: F(31, 72) + " ≈ 0.43", v: "d2" },
-      { t: F(1, 2), v: "d3" },
-      { t: F(5, 9) + " ≈ 0.56", v: "d4" }
-    ],
+    fmt: "Probability: fraction, decimal or percentage",
+    d: 2,
     hint: "Plot it: put Mei’s arrival time (0 to 60 minutes after 7pm) on the x-axis and her friend’s on the y-axis. Every possible pair of arrivals is a point in a 60 × 60 square. Draw the two straight lines that mark the edges of “they meet”, shade the region between them, and the probability is the shaded area ÷ the area of the square.",
-    k: "337691662b090e983dd99c7f935280f17bbcde1094e4c6946cfa87f922d03f72",
+    k: "1cb518fae89601d8fc955139440d46df40ca0e8b7e1a1591c436a901885376c8",
     sol: function () { return '' +
       '<p>Let <i>x</i> = Mei’s arrival and <i>y</i> = her friend’s, in minutes after 7pm. Each point in the 60 × 60 square is equally likely.</p>' +
       '<ul><li>If Mei is first, they meet when the friend arrives within 20 min: <i>y</i> − <i>x</i> ≤ 20.</li><li>If the friend is first, they meet when Mei arrives within 10 min: <i>x</i> − <i>y</i> ≤ 10.</li></ul>' +
@@ -766,14 +760,10 @@ var STAGES = [
     body: "<p>Each ang bao contains an amount between $0 and $100, with every value equally likely (treat it as continuous), independently of the others.</p>" +
           "<p>You may open up to three, one at a time. After opening one, you either <em>keep it</em> (the game ends) or <em>discard it forever</em> and open the next. If you reach the third, you must keep it.</p>" +
           "<p>Playing optimally, what is your expected payout?</p>",
-    opts: [
-      { t: "$50.00", v: "e1" },
-      { t: "$62.50", v: "e2" },
-      { t: "$69.53", v: "e3" },
-      { t: "$75.00", v: "e4" }
-    ],
+    fmt: "Amount in $, to the nearest cent",
+    d: 2,
     hint: "Work backwards. With one ang bao left it’s worth $50 on average. With two left, keep the current one only if it beats what continuing is worth, then repeat the logic one more time.",
-    k: "65ca42046839b941db2aa3d2b566daed8cbe0c7774e6d77717df97082ea3f88b",
+    k: "53f5bf2ffdea5ffed7a843ff8562c13af959260c1cd8a03adf02da368ac34af8",
     sol: function () { return '' +
       '<p>Work backwards from the last ang bao. At each step, keep what you’re holding only if it beats the value of carrying on.</p>' +
       '<h3>One left</h3><p>You must keep it: worth its average, <b>$50</b>.</p>' +
@@ -799,14 +789,10 @@ var STAGES = [
     body: "<p>A gift bag holds <em>four</em> pieces of ribbon. You can see their eight ends poking out, but you can’t tell which ends belong to the same ribbon.</p>" +
           "<p>You repeatedly pick two loose ends uniformly at random and tie them together, until no loose ends remain. The ribbons end up joined into one or more closed loops.</p>" +
           "<p>What is the expected number of loops?</p>",
-    opts: [
-      { t: "1", v: "f1" },
-      { t: F(4, 3) + " ≈ 1.33", v: "f2" },
-      { t: F(176, 105) + " ≈ 1.68", v: "f3" },
-      { t: F(25, 12) + " ≈ 2.08", v: "f4" }
-    ],
+    fmt: "A number, as a fraction or to 2 decimal places",
+    d: 2,
     hint: "Start small. With 1 ribbon, its two ends must be tied together: exactly 1 loop. With 2 ribbons, take any loose end: what’s the chance it gets tied to the other end of its own piece, closing a loop? Whatever happens, the tied pieces then behave like one ribbon, so you’re back to a smaller case. Expected loops = the sum of the chances of closing a loop at each step, for 1, 2, 3 and 4 ribbons.",
-    k: "34c0a0148eb5f75b7fe9596e0012f87d15a1407090a128f7bc1b6b34df1fbaee",
+    k: "6d2377f3bff0fb7771b3709223e2f46aabd1ae9dbe8b72437933b2ae9b9daa6a",
     sol: function () { return '' +
       '<p>Tie one pair at a time. Suppose <i>k</i> separate pieces remain, so 2<i>k</i> loose ends. Grab any end: its partner is one of the other 2<i>k</i> − 1 ends, and exactly one of those is the other end of its own piece.</p>' +
       '<span class="eq">P(this tie closes a loop) = ' + F(1, "2<i>k</i> − 1") + '</span>' +
@@ -824,14 +810,10 @@ var STAGES = [
           "<p><em>Game 1</em> always gives you Prize 1.<br><em>Game 2</em> gives Prize 1 or Prize 2, each with probability 1/2.<br><em>Game 3</em> gives Prize 1, Prize 2 or Prize 3, each with probability 1/3.</p>" +
           "<p>Each round you choose any one game to play, and you see what you won before choosing the next. You want to collect all three prizes.</p>" +
           "<p>Using the strategy that minimises the expected number of rounds, how many rounds do you expect to play?</p>",
-    opts: [
-      { t: "4", v: "g1" },
-      { t: F(13, 3) + " ≈ 4.33", v: "g2" },
-      { t: "4.75", v: "g3" },
-      { t: "5.5", v: "g4" }
-    ],
+    fmt: "A number, as a fraction or to 2 decimal places",
+    d: 2,
     hint: "All that matters is which prizes you already hold. Start from the states where you’re missing just one prize, work backwards, and at each state pick the game with the smallest expected rounds remaining.",
-    k: "0ffd06fa1f52cd1e41937839eaaced68b0713743f47c25024ee24289f57f9b2f",
+    k: "8ac4ff66b5130cfc3d06ae278c9d3c288c9355ccebe71a98e0973a0862a006d0",
     sol: function () { return '' +
       '<p>Only the set of prizes you hold matters. Let E(S) be the expected rounds still needed when holding S, and work backwards. If a game might give a prize you already have, you just stay put, so for example:</p>' +
       '<span class="eq">E({2}) via Game 3: E = 1 + ' + F(1, 3) + 'E + ' + F(1, 3) + ' · E({1,2}) + ' + F(1, 3) + ' · E({2,3}) ⇒ E = ' + F(7, 2) + '</span>' +
@@ -916,16 +898,19 @@ var store = {
   set: function (v) { try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(v)); } catch (e) {} },
   clear: function () { try { localStorage.removeItem(CONFIG.storageKey); } catch (e) {} }
 };
-function fresh() { return { v: 8, phase: "intro", i: 0, log: [], hint: false, tries: 0, rv: {}, opened: {}, egg: {}, bonus: null, ans: {}, cake: false }; }
-var PHASES = ["intro", "stage", "solved", "reward", "done", "egg", "bday", "fin"];
+function fresh() { return { v: 9, phase: "intro", i: 0, max: 0, log: [], miss: {}, att: {}, hints: {}, wrong: {}, rv: {}, opened: {}, egg: {}, bonus: null, ans: {}, cake: false }; }
+var PHASES = ["intro", "stage", "solved", "missed", "reward", "done", "egg", "bday", "fin"];
 var S = (function () {
   var s = store.get(), f = fresh();
-  if (!s || s.v !== 8 || !Array.isArray(s.log)) return f;
+  if (!s || s.v !== 9 || !Array.isArray(s.log)) return f;
   for (var key in f) if (!(key in s)) s[key] = f[key];
   s.i = Math.min(Math.max(0, s.i | 0), N - 1);
+  s.max = Math.min(Math.max(s.i, s.max | 0), N - 1);
+  var all = true; for (var j = 0; j < N; j++) if (!s.log[j]) all = false;
   if (PHASES.indexOf(s.phase) < 0) s.phase = "intro";
   if ((s.phase === "reward" || s.phase === "solved") && !s.log[s.i]) s.phase = "stage";
-  if (["done", "egg", "bday", "fin"].indexOf(s.phase) >= 0 && s.log.length < N) s.phase = "stage";
+  if (s.phase === "missed" && s.log[s.i]) s.phase = "stage";
+  if (["done", "egg", "bday", "fin"].indexOf(s.phase) >= 0 && !all) s.phase = "stage";
   if ((s.phase === "bday" || s.phase === "fin") && !s.bonus) s.phase = "egg";
   return s;
 })();
@@ -1002,8 +987,14 @@ function sha256(str) {
   return Promise.resolve(sha256Fallback(str));
 }
 
-function verify(stageNo, v) {
-  return sha256("vault|" + stageNo + "|" + v).then(function (h) { return { ok: h === STAGES[stageNo - 1].k }; });
+function verify(stageNo, raws) {
+  var st = STAGES[stageNo - 1], parts = [];
+  for (var j = 0; j < raws.length; j++) {
+    var v = readNumber(raws[j]);
+    if (v === null) return Promise.resolve({ ok: false, unreadable: true });
+    parts.push(canon(v, st.d || 2));
+  }
+  return sha256("vault|" + stageNo + "|" + parts.join(";")).then(function (h) { return { ok: h === st.k }; });
 }
 
 /* ---------- gift locks (PBKDF2 + AES-GCM) ---------- */
@@ -1026,7 +1017,7 @@ function openLock(payload, answer) {
 }
 
 /* ---------- gift panel ---------- */
-function soFar(k) { return k === "bonus" ? POOL : sum(CONFIG.rewards.slice(0, +k - 1)); }
+function soFar(k) { if (k === "bonus") return POOL; var t = 0; for (var j = 0; j < N; j++) if (S.log[j] && j !== +k - 1) t += CONFIG.rewards[j]; return t; }
 function mountGift(el, k, label, onOpened) {
   var g = CONFIG.gifts[k] || {}, key = String(k), opened = S.opened[key];
   el.hidden = false;
@@ -1069,6 +1060,11 @@ var SCREENS = { intro: "s-intro", stage: "s-stage", reward: "s-reward", done: "s
 var whisperTimer = null;
 var view = "home", reviewIdx = -1;   // not saved: every refresh opens the home page
 
+function solved(j) { return !!S.log[j]; }
+function missed(j) { return !solved(j) && (S.miss[j] || 0) > 0; }
+function unlocked(j) { return j <= S.max; }
+function allSolved() { for (var j = 0; j < N; j++) if (!solved(j)) return false; return true; }
+
 function show(screen, focusId) {
   for (var p in SCREENS) $(SCREENS[p]).hidden = p !== screen;
   document.body.classList.toggle("party", screen === "bday" || screen === "fin");
@@ -1079,11 +1075,12 @@ function show(screen, focusId) {
   if (focusId) { var f = $(focusId); if (f) try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); } }
 }
 function renderHud() {
-  var solved = S.log.length, d = "";
+  var d = "";
   for (var j = 0; j < N; j++) {
-    var isNow = j === S.i && S.phase === "stage", can = j < solved || isNow;
-    d += '<button type="button" class="dot' + (j < solved ? " done" : (isNow ? " now" : "")) + (view === "review" && j === reviewIdx ? " view" : "") +
-      '" data-j="' + j + '" aria-label="Stage ' + ROMAN[j] + (j < solved ? " (solved)" : isNow ? " (current)" : " (locked)") + '"' + (can ? "" : " disabled") + '></button>';
+    var isNow = j === S.i && (S.phase === "stage" || S.phase === "missed");
+    var cls = solved(j) ? " done" : isNow ? " now" : missed(j) ? " miss" : "";
+    var lab = solved(j) ? " (solved)" : isNow ? " (current)" : missed(j) ? " (missed, try again)" : unlocked(j) ? " (not tried yet)" : " (locked)";
+    d += '<button type="button" class="dot' + cls + (view === "review" && j === reviewIdx ? " view" : "") + '" data-j="' + j + '" aria-label="Stage ' + ROMAN[j] + lab + '"' + (solved(j) || unlocked(j) ? "" : " disabled") + '></button>';
   }
   $("hud-dots").innerHTML = d;
   $("hud-stage").textContent = view === "review" ? "Reviewing Stage " + ROMAN[reviewIdx] : S.phase === "done" ? "All " + N + " cleared" : "Stage " + (S.i + 1) + " of " + N;
@@ -1091,32 +1088,40 @@ function renderHud() {
 
 function renderStage(focus, rIdx) {
   var review = typeof rIdx === "number" && rIdx >= 0, idx = review ? rIdx : S.i;
-  var mode = review ? "review" : (S.phase === "solved" ? "solved" : "play");
-  var st = STAGES[idx], html = "", chosen = mode === "play" ? -1 : S.ans[idx];
+  var mode = review ? "review" : S.phase === "solved" ? "solved" : S.phase === "missed" ? "missed" : "play";
+  var st = STAGES[idx], labels = st.fields || [null], html = "";
+  var prev = mode === "play" ? [] : mode === "missed" ? (S.wrong[idx] || []) : (S.ans[idx] || []);
   $("st-tag").textContent = "Stage " + ROMAN[idx] + " · " + st.topic;
   $("st-title").textContent = st.title;
   $("st-card").setAttribute("data-n", ROMAN[idx]);
   $("st-body").innerHTML = st.body;
-  picked = -1;
-  for (var j = 0; j < st.opts.length; j++) {
-    var right = mode !== "play" && j === chosen;
-    html += '<button type="button" class="opt' + (right ? " right" : "") + '" role="radio" aria-checked="' + (right ? "true" : "false") + '" data-j="' + j + '"' + (mode !== "play" ? " disabled" : "") + '>' +
-      '<span class="opt-l" aria-hidden="true">' + (right ? "✓" : "ABCDEFG".charAt(j)) + '</span><span class="opt-t">' + st.opts[j].t + '</span></button>';
+  $("st-fmt").textContent = st.fmt;
+  for (var j = 0; j < labels.length; j++) {
+    html += '<div>' + (labels[j] ? '<label for="st-in' + j + '">' + esc(labels[j]) + '</label>' : "") +
+      '<input class="answer st-in' + (mode === "missed" ? " bad" : "") + '" id="st-in' + j + '" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="' +
+      (labels.length > 1 ? "answer" : "your answer") + '"' + (labels[j] ? "" : ' aria-label="Your answer"') + ' aria-describedby="st-fmt st-feedback"' +
+      (mode !== "play" ? ' readonly value="' + esc(prev[j] != null ? prev[j] : "✓") + '"' : "") + '></div>';
   }
-  $("st-opts").innerHTML = html;
+  $("st-inputs").innerHTML = html;
   $("st-submit").hidden = mode !== "play";
-  var e = S.log[idx];
-  $("st-feedback").innerHTML = mode === "solved" ? '<p class="yay-note">🎉 Correct!</p>'
-    : mode === "review" ? '<p class="solved-note">✓ Solved' + (e ? " in " + e.tries + (e.tries === 1 ? " attempt" : " attempts") : "") + '</p>' : "";
-  setHint(mode === "play" ? S.hint : false, idx);
+  var e = S.log[idx], fb = "";
+  if (mode === "solved") fb = '<p class="yay-note">🎉 Correct!</p>';
+  else if (mode === "review") fb = '<p class="solved-note">✓ Solved' + (e ? " in " + e.tries + (e.tries === 1 ? " try" : " tries") : "") + '</p>';
+  else if (mode === "missed") fb = '<p class="nope">Not quite! 😢</p><p class="nope-sub">One try per visit, so let’s move on. You can come back to this one any time.</p>';
+  else if (missed(idx)) fb = '<p class="nope-sub">Second chance! 💪 Still just one try.</p>';
+  $("st-feedback").innerHTML = fb;
+  setHint(mode === "play" ? !!S.hints[idx] : false, idx);
   $("st-done").hidden = mode === "play";
   $("st-sol").hidden = true; $("st-sol").innerHTML = "";
+  $("st-solbtn").hidden = !(mode === "solved" || mode === "review");
   $("st-solbtn").textContent = "📖 Show solution"; $("st-solbtn").setAttribute("aria-expanded", "false");
   $("st-continue").hidden = mode !== "solved";
+  $("st-move").hidden = mode !== "missed";
+  if (mode === "missed") { var nx = nextTarget(idx); $("st-move").textContent = nx === idx ? "Try this one again →" : "Next: Stage " + ROMAN[nx] + " →"; }
   $("st-giftbtn").hidden = mode !== "review";
   $("st-gift").hidden = true; $("st-gift").innerHTML = "";
   $("st-back").hidden = mode !== "review";
-  if (mode === "review") $("st-back").textContent = S.phase === "stage" ? "Back to Stage " + ROMAN[S.i] + " →" : "Continue where you left off →";
+  if (mode === "review") $("st-back").textContent = (S.phase === "stage" || S.phase === "missed") ? "Back to Stage " + ROMAN[S.i] + " →" : "Continue where you left off →";
   show("stage", focus ? "st-title" : null);
 }
 function setHint(open, idx) {
@@ -1125,7 +1130,6 @@ function setHint(open, idx) {
   else { box.hidden = true; btn.hidden = false; btn.setAttribute("aria-expanded", "false"); }
 }
 
-var picked = -1;
 var CHEERS = ["Nice one! 🎉", "Too easy? 😏", "Look at you go! ✨", "Big brain! 🧠", "Unstoppable! 🚀", "Wow, okay! 🤩", "Legend! 🏆"];
 function renderReward(fresh, focus) {
   var e = S.log[S.i], k = S.i + 1;
@@ -1137,7 +1141,7 @@ function renderReward(fresh, focus) {
   $("rw-id").textContent = e.id;
   $("rw-tries").textContent = String(e.tries);
   $("rw-hint").textContent = e.hint ? "Yes" : "No";
-  $("rw-next").textContent = S.i < N - 1 ? "Next: Stage " + ROMAN[S.i + 1] + " →" : "Finish →";
+  var nx = nextTarget(S.i); $("rw-next").textContent = allSolved() || nx < 0 ? "Finish →" : "Next: Stage " + ROMAN[nx] + " →";
   $("rw-next").hidden = true;
   $("rw-open").hidden = !!S.rv[k];
   if (S.rv[k]) mountGift($("rw-gift"), k, "Stage " + ROMAN[S.i] + " · " + money(CONFIG.rewards[S.i]), function () { $("rw-next").hidden = false; });
@@ -1201,15 +1205,17 @@ function renderFin(celebrate, focus) {
 }
 
 function renderHome(focus) {
-  var started = S.phase !== "intro", solved = S.log.length;
+  var started = S.phase !== "intro";
   $("btn-start").textContent = started ? "Continue where you left off ▶" : "Let’s go";
   $("home-progress").hidden = !started;
   if (started) {
     var rows = "";
     for (var j = 0; j < N; j++) {
-      var isCur = j === S.i && S.phase === "stage";
-      if (j < solved) rows += '<li><button type="button" class="prow" data-review="' + j + '"><span class="ic" aria-hidden="true">✓</span><span>Stage ' + ROMAN[j] + ' · ' + esc(STAGES[j].title) + '<small>Solved · tap to review</small></span></button></li>';
-      else if (isCur) rows += '<li><button type="button" class="prow cur" data-go="1"><span class="ic" aria-hidden="true">▶</span><span>Stage ' + ROMAN[j] + ' · ' + esc(STAGES[j].title) + '<small>In progress · tap to continue</small></span></button></li>';
+      var isCur = j === S.i && S.phase === "stage", t = esc(STAGES[j].title);
+      if (solved(j)) rows += '<li><button type="button" class="prow" data-review="' + j + '"><span class="ic" aria-hidden="true">✓</span><span>Stage ' + ROMAN[j] + ' · ' + t + '<small>Solved · tap to review</small></span></button></li>';
+      else if (isCur) rows += '<li><button type="button" class="prow cur" data-go="1"><span class="ic" aria-hidden="true">▶</span><span>Stage ' + ROMAN[j] + ' · ' + t + '<small>' + (missed(j) ? "Second chance · tap to continue" : "In progress · tap to continue") + '</small></span></button></li>';
+      else if (missed(j)) rows += '<li><button type="button" class="prow miss" data-stage="' + j + '"><span class="ic" aria-hidden="true">↺</span><span>Stage ' + ROMAN[j] + ' · ' + t + '<small>Missed · tap to try again</small></span></button></li>';
+      else if (unlocked(j)) rows += '<li><button type="button" class="prow" data-stage="' + j + '"><span class="ic" aria-hidden="true">•</span><span>Stage ' + ROMAN[j] + ' · ' + t + '<small>Not tried yet · tap to start</small></span></button></li>';
       else rows += '<li><button type="button" class="prow" disabled><span class="ic lockic" aria-hidden="true">' + LOCK_SVG + '</span><span>Stage ' + ROMAN[j] + '<small>Locked</small></span></button></li>';
     }
     $("home-plist").innerHTML = rows;
@@ -1222,7 +1228,7 @@ function render(focus) {
   clearTimeout(whisperTimer);
   if (view === "home") { renderHome(focus); return; }
   if (view === "review") renderStage(focus, reviewIdx);
-  else if (S.phase === "stage" || S.phase === "solved") renderStage(focus);
+  else if (S.phase === "stage" || S.phase === "solved" || S.phase === "missed") renderStage(focus);
   else if (S.phase === "reward") renderReward(false, focus);
   else if (S.phase === "done") renderDone(focus);
   else if (S.phase === "egg") renderEgg(focus);
@@ -1318,9 +1324,21 @@ function glitterAt(x, y, color, count) {
 function announce(msg) { var a = $("announce"); a.textContent = ""; setTimeout(function () { a.textContent = msg; }, 30); }
 
 /* ---------- navigation ---------- */
+// Next stage after finishing `from`: the next unsolved stage that is open (or the next new one), wrapping around.
+function nextTarget(from) {
+  for (var k = 1; k <= N; k++) { var j = (from + k) % N; if (!solved(j) && j <= S.max + 1) return j; }
+  return -1;
+}
+function startStage(j) { S.i = j; S.max = Math.max(S.max, j); S.phase = "stage"; }
+function advance(from) {
+  if (allSolved()) S.phase = "done";
+  else { var j = nextTarget(from); startStage(j < 0 ? from : j); }
+  save(); Sound.play("tap"); goPlay();
+}
 function goHome() { view = "home"; render(true); }
 function goPlay() { view = "play"; reviewIdx = -1; render(true); }
-function goReview(j) { if (j >= 0 && j < S.log.length) { view = "review"; reviewIdx = j; render(true); } }
+function goReview(j) { if (j >= 0 && j < N && solved(j)) { view = "review"; reviewIdx = j; render(true); } }
+function goStage(j) { if (solved(j)) { goReview(j); return; } if (!unlocked(j)) return; startStage(j); save(); goPlay(); }
 
 $("btn-start").addEventListener("click", function () {
   if (S.phase === "intro") { S = fresh(); S.phase = "stage"; save(); }
@@ -1332,60 +1350,68 @@ $("home-fab").addEventListener("click", goHome);
 $("home-plist").addEventListener("click", function (ev) {
   var b = ev.target.closest(".prow");
   if (!b || b.disabled) return;
-  if (b.hasAttribute("data-review")) goReview(+b.getAttribute("data-review")); else goPlay();
+  if (b.hasAttribute("data-review")) goReview(+b.getAttribute("data-review"));
+  else if (b.hasAttribute("data-stage")) goStage(+b.getAttribute("data-stage"));
+  else goPlay();
 });
 $("hud-dots").addEventListener("click", function (ev) {
   var b = ev.target.closest(".dot");
   if (!b || b.disabled) return;
   var j = +b.getAttribute("data-j");
-  if (j < S.log.length) goReview(j); else goPlay();
+  if (solved(j)) goReview(j);
+  else if (j === S.i && (S.phase === "stage" || S.phase === "missed")) goPlay();
+  else goStage(j);
 });
 
-/* ---------- answering ---------- */
+/* ---------- answering: one try per visit ---------- */
 var busy = false;
 $("st-form").addEventListener("submit", function (ev) {
   ev.preventDefault();
   if (busy || S.phase !== "stage" || view !== "play") return;
-  if (picked < 0) { $("st-feedback").innerHTML = '<p class="nope-sub">Pick an answer first 👆</p>'; return; }
+  var ins = Array.prototype.slice.call(document.querySelectorAll(".st-in"));
+  var raws = ins.map(function (x) { return x.value; });
+  var empty = ins.filter(function (x) { return !x.value.trim(); });
+  if (empty.length) { empty[0].focus(); return; }
   busy = true;
-  var idx = S.i, choice = picked, btn = document.querySelector('.opt[data-j="' + choice + '"]');
-  verify(idx + 1, STAGES[idx].opts[choice].v).then(function (res) {
+  var idx = S.i;
+  verify(idx + 1, raws).then(function (res) {
     busy = false;
     if (S.phase !== "stage" || S.i !== idx) return;
+    if (res.unreadable) {   // doesn't use up the try
+      $("st-feedback").innerHTML = '<p class="nope-sub">Hmm, I can’t read that. Try a number, a fraction like 3/4, or a percentage. (This didn’t use your try.)</p>';
+      ins.forEach(function (x) { if (readNumber(x.value) === null) x.classList.add("bad"); });
+      return;
+    }
+    var clean = raws.map(function (x) { return String(x).trim().slice(0, 40); });
+    S.att[idx] = (S.att[idx] || 0) + 1;
+    ins.forEach(function (x) { x.blur(); });
     if (res.ok) {
-      S.log = S.log.slice(0, idx);
-      S.log[idx] = { id: makeId(ROMAN[idx]), at: Date.now(), hint: !!S.hint, tries: S.tries + 1 };
-      S.ans[idx] = choice;
+      S.log[idx] = { id: makeId(ROMAN[idx]), at: Date.now(), hint: !!S.hints[idx], tries: S.att[idx] };
+      S.ans[idx] = clean;
       S.phase = "solved"; save();
       Sound.play("correct"); confetti(36);
       announce("Correct! Stage " + ROMAN[idx] + " solved.");
       if (navigator.vibrate) try { navigator.vibrate([18, 40, 18]); } catch (e) {}
-      renderStage(false);
-      $("st-done").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
     } else {
-      S.tries++; save();
+      S.miss[idx] = (S.miss[idx] || 0) + 1;
+      S.wrong[idx] = clean;
+      S.phase = "missed"; save();
       Sound.play("wrong");
-      $("st-feedback").innerHTML = '<p class="nope">Not quite!</p><p class="nope-sub">Have another go. No limit on tries.</p>';
-      if (btn) { btn.classList.add("wrong"); btn.setAttribute("aria-checked", "false"); }
-      picked = -1;
-      var card = $("st-card"); card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+      announce("Not quite. Moving on; you can come back to Stage " + ROMAN[idx] + " later.");
       if (navigator.vibrate) try { navigator.vibrate(90); } catch (e) {}
     }
+    renderStage(false);
+    if (!res.ok) { var card = $("st-card"); card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake"); }
+    $("st-done").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
   });
 });
-$("st-opts").addEventListener("click", function (ev) {
-  var b = ev.target.closest(".opt");
-  if (!b || b.disabled || view !== "play" || S.phase !== "stage") return;
-  picked = +b.getAttribute("data-j");
-  Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (o) { o.setAttribute("aria-checked", String(o === b)); });
-  $("st-feedback").innerHTML = "";
-  Sound.play("tap");
-});
+$("st-inputs").addEventListener("input", function (ev) { if (ev.target.classList) ev.target.classList.remove("bad"); });
 
 $("st-hintbtn").addEventListener("click", function () {
   Sound.play("tap");
-  if (view === "review" || S.phase === "solved") { setHint(true, view === "review" ? reviewIdx : S.i); return; }
-  S.hint = true; save(); setHint(true);
+  var idx = view === "review" ? reviewIdx : S.i;
+  if (view !== "review" && S.phase === "stage") { S.hints[idx] = true; save(); }
+  setHint(true, idx);
   var box = $("st-hint"); box.setAttribute("tabindex", "-1"); box.focus();
 });
 $("st-solbtn").addEventListener("click", function () {
@@ -1402,6 +1428,7 @@ $("st-continue").addEventListener("click", function () {
   S.phase = "reward"; save();
   playGift(function () { renderReward(true, true); window.scrollTo(0, 0); });
 });
+$("st-move").addEventListener("click", function () { if (S.phase === "missed" && view === "play") advance(S.i); });
 $("st-back").addEventListener("click", goPlay);
 $("st-giftbtn").addEventListener("click", function () {
   var j = reviewIdx;
@@ -1415,12 +1442,7 @@ $("rw-open").addEventListener("click", function () {
   S.rv[S.i + 1] = true; save(); Sound.play("tap"); renderReward(false, false);
   $("rw-gift").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
 });
-$("rw-next").addEventListener("click", function () {
-  if (S.phase !== "reward") return;
-  if (S.i >= N - 1) S.phase = "done";
-  else { S.i++; S.phase = "stage"; S.hint = false; S.tries = 0; }
-  save(); Sound.play("tap"); render(true);
-});
+$("rw-next").addEventListener("click", function () { if (S.phase === "reward") advance(S.i); });
 
 /* ---------- easter egg + finale ---------- */
 $("dn-whisper").addEventListener("click", function () { S.phase = "egg"; S.egg = {}; save(); Sound.play("tap"); render(true); });
