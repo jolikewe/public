@@ -415,6 +415,9 @@ body.party .aurora{display:none}
 .prow.miss{border-color:#ffd9c2}
 .prow.miss .ic{background:#ffb48a}
 .prow .ic{font-size:14px}
+.ledger li.miss{color:var(--muted)}
+.ledger li.miss .ok{background:#ffb48a}
+.ledger li.miss b{font-weight:700;font-size:13px}
 .answer.bad[readonly]{background:#fff3f5;border-color:#f3c1cf;color:var(--bad);text-decoration:line-through}
 </style>
 </head>
@@ -515,7 +518,7 @@ body.party .aurora{display:none}
         <h2 class="big" tabindex="-1" id="dn-title">All 7 stages cleared! 🎉</h2>
         <ul class="ledger" id="dn-ledger"></ul>
         <p class="collected" id="dn-total">You collected $0</p>
-        <p class="closed">That was the final stage. Well played!</p>
+        <p class="closed" id="dn-closed">That was the final stage. Well played!</p>
       </div>
       <button class="whisper" type="button" id="dn-whisper" hidden>Wait… one more thing 👀</button>
     </section>
@@ -573,7 +576,7 @@ body.party .aurora{display:none}
       <div class="card">
         <span class="tag">Total collected</span>
         <div class="amount" id="fn-amt" style="margin-top:12px">$0</div>
-        <p class="noprob">7 brain teasers + 1 birthday bonus</p>
+        <p class="noprob" id="fn-sub">7 brain teasers + 1 birthday bonus</p>
       </div>
       <div class="cake-wrap">
         <div class="cake">
@@ -898,7 +901,7 @@ var store = {
   set: function (v) { try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(v)); } catch (e) {} },
   clear: function () { try { localStorage.removeItem(CONFIG.storageKey); } catch (e) {} }
 };
-function fresh() { return { v: 9, phase: "intro", i: 0, max: 0, log: [], miss: {}, att: {}, hints: {}, wrong: {}, rv: {}, opened: {}, egg: {}, bonus: null, ans: {}, cake: false }; }
+function fresh() { return { v: 9, phase: "intro", i: 0, max: 0, ended: false, end: "done", log: [], miss: {}, att: {}, hints: {}, wrong: {}, rv: {}, opened: {}, egg: {}, bonus: null, ans: {}, cake: false }; }
 var PHASES = ["intro", "stage", "solved", "missed", "reward", "done", "egg", "bday", "fin"];
 var S = (function () {
   var s = store.get(), f = fresh();
@@ -910,11 +913,11 @@ var S = (function () {
   if (PHASES.indexOf(s.phase) < 0) s.phase = "intro";
   if ((s.phase === "reward" || s.phase === "solved") && !s.log[s.i]) s.phase = "stage";
   if (s.phase === "missed" && s.log[s.i]) s.phase = "stage";
-  if (["done", "egg", "bday", "fin"].indexOf(s.phase) >= 0 && !all) s.phase = "stage";
+  if (["done", "egg", "bday", "fin"].indexOf(s.phase) >= 0 && !s.ended) s.phase = "stage";
   if ((s.phase === "bday" || s.phase === "fin") && !s.bonus) s.phase = "egg";
   return s;
 })();
-function save() { store.set(S); }
+function save() { if (["done", "egg", "bday", "fin"].indexOf(S.phase) >= 0) S.end = S.phase; store.set(S); }
 
 /* ---------- reference codes ---------- */
 var ALPH = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
@@ -1017,7 +1020,8 @@ function openLock(payload, answer) {
 }
 
 /* ---------- gift panel ---------- */
-function soFar(k) { if (k === "bonus") return POOL; var t = 0; for (var j = 0; j < N; j++) if (S.log[j] && j !== +k - 1) t += CONFIG.rewards[j]; return t; }
+function collected() { var t = 0; for (var j = 0; j < N; j++) if (S.log[j]) t += CONFIG.rewards[j]; return t; }
+function soFar(k) { if (k === "bonus") return collected(); var t = 0; for (var j = 0; j < N; j++) if (S.log[j] && j !== +k - 1) t += CONFIG.rewards[j]; return t; }
 function mountGift(el, k, label, onOpened) {
   var g = CONFIG.gifts[k] || {}, key = String(k), opened = S.opened[key];
   el.hidden = false;
@@ -1062,7 +1066,7 @@ var view = "home", reviewIdx = -1;   // not saved: every refresh opens the home 
 
 function solved(j) { return !!S.log[j]; }
 function missed(j) { return !solved(j) && (S.miss[j] || 0) > 0; }
-function unlocked(j) { return j <= S.max; }
+function unlocked(j) { return j <= S.max || S.ended; }
 function allSolved() { for (var j = 0; j < N; j++) if (!solved(j)) return false; return true; }
 
 function show(screen, focusId) {
@@ -1117,7 +1121,7 @@ function renderStage(focus, rIdx) {
   $("st-solbtn").textContent = "📖 Show solution"; $("st-solbtn").setAttribute("aria-expanded", "false");
   $("st-continue").hidden = mode !== "solved";
   $("st-move").hidden = mode !== "missed";
-  if (mode === "missed") { var nx = nextTarget(idx); $("st-move").textContent = nx === idx ? "Try this one again →" : "Next: Stage " + ROMAN[nx] + " →"; }
+  if (mode === "missed") $("st-move").textContent = nextLabel(idx);
   $("st-giftbtn").hidden = mode !== "review";
   $("st-gift").hidden = true; $("st-gift").innerHTML = "";
   $("st-back").hidden = mode !== "review";
@@ -1141,7 +1145,7 @@ function renderReward(fresh, focus) {
   $("rw-id").textContent = e.id;
   $("rw-tries").textContent = String(e.tries);
   $("rw-hint").textContent = e.hint ? "Yes" : "No";
-  var nx = nextTarget(S.i); $("rw-next").textContent = allSolved() || nx < 0 ? "Finish →" : "Next: Stage " + ROMAN[nx] + " →";
+  $("rw-next").textContent = nextLabel(S.i);
   $("rw-next").hidden = true;
   $("rw-open").hidden = !!S.rv[k];
   if (S.rv[k]) mountGift($("rw-gift"), k, "Stage " + ROMAN[S.i] + " · " + money(CONFIG.rewards[S.i]), function () { $("rw-next").hidden = false; });
@@ -1151,10 +1155,13 @@ function renderReward(fresh, focus) {
 
 function renderDone(focus) {
   var rows = "";
-  for (var j = 0; j < N; j++) rows += '<li><span><span class="ok" aria-hidden="true">✓</span>Stage ' + ROMAN[j] + ' · ' + esc(STAGES[j].topic) + '</span><b>' + money(CONFIG.rewards[j]) + '</b></li>';
+  for (var j = 0; j < N; j++) rows += solved(j)
+    ? '<li><span><span class="ok" aria-hidden="true">✓</span>Stage ' + ROMAN[j] + ' · ' + esc(STAGES[j].topic) + '</span><b>' + money(CONFIG.rewards[j]) + '</b></li>'
+    : '<li class="miss"><span><span class="ok" aria-hidden="true">↺</span>Stage ' + ROMAN[j] + ' · ' + esc(STAGES[j].topic) + '</span><b>retry anytime</b></li>';
   $("dn-ledger").innerHTML = rows;
-  $("dn-title").textContent = "All " + N + " stages cleared! 🎉";
-  $("dn-total").textContent = "You collected " + money(POOL);
+  $("dn-title").textContent = allSolved() ? "All " + N + " stages cleared! 🎉" : "You made it to the end! 🎉";
+  $("dn-total").textContent = "You collected " + money(collected());
+  $("dn-closed").textContent = allSolved() ? "That was the final stage. Well played!" : "Missed ones stay open: retry them anytime from Home.";
   var w = $("dn-whisper");
   w.classList.remove("on"); w.hidden = true;
   clearTimeout(whisperTimer);
@@ -1179,7 +1186,7 @@ function renderEgg(focus) {
 
 function renderBday(celebrate, focus) {
   var amt = $("bd-amt");
-  $("bd-tease").textContent = "We know " + money(POOL) + " isn’t enough…";
+  $("bd-tease").textContent = "We know " + money(collected()) + " isn’t enough…";
   $("bd-sofar").lastChild.textContent = money(soFar("bonus"));
   $("bd-open").hidden = !!S.rv.bonus;
   $("bd-finish").hidden = true;
@@ -1192,7 +1199,9 @@ function renderBday(celebrate, focus) {
 }
 
 function renderFin(celebrate, focus) {
-  var amt = $("fn-amt"), total = POOL + CONFIG.bonusAmount;
+  var amt = $("fn-amt"), total = collected() + CONFIG.bonusAmount, ns = 0;
+  for (var q = 0; q < N; q++) if (solved(q)) ns++;
+  $("fn-sub").textContent = ns + (ns === 1 ? " brain teaser" : " brain teasers") + " + 1 birthday bonus";
   $("fn-photo").innerHTML = (CONFIG.photo ? '<img src="' + esc(CONFIG.photo) + '" alt="Birthday photo">' : '<div class="ph">Photo goes here 📸</div>') +
     '<figcaption>' + esc(CONFIG.photoCaption || "") + '</figcaption>';
   var cs = $("fn-candles").querySelectorAll(".candle");
@@ -1324,17 +1333,23 @@ function glitterAt(x, y, color, count) {
 function announce(msg) { var a = $("announce"); a.textContent = ""; setTimeout(function () { a.textContent = msg; }, 30); }
 
 /* ---------- navigation ---------- */
-// Next stage after finishing `from`: the next unsolved stage that is open (or the next new one), wrapping around.
+function attempted(j) { return solved(j) || (S.miss[j] || 0) > 0; }
+// Where "next" goes after finishing stage `from`:
+//  - first time through: the next stage she hasn't tried yet; once all 7 have been tried, the ending.
+//  - after the ending: straight back to wherever she was in the ending.
 function nextTarget(from) {
-  for (var k = 1; k <= N; k++) { var j = (from + k) % N; if (!solved(j) && j <= S.max + 1) return j; }
+  if (S.ended) return -1;
+  for (var j = 0; j < N; j++) if (!attempted(j)) return j;
   return -1;
 }
 function startStage(j) { S.i = j; S.max = Math.max(S.max, j); S.phase = "stage"; }
+function toEnding() { S.ended = true; S.phase = S.end || "done"; }
 function advance(from) {
-  if (allSolved()) S.phase = "done";
-  else { var j = nextTarget(from); startStage(j < 0 ? from : j); }
+  var j = nextTarget(from);
+  if (j < 0) toEnding(); else startStage(j);
   save(); Sound.play("tap"); goPlay();
 }
+function nextLabel(from) { var j = nextTarget(from); return j >= 0 ? "Next: Stage " + ROMAN[j] + " →" : S.ended ? "Back to the celebration →" : "Finish →"; }
 function goHome() { view = "home"; render(true); }
 function goPlay() { view = "play"; reviewIdx = -1; render(true); }
 function goReview(j) { if (j >= 0 && j < N && solved(j)) { view = "review"; reviewIdx = j; render(true); } }
