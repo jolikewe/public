@@ -376,9 +376,21 @@ body.party .reset{color:rgba(255,255,255,.45)}
       <div class="after">
         <button class="btn btn-main" type="button" id="bd-open">🎁 Open your bonus gift</button>
         <div id="bd-gift" class="qr-wrap" hidden></div>
+        <button class="btn btn-soft" type="button" id="bd-finish" hidden>Finish 🎉</button>
       </div>
       <p class="echo" id="bd-echo"></p>
-      <p class="grand" id="bd-grand"></p>
+    </section>
+
+    <!-- Final wrap-up -->
+    <section class="screen bday fin" id="s-fin" hidden>
+      <p class="pre">QUIZ COMPLETE</p>
+      <h1 tabindex="-1" id="fn-title">That’s a wrap! 🎂</h1>
+      <div class="card">
+        <span class="tag">Total collected</span>
+        <div class="amount" id="fn-amt" style="margin-top:12px">S$0</div>
+        <p class="noprob">7 brain teasers + 1 birthday bonus</p>
+      </div>
+      <p class="tease" style="margin-top:22px">Happy birthday! Hope the brain teasers were (mostly) fun. 💝</p>
     </section>
   </main>
 
@@ -404,24 +416,24 @@ var CONFIG = {
   currency: "S$",
 
   // Stage gifts, in order (one per stage). Each should be larger than the last.
-  // Stage gifts + bonusAmount should total 1000, with the bonus the largest.
-  rewards: [30, 40, 50, 60, 80, 100, 140],
+  // The bonus should be the largest gift.
+  rewards: [18, 28, 38, 48, 88, 108, 188],
 
   // Birthday bonus revealed after the Easter egg (the biggest gift).
-  bonusAmount: 500,
+  bonusAmount: 488,
 
   // Each gift's QR code is encrypted. It opens only with the answer to its
   // security question; the answer itself is never stored in this file.
   // Generate "lock" with lock_gift.mjs. Leave lock "" to show a placeholder.
   gifts: {
-    1: { question: "[Demo] What do you blow out on a birthday cake? (demo answer: candles)", lock: "v1.250000.GZZGEpoVkpVPZCDR5+EraA==.0TxYKdAa0j3jOTyJ.L79wAguIF1bn2gTSS4SN5SBotNvQHN+0gWa5FP0L4Nn3m26NX8IUdsF0G7zG+Ubtzm05JB2//BXsOi6TQ4oPzx/7J/iOMMYynXQBEUpOqb7YrQ7Qzdlw10xesQizZapccIpsrg6/fT/8FMXIR+JVw36R/PuTfB48/Z/RsWjsEiytlK75hqI5YIWpymtpks2pU74DDqxg7RQGwCUJSPUKzF4GWTcRDvzSnpY65mam06KwjbT4LG2ZswBRuyuSMAIDj2tqwt+hfKJ5MxAjXr613kaTcjvsCR03UjflTkf7fmU4iwG7MBfOtZIfAmYv8JxILp236uW6h9jW380yKRMhs5l9FgvIYIxcbVmANE2/phFH+R2TfFJch+DPrjSJ4IXWEKcwFK9yadFlNXrwd7NskcI9g3kHp6i/zKMB4dVIkFhB6XCidqQlEHdFS7lvTWyG1zGuJ1pIvVqWuQZRMvxRxF3nbieH0076mSwyVvGKiFubz4n++fUUzwh26e2ocEAXV/sSN8oZKq+ngqXDVtjsFq+09cvnQybw/4Q+GhfgF+Qxj+yGYTUWnmNQ418o5/ppLtcuGUpDoZpEDS4na8mmJG1EZnW7V/q3qpuyo+wJVjcnByZLm77oc86Pb9ATacZ5Qa14cTNOQVY4Zxx7jz0NWMq6fMKR0qbnIYqrSNP7ci7sb+iKyRjXjs+yjPMPYnf4ouOQ23P7mq1m4PhWpO62K2LT9sWOGzmDD/c3nvVGaaxee+ixZrxSSIROxbmK9MCmNUd65eLsqBA/IZ++GcY/OJkysk+lJEJI6EVxq3fttDTcsXGQyLxbeSwsq4Rn4WqC60MkCepAoz5UOaZSs9fJOk7CyhznOdPImGdxyGDGcpNh+mZIVb8Dt6sl3/jeR3iNPT8c2YXHOa0m6nOq7IRa5PvbXavLQGAmWnmxFugEvCppH12r5C6qJF5G7tOwb4zlxnjPvKMf7YuLJ3SMgaGo7j44g/pVmLfLPsAw+lvrxOF+Fv52o3j4wQHLiOROT40ye7ydSTeQKBc9ujEvZ2WpuMjY/EVCyr+L6Y0MFKYpR7OpMl0E83LNWPFTjc2bLHodyRYb5THEFgN6KC+3rL8SsMxvI+lkA4yAuZGTi12RsOAXRnDdfjNTRMgO" },
-    2: { question: "[Demo] What do you blow out on a birthday cake? (demo answer: candles)", lock: "v1.250000.wUBAg5iTdMp5DpLw28tLTg==.GpgytbTt8uIaFwB5.RcxKer2k4VlScDL+J0ehHT3789wnfVMfNJFBL8iPdn8dolU6I0wto1uxocjOE6y9z5F2eXtF/VrUBpnpGaHl+5Ey+3V+Gf7nrWc+H3XSXKCHjthbQjSrtB7l/MIxtyFMzjpNQ3/DH0a2BzW6bSO1JSrTWWVNtNrvIX7MxQiMP/tvUN7MXgmrGhS53xcDpWgHYEug8BOJ78l9yA/CSA27m8Vo4PMz5wBw5HJgMg2p6WD097MMqMt7mUIUg2QCFrClvhSI6KMDwIfH4s4/ktTwPRmoQX6LIv+b6IH2lkHo/Yt6gJf8JUDR2aQWI0neNDJlel1uiPr8TCdQmgt8q0/FaCGF0bDITrqdoLCqvIYMZc40O6yk5MVLOcePFYLC/bd5MqZcX+tCYq9702UFQTalZoWxbsPnehXrJYJNVuFPQ1msWkZuFzm/MUhuON86gXU1als1gJpcqeE1GGGhuaSg/f8q02ryOo62HvprWcVK9PJnRPcgF0d7iJcp23c/gyf0gsw/ouz8fog0U1o8K5vcxsbaKA57ajuxfyjSSgL8I/U4gPah0ZayKk2zvOtLvOs9uaj3XEl9EgNEamTgnQI858N6LZ75FU4DKChTHkVk15L0FWSxPxTO3X4fhNpLsCFtYPeDOFT3caYLeko/L02w0IlR1QUdV4le9LOzXg+CjF5JBLCtqJxKfLDyCLva3DbdNQoNfa/O2KucT1qbhtgtk2xxz4UtOnD5dZTfzH13Ccet6hXnI5DAAyZctTze/20THVT+babhYyNoKk3qPlrcyl0Xu7D6zKEDKF2NoBXDlv1ud97bulb1YoXbywh1TFc+lDKocuWNfxhbI/mq3dZQ5xHv6t9nduZXma7cn1mju/hOtl5w6230comMZWbvF0LsQp7lJMNarmvgC18nVptxmuwUr7zQRgGe2Dzci73HGz4uwY23Wf57/0rCpc8gSQIKhPNGle/8y7Usqwgj1og5VRlSiYeAusjQSUoHhuDrWEnrQ8+9/xF8TMoHvBtbZvOHw//CKrbZyjJS1lenPdNtc8TMPpE3iarODnPvldTPlH+ywlVRsflyvmIjRMlj9GbMtE6IJ42zMqzsULOMYepiuYo7ANw/nTi87UMylw7HeY8iDVq4gTXCIW4GB8psQA==" },
-    3: { question: "[Demo] What do you blow out on a birthday cake? (demo answer: candles)", lock: "v1.250000.kIW/wdFnxu/j173R69MB+w==.oowvMQ8JDiQ+ZgiO.7uIv1BYENEMb1Doc82kXKW9LHphd72otYjqRMXdLmB8V+yV6L0Jrlw9r6NIW0xMFPMOfGQXw7AlntqU2GXPtcodxHzchVfPpkxcNB4szkurIeNlLGpaiu5NYVOhHK32C4Je3IJw3+Hfvq32Wl4YZuT7uUClsn7Yc6/eh5NVUnv1p8QK80+cpHA5RxJ+meOmooZdMjkUVIVrb+9tpBdrYH9PgXqCGhCX7xIAvCVNxqCwfDSPSclaOg6UP3mdQe5vSEu9JnGkYZFmwtV/2aDtpudHS83WXcP813pxhstv15RPWzQvyENtIHvyguf806C3hHp0ikifz5U+Vtkmkaoz7hEis44HaHVbNfrBPPlfak/5bnIp6vg/bcnjLpquTdyjaOl+zp5COpWj5jhF6hVYbzi+e9I35bSozq8nTwQBkZOalsRkxiIdkj0e35A2YBTc+fItlx9ZiXhE4ETs4NpgqSrrV9TVoIFNnqi4BzK4+Jda0lxAJ80OB3y8KpeUdXhz16Bb4KGjD7wBGX6RI29m2Yz47gljQuaTmhtmOvilI5s5GCEaKcoul2W94iDSRLuapESrM3ui6mHmhYj9sFQNBpphZBvWiudFtQIbNR5ViX0lWK3LbqAaUatWwrBsmLCb4LM4tSqknktLKWyWFH2yFUDNCU2e4klT6XCjIKTrW37ekjILsLdEdiJzqItfvuM7nHY0VU0rVlOQBJFv5lo1quXmYOTutwAVVISZZrdcPcKF9yspN7NTaO0g5jUOmkL5SppyXXDCLVajr6Hn9EBFkYJDrRxEQmOFDZTcSFD9bhOk21rETgp5LH3owkdPClj7zY6HcuxoZmD3DO5MHTdPVB9Xf3bz8uGKvY7XEPzHjRqdbsdKve6Lhs0eIkepSqhe6T7O4s37TNPu70d+U6GgkiHHIlgWv3UJuawcSjWQpErInMEFbYCSaW7eskTlBhe4C39ome+t94hy4niFSQ4vcBY/AKd7E7Hhhk/mLxpuGZ3T1eEmFZSoe1hLFLyLqgjnhy9FvMh0vvpSzIDFPv7HTuDvYOKWzPYhvBOmKfaISCyBNtLIat0Gh1iwLtAgD1Y0NkrmLOpACbxQlfxfF+ueLmbhC43t+4SaXuHBRpKsO95/i3VQM7zWUEMvQwfr7MQ==" },
-    4: { question: "[Demo] What do you blow out on a birthday cake? (demo answer: candles)", lock: "v1.250000.+q9GlWqWJvYH+/+AMY+bYw==.1tecY+sPjuTKfl/Q.7uYwyXcd4qYLPl1hea4J65kauh3vjug6fKoWYnaU9ZcwybLV6v7bwchYQIeKcXuO11MWf2Xh6fG7bI1L4G7JzoaeF6gX0qZEpXaALcuu2AimtUziLYgPrbZNtXzluFN+R9QlhSNJyW70XrzfCQfF4zlBRw/TExoxrDuqYsZM5LY6mrRoorOKs4gE/PBswAeSOU4A7i3jA+b/XuUbStujbGC40gpEGwI4dKsmOGfei52fn+DYytb70K+zytrO8hqeLELHisrmXcw7ZsKWtC0FaBt1hkzRqmmR5CTVm0QMULxWX0DpYe4plNB7+zR00CbB+Spqcmv7WW3eZ9SG5dwWqgn6ofk2Q1nMDk6pAQkEN8dqkHwJnQGQlIPRBfa0v7/rl7n1RUUvUWKmHTyE4B+3it57S1rZJ/txm0HrKiW6dWDldCee0eTG0hgH5FpzFOc8Wmqui7qPGTvDf3+uGUqh7BAvAav62U2P+fh7GocuJYV8hge65RAqRgZcv3+ndshVHFIufkj68wnsJ9Iy/FyN2u6vqnzAf7+vW19JsAQmJbgGGr1WaLSyqEgN91XGZ6TUwSin//rQffDk34t3gbYeYv/qPpA0o+RUocqITU+Gz6skDYfFe5SXXm3PiRQEI5UlqQwwIfOTylre8IcwKa7RH2OfldRAWeRFhUESr9zT1IAf8GapHUO9ew9g4aMGrJr3oN11IwigIfHNEiplwlqbmXfdD55wiprPo1uf2Ez0qlJhvwpyhPhheoaCr6sP1P5irKjzN8LeefnVSwa6cYyJk0juW0XcF351iJEzEnjw1DWcJas2K3bLWgMCZFSFSczKs6wEvaIBV9uCF3Ef+jdsTLi50DMHfe+lfejts0W2udh2am6VcG6XVoXARFOGUl7hq12Oh1id+8JOXN+iZl27nNnwXrkhj6b1rUMCo8DeYIWktUT0noOz6JtxkZESaMwaRpG36tnk+dBT2Gjs5IIwwZujEjocolcSC3ynUQFhrZ08YMNwx2F8FRgBcDrh30zLMdeW6K9RDUYkqvEPYlJqmBUeQgDLHX7LVIg/A55BD7OPWBkTXFcLXdD0bslCwFknylifcSgYiJ3epa8yIpK1/3xm82lseibw+fwi7F8rPHl2VjdR5FMYDNQ3wQPMZg==" },
-    5: { question: "[Demo] What do you blow out on a birthday cake? (demo answer: candles)", lock: "v1.250000.0e+TU1OMVCL9by4zTp3QDg==.x2X8tEij1F2L5KAk.OexulR07T3gLVwxhpHBpjHoaocOgiNvx6qhfKZLnWuiBZTf/lfOaptagswyHNQ/E0jga/bjKK6aIp850I+NFiftdPqgHVAHxxOkDbjl7F1ynYW0F94R+0PvVA0h4szrA1d1/YReROokrabibpeAwDVcXWR6eYa9phuXTQpVnCzn+0zBxckImRtOQlnGRR0oB6CgltKgkWrm0AM1Xx9E4oWIdROSDLxZAdP1a7uVvd7cqbPKCiiVKj2qZfpl+QXZUro2dh3mwKD1j4ng/YZ5gAttEmzQWJNO3Mx5GvBPP0oyJxoPyEYkdLWbX1bjI/R1Sjh17tOw0Z3td0eMKhc6XM9V1DxjuZTixbMLuFR3A2JSDdaDkQWdcepTtXEXZlf8x09g2D0rLP+sowbeh56T7uBqKpiy1kPxpPX1hTfljD3/krJ/rUMl9n1n3VMi9bxsnC7h4tWhMVDvhWj/duk1TyRU/eCQSKDICVNgPwI4i0BauunOX665ijw/XOcjyc3riMNkLIqhQJOSX3wCjm3V7ro0YFeno1FxTFa+JQr0dTLWri+NTfchUYgMEiDoxLjyZ8LC9KmVKiXF17OSbr/Qx2k+dRiv/0uxV6q29kRvuSgpgWaz1+e7p1dvASE8wRg8hxI7LuK9zk2sndRFqSTHTpc06I/56lFlHDB6dJ0GnYWAeIg83c9doAuz7wdf8A/ENx4xcKxKxZ/4JFUepMKIGQ+TX4NZBI9V8mlFFnouMaaj0Gpjahdi5bNhuRkxyek2NHdw2ZBZWoglfTI1a+YTXGwHhlYr1PajsqYSmLWvuxufVLX0EZS32K6sDovRkVZ1MfdMjTLLARHfYDHd3wYk3iOs6tQW5dqKEUP+Dmq3P8Vb1Hu5Mbu2U0KczsJuxnvQA+o9vLfOo1UUyBWcAswOpK9yNgAre43hXrYvjUGM0uToAWuPS/ehjpGrCYB15re7v4WxrPUETeInMxC9/HlzzvWNQ+tNUuczUCVd18PcSOo/I+SaRmaduEyYsqSn/1RAvy03lQ4tRA6Ld7dbuGm9JV62urdFvtx4+lPKV1eIn3OjpH0+ffTNiJM6IxZzVMTkwG+5edzAZUC01YiDlBom6MAFZ/efZfuOfSwjSKi5aJDQk5nEF9NrJOEfy" },
-    6: { question: "[Demo] What do you blow out on a birthday cake? (demo answer: candles)", lock: "v1.250000.+0+DBTGxCtwBtzYlepT+yQ==.+IsslvxTgv1jRFqM.xHnGNmgOpO0nahm5SMO+jizd7oIhdLuKGp5FlCWFPA/eFTcQ7NbsAml0STig5JQn30mWAHv/Iw99RrzWoU6kPYw7jkcPgWtQzPHQCSsSUSTxk5s/aAThRu9XZjiOioPP4R+h5/pBftJk/cv57VwT/au7fpO9GGCVGYOoowuIREBz9rzDBA1j8ZZQRHLFKWPFC7RX9s2EzprWH6Pi9wp/q6eqymaiqnT6J+I+YZPX+ztM9a2G4aE7luRDqPMpLJZk97paqJvaAhxjBwobB0CauZS1p/+VzBrc22zOnfA+nnacSKbMZDyqcuj4zzWfwRBB/5p/jmvRbfprv1txQceYksYSLfIpNYtbUN8uKLoD5UzSoSr2bD2CvGwTNCvcUEaK4CExbjJypHs7lgE9gFeja1CTIB5wt+d1jl7cMl/Q0k8YTAHlkEv9iEzFbIBtOV+wTCKuPabEYz12bbrcQp0KE+ocCsldiJlwGQP6jOhAo91W3XnNe3b13JVvQpDGpKAssWpA2Sz+ANj7O7fhHkt680jxtyvVbxxQ3gVx6TZL7qsXZyCNI6hlkyZzBH0m4gXN0FMmFXdWV/AkLyZnpxPZeT3JvZFllWstd25onxqvrBQv9wMjb80dbSEz+yp21nDf81B73QEjOR1osQo9M8IQJsQZ+IGSgZGrGlIT+TWDuDtR1ldr9XzsSKQsJkQT7Rgn60Yu2WIjAH0+TmkCIoYWrMZTaJWZ/Uz7grRuKvVIxnL0QTKBBVxk+Y444rhVLv3ouZ+ibheXV0XB/sWurhOeaSgoX3r1cFRDDo/UMi+7+CBb7bkEmEiRPpI/pUFDI3Idns5pIhdkrfJUf0FsPcVfIGg1hZiVxcy3X3bSVK3QTeRiiMYDmyX8CRxYhQinYEvPQqz0yCX0QdGiTMg3aFXKkMBOgkjLGp26yccr180i5GRIjd/qXeQJkQRSKvO2N0dBRtEqObwszh1SOKjXCHEYQ6ZhXmzyMpE9fSJlQ7q9zPkwmzdziS3u4GJZU3U17Cu1bp7iTfHIZhNbG1yKBBR0PfguwsPLP/LR+HgutC0+nilIiR6g4Zd0G/Jsy7pTSCdfDn/wbQ523cAiHU1cEVr8r8c7ioW1Fj/BSx/0eQ51+5mNxWlulFmZ3bAyJANgwg==" },
-    7: { question: "[Demo] What do you blow out on a birthday cake? (demo answer: candles)", lock: "v1.250000.d2eZxRa4E2FnIclf0Kfdlw==.9e7p9Bkwd2bMaVRh.NRz/aAaLS/8Z6UXNdDG9yjcspJwGs7mLY1yHjqF05aetGJFT26rwwX4h+WbLfrJODggpSeK+awIR60dltdERBHOEncEXhkNuQGG1ByJw60+vf7mBo1IQi01tm1Vbbj2MwtYcYDFcuJqQ3d/oUxjV75W1e9V+UHaarwYT4H8ktbT75pZ9C9y3hegbkGqiuT8iwVd+/XARSvSuaINHfAywWB96wrijKdEV5Otn/zdsx0WohmrBjg516fZK4sCVidFDSqv9a1um3BypYQJeLNrB2Cyl9tZaObiKeE62bQY7+OVOVqnQKbMicfmPk4hCn2JW6+Y3DtXAbtU5O6HjnNe62IMyDeKIKHx12vFNq/TFF99fpVdZ08mebOGI16x+PSTJ2eFRophPcxcuARwRU6f3nKa6VJieFheCmSkhdIkHq5SYayNY3yLe7zojY6iNlGc1p/J6X4WMLIxealKInAdEFJdl4qOHndPg1g+GQX41y1kxJhlPoABDozzSMD9xEyDYISGUTLMSmDlusJ8532nzucFLuPubkEMy1VP9VUBZY7TsBCyU4mXtBf8eS0zxlAUJE3WCO19icKnCRzSUr2oUTVTF3XDWpMFiZsALHNTNOyxJiKmhiQIxOUanv30l1GlZKGc4hYsibTGQGU/GB9eUF3dC9WohBFVjsGHr6YdiOWuIVCTf+K+aPHrw6ZrdCoPDj4OqoB3iXUCdTljpWEixA5zCUHk++IlNOLJ9CVZlZoe0W+YIznKBkv3Ilpafy2iJy26f6gvCrpauhsV7NGtx+sFc9BpoohP9ZRV1BdoQ87P5BjTFbS4LB8G/PT8pmgujiG9hbnY5d2YBNLchsy7oAs498xw4+yyk2ndTDZj9xt4x9HUeQq/RzPHqTGI0ADrC+cu7/ckdn0mzJgOBdt8S7MMSDOoDmCqybkgVUqGQDo73VCP9dcIFnuiEpeM4TotnAmxuqTZUfCzJ9+EcTsvxHWBB/MPQSbZABnv5G05bjuJ6I5K032R8w6jAOaLDAAhIf+FaAwz3co/4g0GmKrNeYmqXxKn2JXARlUy3qepRAxtiV2dMRIhAL03+LwM+8NaU2d9bRxovaQZiWpUQAe2Cgs24T48Jp0YSVY9zCtLbx0fc92UOfOQSLWyMAD3JIA==" },
-    bonus: { question: "[Demo] What do you blow out on a birthday cake? (demo answer: candles)", lock: "v1.250000.28s5GIcmrYK82DoqHlpuUA==./cVM4wLAY7qC9iPn.VRGiAa7/KNAcX//SdAAHsc4IfXEKGoZ3/IMKEO+PZBY3CFWehzOxFRO8hoiF1uREAxIFwRQ9OCx2J8qsEj+xdwUknkNvHpmVAbVKa71YiDIaPiAsLfox3kUSKQEWT0syRkilLNAyy6Ea72lpCOqQOwHKq9SA2M3lb78cLRIxsDHw5HiZuMOiHtP8QEUXPK+7wY+WDpqPoVYeB6xLHCUdUSXBiWGdOvd8yRM+Utp2UffEMpj3yQtB8WhDJiTeaOfnOP/qRTTeRCbvnlGE0EQCXPnwUo0st2rjQoAehp49ZmqF6NNFk2KTUmdYNk2QI3FJDcvDqYH+qO4/dP8dee6SCl1P8GN+S0LG+eEbhoFBTfrqOYwT4S9vqPAQqx/llkdiok37pUHVWgjjiSYw5izivex7DnMccb+BVDQJo9UNV+kZv9nRQhgBwMqg68XLMkm5jFdWbwQgdyCzmImEPXqpez8zCnuUK0PN45OgyD5JLZpRDoPEhVFQkXOjo5G6o1mSmVgXHvXic9CHxdNLXpaPrsfahI8w5PUazz8ew7u78CMdxshxI8HdkNOCMdJo5AiCVAJnpCFKBF6OiPs94gw3I+ikiK9lCrKESujtFYnwcBzVept0QR8NJe75YG4GdvoLaANgBpd1Hq8QXcIw4fZKLpgipSjEEfAmDc1+4iVUV4K6OoZ1P9yvWi3/UcnLkdE8aop5Xz4wTbHbknTjMNLA7FdK6P4XeHB+WMoW01/j6OnEciNiDBV55mRMQebVNuWHYsYj4MWGcsEgS83iQDpuKRqobvURN7O1p52mKN+Ytp2jjd/OgcBXOJLC1YJAA8yfz2TXouB9PBKyadKjS3KOUsQZ/c/25Yo3q8cnL4xdp0+hw+Xkee1yM8/lKWcmFL5O6Q41NAmpc8luj3rri3Tcp1C6xoUB14MaU5vm5J3ZvdIOG1v5lSGbLnMqnZerPC/L3ROXRUXH2/Dgfqme+mEDd2ZGuPKgg6mL7OaI6uogPhtEpyyBVSkIJGPbyhNsskHBs5PuWwQsOeL/U/Fw1+kVNzZLA25VdJ2lnwZXqCFY6KJVcl34ABU+GzeU1LcV+z5zGpcWsFXfIcBWISCbtkG65EKcTofxm4pup9W6kK3ck3FLaPLSbw/Lchk+SdpXtsh+WOXy2ufb" }
+    1: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.GZZGEpoVkpVPZCDR5+EraA==.0TxYKdAa0j3jOTyJ.L79wAguIF1bn2gTSS4SN5SBotNvQHN+0gWa5FP0L4Nn3m26NX8IUdsF0G7zG+Ubtzm05JB2//BXsOi6TQ4oPzx/7J/iOMMYynXQBEUpOqb7YrQ7Qzdlw10xesQizZapccIpsrg6/fT/8FMXIR+JVw36R/PuTfB48/Z/RsWjsEiytlK75hqI5YIWpymtpks2pU74DDqxg7RQGwCUJSPUKzF4GWTcRDvzSnpY65mam06KwjbT4LG2ZswBRuyuSMAIDj2tqwt+hfKJ5MxAjXr613kaTcjvsCR03UjflTkf7fmU4iwG7MBfOtZIfAmYv8JxILp236uW6h9jW380yKRMhs5l9FgvIYIxcbVmANE2/phFH+R2TfFJch+DPrjSJ4IXWEKcwFK9yadFlNXrwd7NskcI9g3kHp6i/zKMB4dVIkFhB6XCidqQlEHdFS7lvTWyG1zGuJ1pIvVqWuQZRMvxRxF3nbieH0076mSwyVvGKiFubz4n++fUUzwh26e2ocEAXV/sSN8oZKq+ngqXDVtjsFq+09cvnQybw/4Q+GhfgF+Qxj+yGYTUWnmNQ418o5/ppLtcuGUpDoZpEDS4na8mmJG1EZnW7V/q3qpuyo+wJVjcnByZLm77oc86Pb9ATacZ5Qa14cTNOQVY4Zxx7jz0NWMq6fMKR0qbnIYqrSNP7ci7sb+iKyRjXjs+yjPMPYnf4ouOQ23P7mq1m4PhWpO62K2LT9sWOGzmDD/c3nvVGaaxee+ixZrxSSIROxbmK9MCmNUd65eLsqBA/IZ++GcY/OJkysk+lJEJI6EVxq3fttDTcsXGQyLxbeSwsq4Rn4WqC60MkCepAoz5UOaZSs9fJOk7CyhznOdPImGdxyGDGcpNh+mZIVb8Dt6sl3/jeR3iNPT8c2YXHOa0m6nOq7IRa5PvbXavLQGAmWnmxFugEvCppH12r5C6qJF5G7tOwb4zlxnjPvKMf7YuLJ3SMgaGo7j44g/pVmLfLPsAw+lvrxOF+Fv52o3j4wQHLiOROT40ye7ydSTeQKBc9ujEvZ2WpuMjY/EVCyr+L6Y0MFKYpR7OpMl0E83LNWPFTjc2bLHodyRYb5THEFgN6KC+3rL8SsMxvI+lkA4yAuZGTi12RsOAXRnDdfjNTRMgO" },
+    2: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.wUBAg5iTdMp5DpLw28tLTg==.GpgytbTt8uIaFwB5.RcxKer2k4VlScDL+J0ehHT3789wnfVMfNJFBL8iPdn8dolU6I0wto1uxocjOE6y9z5F2eXtF/VrUBpnpGaHl+5Ey+3V+Gf7nrWc+H3XSXKCHjthbQjSrtB7l/MIxtyFMzjpNQ3/DH0a2BzW6bSO1JSrTWWVNtNrvIX7MxQiMP/tvUN7MXgmrGhS53xcDpWgHYEug8BOJ78l9yA/CSA27m8Vo4PMz5wBw5HJgMg2p6WD097MMqMt7mUIUg2QCFrClvhSI6KMDwIfH4s4/ktTwPRmoQX6LIv+b6IH2lkHo/Yt6gJf8JUDR2aQWI0neNDJlel1uiPr8TCdQmgt8q0/FaCGF0bDITrqdoLCqvIYMZc40O6yk5MVLOcePFYLC/bd5MqZcX+tCYq9702UFQTalZoWxbsPnehXrJYJNVuFPQ1msWkZuFzm/MUhuON86gXU1als1gJpcqeE1GGGhuaSg/f8q02ryOo62HvprWcVK9PJnRPcgF0d7iJcp23c/gyf0gsw/ouz8fog0U1o8K5vcxsbaKA57ajuxfyjSSgL8I/U4gPah0ZayKk2zvOtLvOs9uaj3XEl9EgNEamTgnQI858N6LZ75FU4DKChTHkVk15L0FWSxPxTO3X4fhNpLsCFtYPeDOFT3caYLeko/L02w0IlR1QUdV4le9LOzXg+CjF5JBLCtqJxKfLDyCLva3DbdNQoNfa/O2KucT1qbhtgtk2xxz4UtOnD5dZTfzH13Ccet6hXnI5DAAyZctTze/20THVT+babhYyNoKk3qPlrcyl0Xu7D6zKEDKF2NoBXDlv1ud97bulb1YoXbywh1TFc+lDKocuWNfxhbI/mq3dZQ5xHv6t9nduZXma7cn1mju/hOtl5w6230comMZWbvF0LsQp7lJMNarmvgC18nVptxmuwUr7zQRgGe2Dzci73HGz4uwY23Wf57/0rCpc8gSQIKhPNGle/8y7Usqwgj1og5VRlSiYeAusjQSUoHhuDrWEnrQ8+9/xF8TMoHvBtbZvOHw//CKrbZyjJS1lenPdNtc8TMPpE3iarODnPvldTPlH+ywlVRsflyvmIjRMlj9GbMtE6IJ42zMqzsULOMYepiuYo7ANw/nTi87UMylw7HeY8iDVq4gTXCIW4GB8psQA==" },
+    3: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.kIW/wdFnxu/j173R69MB+w==.oowvMQ8JDiQ+ZgiO.7uIv1BYENEMb1Doc82kXKW9LHphd72otYjqRMXdLmB8V+yV6L0Jrlw9r6NIW0xMFPMOfGQXw7AlntqU2GXPtcodxHzchVfPpkxcNB4szkurIeNlLGpaiu5NYVOhHK32C4Je3IJw3+Hfvq32Wl4YZuT7uUClsn7Yc6/eh5NVUnv1p8QK80+cpHA5RxJ+meOmooZdMjkUVIVrb+9tpBdrYH9PgXqCGhCX7xIAvCVNxqCwfDSPSclaOg6UP3mdQe5vSEu9JnGkYZFmwtV/2aDtpudHS83WXcP813pxhstv15RPWzQvyENtIHvyguf806C3hHp0ikifz5U+Vtkmkaoz7hEis44HaHVbNfrBPPlfak/5bnIp6vg/bcnjLpquTdyjaOl+zp5COpWj5jhF6hVYbzi+e9I35bSozq8nTwQBkZOalsRkxiIdkj0e35A2YBTc+fItlx9ZiXhE4ETs4NpgqSrrV9TVoIFNnqi4BzK4+Jda0lxAJ80OB3y8KpeUdXhz16Bb4KGjD7wBGX6RI29m2Yz47gljQuaTmhtmOvilI5s5GCEaKcoul2W94iDSRLuapESrM3ui6mHmhYj9sFQNBpphZBvWiudFtQIbNR5ViX0lWK3LbqAaUatWwrBsmLCb4LM4tSqknktLKWyWFH2yFUDNCU2e4klT6XCjIKTrW37ekjILsLdEdiJzqItfvuM7nHY0VU0rVlOQBJFv5lo1quXmYOTutwAVVISZZrdcPcKF9yspN7NTaO0g5jUOmkL5SppyXXDCLVajr6Hn9EBFkYJDrRxEQmOFDZTcSFD9bhOk21rETgp5LH3owkdPClj7zY6HcuxoZmD3DO5MHTdPVB9Xf3bz8uGKvY7XEPzHjRqdbsdKve6Lhs0eIkepSqhe6T7O4s37TNPu70d+U6GgkiHHIlgWv3UJuawcSjWQpErInMEFbYCSaW7eskTlBhe4C39ome+t94hy4niFSQ4vcBY/AKd7E7Hhhk/mLxpuGZ3T1eEmFZSoe1hLFLyLqgjnhy9FvMh0vvpSzIDFPv7HTuDvYOKWzPYhvBOmKfaISCyBNtLIat0Gh1iwLtAgD1Y0NkrmLOpACbxQlfxfF+ueLmbhC43t+4SaXuHBRpKsO95/i3VQM7zWUEMvQwfr7MQ==" },
+    4: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.+q9GlWqWJvYH+/+AMY+bYw==.1tecY+sPjuTKfl/Q.7uYwyXcd4qYLPl1hea4J65kauh3vjug6fKoWYnaU9ZcwybLV6v7bwchYQIeKcXuO11MWf2Xh6fG7bI1L4G7JzoaeF6gX0qZEpXaALcuu2AimtUziLYgPrbZNtXzluFN+R9QlhSNJyW70XrzfCQfF4zlBRw/TExoxrDuqYsZM5LY6mrRoorOKs4gE/PBswAeSOU4A7i3jA+b/XuUbStujbGC40gpEGwI4dKsmOGfei52fn+DYytb70K+zytrO8hqeLELHisrmXcw7ZsKWtC0FaBt1hkzRqmmR5CTVm0QMULxWX0DpYe4plNB7+zR00CbB+Spqcmv7WW3eZ9SG5dwWqgn6ofk2Q1nMDk6pAQkEN8dqkHwJnQGQlIPRBfa0v7/rl7n1RUUvUWKmHTyE4B+3it57S1rZJ/txm0HrKiW6dWDldCee0eTG0hgH5FpzFOc8Wmqui7qPGTvDf3+uGUqh7BAvAav62U2P+fh7GocuJYV8hge65RAqRgZcv3+ndshVHFIufkj68wnsJ9Iy/FyN2u6vqnzAf7+vW19JsAQmJbgGGr1WaLSyqEgN91XGZ6TUwSin//rQffDk34t3gbYeYv/qPpA0o+RUocqITU+Gz6skDYfFe5SXXm3PiRQEI5UlqQwwIfOTylre8IcwKa7RH2OfldRAWeRFhUESr9zT1IAf8GapHUO9ew9g4aMGrJr3oN11IwigIfHNEiplwlqbmXfdD55wiprPo1uf2Ez0qlJhvwpyhPhheoaCr6sP1P5irKjzN8LeefnVSwa6cYyJk0juW0XcF351iJEzEnjw1DWcJas2K3bLWgMCZFSFSczKs6wEvaIBV9uCF3Ef+jdsTLi50DMHfe+lfejts0W2udh2am6VcG6XVoXARFOGUl7hq12Oh1id+8JOXN+iZl27nNnwXrkhj6b1rUMCo8DeYIWktUT0noOz6JtxkZESaMwaRpG36tnk+dBT2Gjs5IIwwZujEjocolcSC3ynUQFhrZ08YMNwx2F8FRgBcDrh30zLMdeW6K9RDUYkqvEPYlJqmBUeQgDLHX7LVIg/A55BD7OPWBkTXFcLXdD0bslCwFknylifcSgYiJ3epa8yIpK1/3xm82lseibw+fwi7F8rPHl2VjdR5FMYDNQ3wQPMZg==" },
+    5: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.0e+TU1OMVCL9by4zTp3QDg==.x2X8tEij1F2L5KAk.OexulR07T3gLVwxhpHBpjHoaocOgiNvx6qhfKZLnWuiBZTf/lfOaptagswyHNQ/E0jga/bjKK6aIp850I+NFiftdPqgHVAHxxOkDbjl7F1ynYW0F94R+0PvVA0h4szrA1d1/YReROokrabibpeAwDVcXWR6eYa9phuXTQpVnCzn+0zBxckImRtOQlnGRR0oB6CgltKgkWrm0AM1Xx9E4oWIdROSDLxZAdP1a7uVvd7cqbPKCiiVKj2qZfpl+QXZUro2dh3mwKD1j4ng/YZ5gAttEmzQWJNO3Mx5GvBPP0oyJxoPyEYkdLWbX1bjI/R1Sjh17tOw0Z3td0eMKhc6XM9V1DxjuZTixbMLuFR3A2JSDdaDkQWdcepTtXEXZlf8x09g2D0rLP+sowbeh56T7uBqKpiy1kPxpPX1hTfljD3/krJ/rUMl9n1n3VMi9bxsnC7h4tWhMVDvhWj/duk1TyRU/eCQSKDICVNgPwI4i0BauunOX665ijw/XOcjyc3riMNkLIqhQJOSX3wCjm3V7ro0YFeno1FxTFa+JQr0dTLWri+NTfchUYgMEiDoxLjyZ8LC9KmVKiXF17OSbr/Qx2k+dRiv/0uxV6q29kRvuSgpgWaz1+e7p1dvASE8wRg8hxI7LuK9zk2sndRFqSTHTpc06I/56lFlHDB6dJ0GnYWAeIg83c9doAuz7wdf8A/ENx4xcKxKxZ/4JFUepMKIGQ+TX4NZBI9V8mlFFnouMaaj0Gpjahdi5bNhuRkxyek2NHdw2ZBZWoglfTI1a+YTXGwHhlYr1PajsqYSmLWvuxufVLX0EZS32K6sDovRkVZ1MfdMjTLLARHfYDHd3wYk3iOs6tQW5dqKEUP+Dmq3P8Vb1Hu5Mbu2U0KczsJuxnvQA+o9vLfOo1UUyBWcAswOpK9yNgAre43hXrYvjUGM0uToAWuPS/ehjpGrCYB15re7v4WxrPUETeInMxC9/HlzzvWNQ+tNUuczUCVd18PcSOo/I+SaRmaduEyYsqSn/1RAvy03lQ4tRA6Ld7dbuGm9JV62urdFvtx4+lPKV1eIn3OjpH0+ffTNiJM6IxZzVMTkwG+5edzAZUC01YiDlBom6MAFZ/efZfuOfSwjSKi5aJDQk5nEF9NrJOEfy" },
+    6: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.+0+DBTGxCtwBtzYlepT+yQ==.+IsslvxTgv1jRFqM.xHnGNmgOpO0nahm5SMO+jizd7oIhdLuKGp5FlCWFPA/eFTcQ7NbsAml0STig5JQn30mWAHv/Iw99RrzWoU6kPYw7jkcPgWtQzPHQCSsSUSTxk5s/aAThRu9XZjiOioPP4R+h5/pBftJk/cv57VwT/au7fpO9GGCVGYOoowuIREBz9rzDBA1j8ZZQRHLFKWPFC7RX9s2EzprWH6Pi9wp/q6eqymaiqnT6J+I+YZPX+ztM9a2G4aE7luRDqPMpLJZk97paqJvaAhxjBwobB0CauZS1p/+VzBrc22zOnfA+nnacSKbMZDyqcuj4zzWfwRBB/5p/jmvRbfprv1txQceYksYSLfIpNYtbUN8uKLoD5UzSoSr2bD2CvGwTNCvcUEaK4CExbjJypHs7lgE9gFeja1CTIB5wt+d1jl7cMl/Q0k8YTAHlkEv9iEzFbIBtOV+wTCKuPabEYz12bbrcQp0KE+ocCsldiJlwGQP6jOhAo91W3XnNe3b13JVvQpDGpKAssWpA2Sz+ANj7O7fhHkt680jxtyvVbxxQ3gVx6TZL7qsXZyCNI6hlkyZzBH0m4gXN0FMmFXdWV/AkLyZnpxPZeT3JvZFllWstd25onxqvrBQv9wMjb80dbSEz+yp21nDf81B73QEjOR1osQo9M8IQJsQZ+IGSgZGrGlIT+TWDuDtR1ldr9XzsSKQsJkQT7Rgn60Yu2WIjAH0+TmkCIoYWrMZTaJWZ/Uz7grRuKvVIxnL0QTKBBVxk+Y444rhVLv3ouZ+ibheXV0XB/sWurhOeaSgoX3r1cFRDDo/UMi+7+CBb7bkEmEiRPpI/pUFDI3Idns5pIhdkrfJUf0FsPcVfIGg1hZiVxcy3X3bSVK3QTeRiiMYDmyX8CRxYhQinYEvPQqz0yCX0QdGiTMg3aFXKkMBOgkjLGp26yccr180i5GRIjd/qXeQJkQRSKvO2N0dBRtEqObwszh1SOKjXCHEYQ6ZhXmzyMpE9fSJlQ7q9zPkwmzdziS3u4GJZU3U17Cu1bp7iTfHIZhNbG1yKBBR0PfguwsPLP/LR+HgutC0+nilIiR6g4Zd0G/Jsy7pTSCdfDn/wbQ523cAiHU1cEVr8r8c7ioW1Fj/BSx/0eQ51+5mNxWlulFmZ3bAyJANgwg==" },
+    7: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.d2eZxRa4E2FnIclf0Kfdlw==.9e7p9Bkwd2bMaVRh.NRz/aAaLS/8Z6UXNdDG9yjcspJwGs7mLY1yHjqF05aetGJFT26rwwX4h+WbLfrJODggpSeK+awIR60dltdERBHOEncEXhkNuQGG1ByJw60+vf7mBo1IQi01tm1Vbbj2MwtYcYDFcuJqQ3d/oUxjV75W1e9V+UHaarwYT4H8ktbT75pZ9C9y3hegbkGqiuT8iwVd+/XARSvSuaINHfAywWB96wrijKdEV5Otn/zdsx0WohmrBjg516fZK4sCVidFDSqv9a1um3BypYQJeLNrB2Cyl9tZaObiKeE62bQY7+OVOVqnQKbMicfmPk4hCn2JW6+Y3DtXAbtU5O6HjnNe62IMyDeKIKHx12vFNq/TFF99fpVdZ08mebOGI16x+PSTJ2eFRophPcxcuARwRU6f3nKa6VJieFheCmSkhdIkHq5SYayNY3yLe7zojY6iNlGc1p/J6X4WMLIxealKInAdEFJdl4qOHndPg1g+GQX41y1kxJhlPoABDozzSMD9xEyDYISGUTLMSmDlusJ8532nzucFLuPubkEMy1VP9VUBZY7TsBCyU4mXtBf8eS0zxlAUJE3WCO19icKnCRzSUr2oUTVTF3XDWpMFiZsALHNTNOyxJiKmhiQIxOUanv30l1GlZKGc4hYsibTGQGU/GB9eUF3dC9WohBFVjsGHr6YdiOWuIVCTf+K+aPHrw6ZrdCoPDj4OqoB3iXUCdTljpWEixA5zCUHk++IlNOLJ9CVZlZoe0W+YIznKBkv3Ilpafy2iJy26f6gvCrpauhsV7NGtx+sFc9BpoohP9ZRV1BdoQ87P5BjTFbS4LB8G/PT8pmgujiG9hbnY5d2YBNLchsy7oAs498xw4+yyk2ndTDZj9xt4x9HUeQq/RzPHqTGI0ADrC+cu7/ckdn0mzJgOBdt8S7MMSDOoDmCqybkgVUqGQDo73VCP9dcIFnuiEpeM4TotnAmxuqTZUfCzJ9+EcTsvxHWBB/MPQSbZABnv5G05bjuJ6I5K032R8w6jAOaLDAAhIf+FaAwz3co/4g0GmKrNeYmqXxKn2JXARlUy3qepRAxtiV2dMRIhAL03+LwM+8NaU2d9bRxovaQZiWpUQAe2Cgs24T48Jp0YSVY9zCtLbx0fc92UOfOQSLWyMAD3JIA==" },
+    bonus: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.28s5GIcmrYK82DoqHlpuUA==./cVM4wLAY7qC9iPn.VRGiAa7/KNAcX//SdAAHsc4IfXEKGoZ3/IMKEO+PZBY3CFWehzOxFRO8hoiF1uREAxIFwRQ9OCx2J8qsEj+xdwUknkNvHpmVAbVKa71YiDIaPiAsLfox3kUSKQEWT0syRkilLNAyy6Ea72lpCOqQOwHKq9SA2M3lb78cLRIxsDHw5HiZuMOiHtP8QEUXPK+7wY+WDpqPoVYeB6xLHCUdUSXBiWGdOvd8yRM+Utp2UffEMpj3yQtB8WhDJiTeaOfnOP/qRTTeRCbvnlGE0EQCXPnwUo0st2rjQoAehp49ZmqF6NNFk2KTUmdYNk2QI3FJDcvDqYH+qO4/dP8dee6SCl1P8GN+S0LG+eEbhoFBTfrqOYwT4S9vqPAQqx/llkdiok37pUHVWgjjiSYw5izivex7DnMccb+BVDQJo9UNV+kZv9nRQhgBwMqg68XLMkm5jFdWbwQgdyCzmImEPXqpez8zCnuUK0PN45OgyD5JLZpRDoPEhVFQkXOjo5G6o1mSmVgXHvXic9CHxdNLXpaPrsfahI8w5PUazz8ew7u78CMdxshxI8HdkNOCMdJo5AiCVAJnpCFKBF6OiPs94gw3I+ikiK9lCrKESujtFYnwcBzVept0QR8NJe75YG4GdvoLaANgBpd1Hq8QXcIw4fZKLpgipSjEEfAmDc1+4iVUV4K6OoZ1P9yvWi3/UcnLkdE8aop5Xz4wTbHbknTjMNLA7FdK6P4XeHB+WMoW01/j6OnEciNiDBV55mRMQebVNuWHYsYj4MWGcsEgS83iQDpuKRqobvURN7O1p52mKN+Ytp2jjd/OgcBXOJLC1YJAA8yfz2TXouB9PBKyadKjS3KOUsQZ/c/25Yo3q8cnL4xdp0+hw+Xkee1yM8/lKWcmFL5O6Q41NAmpc8luj3rri3Tcp1C6xoUB14MaU5vm5J3ZvdIOG1v5lSGbLnMqnZerPC/L3ROXRUXH2/Dgfqme+mEDd2ZGuPKgg6mL7OaI6uogPhtEpyyBVSkIJGPbyhNsskHBs5PuWwQsOeL/U/Fw1+kVNzZLA25VdJ2lnwZXqCFY6KJVcl34ABU+GzeU1LcV+z5zGpcWsFXfIcBWISCbtkG65EKcTofxm4pup9W6kK3ck3FLaPLSbw/Lchk+SdpXtsh+WOXy2ufb" }
   },
 
   // How long the apparent ending lingers before "one more thing" appears (ms).
@@ -524,7 +536,6 @@ function sum(a) { return a.reduce(function (x, y) { return x + y; }, 0); }
 var POOL = sum(CONFIG.rewards);
 if (CONFIG.rewards.length !== N) console.warn("CONFIG.rewards should have " + N + " values.");
 for (var r = 1; r < CONFIG.rewards.length; r++) if (CONFIG.rewards[r] <= CONFIG.rewards[r - 1]) console.warn("CONFIG.rewards should increase every stage.");
-if (POOL + CONFIG.bonusAmount !== 1000) console.warn("Stage gifts + bonus = " + (POOL + CONFIG.bonusAmount) + ", not 1000.");
 if (CONFIG.bonusAmount <= Math.max.apply(null, CONFIG.rewards)) console.warn("bonusAmount should be the biggest gift.");
 var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -541,10 +552,10 @@ var S = (function () {
   if (!s || s.v !== 3 || !Array.isArray(s.log)) return f;
   for (var key in f) if (!(key in s)) s[key] = f[key];
   s.i = Math.min(Math.max(0, s.i | 0), N - 1);
-  if (["intro", "stage", "reward", "done", "egg", "bday"].indexOf(s.phase) < 0) s.phase = "intro";
+  if (["intro", "stage", "reward", "done", "egg", "bday", "fin"].indexOf(s.phase) < 0) s.phase = "intro";
   if (s.phase === "reward" && !s.log[s.i]) s.phase = "stage";
-  if ((s.phase === "done" || s.phase === "egg" || s.phase === "bday") && s.log.length < N) s.phase = "stage";
-  if (s.phase === "bday" && !s.bonus) s.phase = "egg";
+  if ((s.phase === "done" || s.phase === "egg" || s.phase === "bday" || s.phase === "fin") && s.log.length < N) s.phase = "stage";
+  if ((s.phase === "bday" || s.phase === "fin") && !s.bonus) s.phase = "egg";
   return s;
 })();
 function save() { store.set(S); }
@@ -651,7 +662,7 @@ function openLock(payload, answer) {
 
 /* ---------- gift panel ---------- */
 function giftKey(k) { return String(k); }
-function soFar(k) { return k === "bonus" ? POOL + CONFIG.bonusAmount : sum(CONFIG.rewards.slice(0, +k)); }
+function soFar(k) { return k === "bonus" ? POOL : sum(CONFIG.rewards.slice(0, +k - 1)); }
 function mountGift(el, k, label, onOpened) {
   var g = CONFIG.gifts[k] || {}, key = giftKey(k), opened = S.opened[key];
   el.hidden = false;
@@ -662,7 +673,7 @@ function mountGift(el, k, label, onOpened) {
       : '<img class="qr-img" src="' + esc(opened) + '" alt="Gift QR code: ' + esc(label) + '">';
     el.innerHTML = '<div class="qr-card">' + img +
       '<p class="secret"><span aria-hidden="true">🤫</span>This QR code is just for you. Please don’t share it with anyone else.</p>' +
-      '<p class="so-far"><span>' + (k === "bonus" ? "Total today" : "Collected so far") + '</span><span>' + money(soFar(k)) + '</span></p></div>';
+      '<p class="so-far"><span>Collected so far</span><span>' + money(soFar(k)) + '</span></p></div>';
     if (onOpened) onOpened();
     return;
   }
@@ -691,12 +702,12 @@ function mountGift(el, k, label, onOpened) {
 }
 
 /* ---------- rendering ---------- */
-var SCREENS = { intro: "s-intro", stage: "s-stage", reward: "s-reward", done: "s-done", egg: "s-egg", bday: "s-bday" };
+var SCREENS = { intro: "s-intro", stage: "s-stage", reward: "s-reward", done: "s-done", egg: "s-egg", bday: "s-bday", fin: "s-fin" };
 var whisperTimer = null;
 
 function show(phase, focusId) {
   for (var p in SCREENS) $(SCREENS[p]).hidden = p !== phase;
-  document.body.classList.toggle("party", phase === "bday");
+  document.body.classList.toggle("party", phase === "bday" || phase === "fin");
   var hud = phase === "stage" || phase === "reward" || phase === "done";
   $("hud").hidden = !hud;
   if (hud) renderHud();
@@ -783,13 +794,20 @@ function renderBday(celebrate, focus) {
   var amt = $("bd-amt");
   $("bd-pool").textContent = money(POOL);
   $("bd-open").hidden = !!S.rv.bonus;
-  if (S.rv.bonus) mountGift($("bd-gift"), "bonus", "Birthday bonus · " + money(CONFIG.bonusAmount)); else $("bd-gift").hidden = true;
+  $("bd-finish").hidden = true;
+  if (S.rv.bonus) mountGift($("bd-gift"), "bonus", "Birthday bonus · " + money(CONFIG.bonusAmount), function () { $("bd-finish").hidden = false; }); else $("bd-gift").hidden = true;
   var said = [S.egg.b, S.egg.c].filter(Boolean);
   $("bd-echo").textContent = said.length ? "Your review: “" + said.join(" / ") + "”. Noted. Bonus unchanged. 😌" : "";
-  $("bd-grand").textContent = "Total today: " + money(POOL + CONFIG.bonusAmount) + " 🎈";
   show("bday", focus ? "bd-title" : null);
   if (celebrate && !reduced) { countUp(amt, CONFIG.bonusAmount, 1500); confetti(90); balloons(9); }
   else amt.textContent = money(CONFIG.bonusAmount);
+}
+
+function renderFin(celebrate, focus) {
+  var amt = $("fn-amt"), total = POOL + CONFIG.bonusAmount;
+  show("fin", focus ? "fn-title" : null);
+  if (celebrate && !reduced) { countUp(amt, total, 1600); confetti(110); balloons(12); }
+  else amt.textContent = money(total);
 }
 
 function render(focus) {
@@ -799,6 +817,7 @@ function render(focus) {
   else if (S.phase === "done") renderDone(focus);
   else if (S.phase === "egg") renderEgg(focus);
   else if (S.phase === "bday") renderBday(false, focus);
+  else if (S.phase === "fin") renderFin(false, focus);
   else show("intro", null);
   if (focus) window.scrollTo(0, 0);
 }
@@ -931,6 +950,10 @@ $("eg-send").addEventListener("click", function () {
 $("bd-open").addEventListener("click", function () {
   S.rv.bonus = true; save(); renderBday(false, false);
   $("bd-gift").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+});
+
+$("bd-finish").addEventListener("click", function () {
+  S.phase = "fin"; save(); window.scrollTo(0, 0); renderFin(true, true);
 });
 
 var armT = null;
