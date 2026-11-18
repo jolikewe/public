@@ -299,15 +299,40 @@ body.party .aurora{display:none}
 .poptext{position:fixed;z-index:41;font-weight:900;font-size:24px;color:var(--pink);pointer-events:none;text-shadow:0 2px 0 #fff;animation:poptext .9s ease-out forwards}
 @keyframes poptext{from{opacity:0;transform:translate(-50%,-30%) scale(.5)}30%{opacity:1;transform:translate(-50%,-90%) scale(1.15)}to{opacity:0;transform:translate(-50%,-170%) scale(1)}}
 .tap-hint{font-size:12px;font-weight:700;color:var(--soft);margin:-8px 0 16px}
+
+/* ---------- v5: home, progress, review ---------- */
+.home-btn{background:none;border:0;font-weight:800;font-size:14px;padding:6px 10px 6px 0;min-height:36px;color:var(--ink)}
+.home-btn:hover{color:var(--pink)}
+.home-fab{position:fixed;top:calc(10px + env(safe-area-inset-top));left:12px;z-index:15;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border:1px solid #fff;border-radius:99px;padding:8px 14px;font-weight:800;font-size:14px;box-shadow:var(--shadow);min-height:40px;color:var(--ink)}
+.dots .dot{border:0;padding:0;position:relative;cursor:pointer}
+.dots .dot::before{content:"";position:absolute;inset:-9px 0}
+.dots .dot:disabled{cursor:default}
+.dots .dot.view{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--lilac)}
+.progress{margin-top:16px;text-align:left}
+.progress h3{font-size:15px;font-weight:800;color:var(--muted);margin:0 0 10px 4px}
+.plist{list-style:none;display:grid;gap:8px}
+.prow{width:100%;display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:16px;border:2px solid rgba(255,255,255,.95);background:rgba(255,255,255,.8);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);font-weight:800;font-size:15px;text-align:left;min-height:56px;box-shadow:0 6px 16px rgba(232,69,127,.06)}
+.prow .ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:13px;flex:none;color:#fff;background:var(--mint)}
+.prow small{display:block;font-size:12.5px;color:var(--muted);font-weight:600}
+.prow.cur{border-color:var(--pink-l)}
+.prow.cur .ic{background:linear-gradient(135deg,#e23d7c,#f2665a)}
+.prow:disabled{opacity:.55;box-shadow:none}
+.prow:disabled .ic{background:var(--soft)}
+.prow:not(:disabled):hover{border-color:var(--pink-l)}
+.solved-note{display:inline-flex;gap:8px;align-items:center;justify-content:center;padding:10px 16px;border-radius:14px;background:#eefbf6;color:#1f6f58;font-weight:800;font-size:15px}
+.answer[readonly]{background:#f4fbf8;border-color:#bfe9da;color:#1f6f58}
 </style>
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<button class="home-fab" id="home-fab" type="button" hidden>🏠 Home</button>
 <div class="app">
 
   <header class="hud" id="hud" hidden>
-    <div class="hud-top"><span class="brand"><span aria-hidden="true">🎂</span> Birthday Easter</span><span class="count" id="hud-stage">Stage 1 of 7</span></div>
-    <div class="dots" id="hud-dots" aria-hidden="true"></div>
+    <div class="hud-top"><button class="home-btn" id="hud-home" type="button">🏠 Home</button><span class="count" id="hud-stage">Stage 1 of 7</span></div>
+    <div class="dots" id="hud-dots" role="group" aria-label="Stages"></div>
   </header>
 
   <main>
@@ -326,7 +351,7 @@ body.party .aurora{display:none}
       </div>
       <p class="tap-hint" aria-hidden="true">psst… try tapping the balloons</p>
       <span class="tag">A little birthday challenge</span>
-      <h1 tabindex="-1">Birthday Easter</h1>
+      <h1 tabindex="-1" id="in-title">Birthday Easter</h1>
       <p class="lede"><span id="in-count">7</span> stages. Can you clear them all?</p>
       <ol class="rules">
         <li><span class="n">01</span><div>Each stage is a brain teaser, a little harder than the last.</div></li>
@@ -336,6 +361,7 @@ body.party .aurora{display:none}
         <li><span class="n">05</span><div>Any QR code you unlock is just for you. Please don’t share it with anyone else.</div></li>
       </ol>
       <button class="btn btn-main" id="btn-start" type="button">Let’s go</button>
+      <div class="progress" id="home-progress" hidden><h3>Your progress</h3><ul class="plist" id="home-plist"></ul></div>
       <p class="fine">Wrong answer? Just try again, as many times as you like. Progress saves on this device.</p>
     </section>
 
@@ -355,6 +381,11 @@ body.party .aurora{display:none}
           <button class="hint-btn" type="button" id="st-hintbtn" aria-expanded="false" aria-controls="st-hint">💡 Show a hint</button>
           <div class="hint" id="st-hint" hidden></div>
         </div>
+      </div>
+      <div class="after" id="st-after" hidden>
+        <button class="btn btn-main" type="button" id="st-giftbtn">🎁 View this gift</button>
+        <div id="st-gift" class="qr-wrap" hidden></div>
+        <button class="btn btn-soft" type="button" id="st-back">Continue where you left off →</button>
       </div>
     </section>
 
@@ -599,7 +630,7 @@ var store = {
   set: function (v) { try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(v)); } catch (e) {} },
   clear: function () { try { localStorage.removeItem(CONFIG.storageKey); } catch (e) {} }
 };
-function fresh() { return { v: 3, phase: "intro", i: 0, log: [], hint: false, tries: 0, rv: {}, opened: {}, egg: {}, bonus: null }; }
+function fresh() { return { v: 3, phase: "intro", i: 0, log: [], hint: false, tries: 0, rv: {}, opened: {}, egg: {}, bonus: null, ans: {} }; }
 var S = (function () {
   var s = store.get(), f = fresh();
   if (!s || s.v !== 3 || !Array.isArray(s.log)) return f;
@@ -757,10 +788,12 @@ function mountGift(el, k, label, onOpened) {
 /* ---------- rendering ---------- */
 var SCREENS = { intro: "s-intro", stage: "s-stage", reward: "s-reward", done: "s-done", egg: "s-egg", bday: "s-bday", fin: "s-fin" };
 var whisperTimer = null;
+var view = "home", reviewIdx = -1;   // not saved: every refresh opens the home page
 
 function show(phase, focusId) {
   for (var p in SCREENS) $(SCREENS[p]).hidden = p !== phase;
   document.body.classList.toggle("party", phase === "bday" || phase === "fin");
+  $("home-fab").hidden = !(phase === "egg" || phase === "bday" || phase === "fin");
   var hud = phase === "stage" || phase === "reward" || phase === "done";
   $("hud").hidden = !hud;
   if (hud) renderHud();
@@ -768,33 +801,46 @@ function show(phase, focusId) {
 }
 function renderHud() {
   var solved = S.log.length, d = "";
-  for (var j = 0; j < N; j++) d += '<span class="dot' + (j < solved ? " done" : (j === S.i && S.phase === "stage" ? " now" : "")) + '"></span>';
+  for (var j = 0; j < N; j++) {
+    var isNow = j === S.i && S.phase === "stage", can = j < solved || isNow;
+    d += '<button type="button" class="dot' + (j < solved ? " done" : (isNow ? " now" : "")) + (view === "review" && j === reviewIdx ? " view" : "") +
+      '" data-j="' + j + '" aria-label="Stage ' + ROMAN[j] + (j < solved ? " (solved)" : isNow ? " (current)" : " (locked)") + '"' + (can ? "" : " disabled") + '></button>';
+  }
   $("hud-dots").innerHTML = d;
-  $("hud-stage").textContent = S.phase === "done" ? "All " + N + " cleared" : "Stage " + (S.i + 1) + " of " + N;
+  $("hud-stage").textContent = view === "review" ? "Reviewing Stage " + ROMAN[reviewIdx] : S.phase === "done" ? "All " + N + " cleared" : "Stage " + (S.i + 1) + " of " + N;
 }
 
-function renderStage(focus) {
-  var st = STAGES[S.i], labels = st.fields || [null], html = "";
-  $("st-tag").textContent = "Stage " + ROMAN[S.i] + " · " + st.topic;
+function renderStage(focus, rIdx) {
+  var review = typeof rIdx === "number" && rIdx >= 0, idx = review ? rIdx : S.i;
+  var st = STAGES[idx], labels = st.fields || [null], html = "", prev = review ? (S.ans[idx] || []) : [];
+  $("st-tag").textContent = "Stage " + ROMAN[idx] + " · " + st.topic;
   $("st-title").textContent = st.title;
-  $("st-card").setAttribute("data-n", ROMAN[S.i]);
+  $("st-card").setAttribute("data-n", ROMAN[idx]);
   $("st-body").innerHTML = st.body;
   $("st-fmt").textContent = st.fmt;
   for (var j = 0; j < labels.length; j++) {
     var lab = labels[j] || "Your answer";
     html += '<div>' + (labels[j] ? '<label for="st-in' + j + '">' + esc(lab) + '</label>' : "") +
       '<input class="answer st-in" id="st-in' + j + '" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="' +
-      (labels.length > 1 ? "answer" : "your answer") + '"' + (labels[j] ? "" : ' aria-label="Your answer"') + ' aria-describedby="st-fmt st-feedback"></div>';
+      (labels.length > 1 ? "answer" : "your answer") + '"' + (labels[j] ? "" : ' aria-label="Your answer"') + ' aria-describedby="st-fmt st-feedback"' +
+      (review ? ' readonly value="' + esc(prev[j] != null ? prev[j] : "✓") + '"' : "") + '></div>';
   }
   $("st-inputs").innerHTML = html;
   Array.prototype.forEach.call(document.querySelectorAll(".st-in"), function (x) { x.addEventListener("input", function () { x.classList.remove("bad"); }); });
-  $("st-feedback").innerHTML = "";
-  setHint(S.hint);
+  $("st-submit").hidden = review;
+  var e = S.log[idx];
+  $("st-feedback").innerHTML = review ? '<p class="solved-note">✓ Solved' + (e ? " in " + e.tries + (e.tries === 1 ? " attempt" : " attempts") : "") + '</p>' : "";
+  setHint(review ? false : S.hint, idx);
+  $("st-after").hidden = !review;
+  if (review) {
+    $("st-gift").hidden = true; $("st-gift").innerHTML = ""; $("st-giftbtn").hidden = false;
+    $("st-back").textContent = S.phase === "stage" ? "Back to Stage " + ROMAN[S.i] + " →" : "Continue where you left off →";
+  }
   show("stage", focus ? "st-title" : null);
 }
-function setHint(open) {
+function setHint(open, idx) {
   var box = $("st-hint"), btn = $("st-hintbtn");
-  if (open) { box.textContent = STAGES[S.i].hint; box.hidden = false; btn.hidden = true; btn.setAttribute("aria-expanded", "true"); }
+  if (open) { box.textContent = STAGES[idx == null ? S.i : idx].hint; box.hidden = false; btn.hidden = true; btn.setAttribute("aria-expanded", "true"); }
   else { box.hidden = true; btn.hidden = false; btn.setAttribute("aria-expanded", "false"); }
 }
 
@@ -864,8 +910,28 @@ function renderFin(celebrate, focus) {
   else amt.textContent = money(total);
 }
 
+function renderHome(focus) {
+  var started = S.phase !== "intro", solved = S.log.length;
+  $("btn-start").textContent = started ? "Continue where you left off ▶" : "Let’s go";
+  $("home-progress").hidden = !started;
+  if (started) {
+    var rows = "";
+    for (var j = 0; j < N; j++) {
+      var isCur = j === S.i && S.phase === "stage";
+      if (j < solved) rows += '<li><button type="button" class="prow" data-review="' + j + '"><span class="ic" aria-hidden="true">✓</span><span>Stage ' + ROMAN[j] + ' · ' + esc(STAGES[j].title) + '<small>Solved · tap to review</small></span></button></li>';
+      else if (isCur) rows += '<li><button type="button" class="prow cur" data-go="1"><span class="ic" aria-hidden="true">▶</span><span>Stage ' + ROMAN[j] + ' · ' + esc(STAGES[j].title) + '<small>In progress · tap to continue</small></span></button></li>';
+      else rows += '<li><button type="button" class="prow" disabled><span class="ic" aria-hidden="true">🔒</span><span>Stage ' + ROMAN[j] + '<small>Locked</small></span></button></li>';
+    }
+    $("home-plist").innerHTML = rows;
+  }
+  show("intro", focus ? "in-title" : null);
+  if (focus) window.scrollTo(0, 0);
+}
+
 function render(focus) {
   clearTimeout(whisperTimer);
+  if (view === "home") { renderHome(focus); return; }
+  if (view === "review") { renderStage(focus, reviewIdx); if (focus) window.scrollTo(0, 0); return; }
   if (S.phase === "stage") renderStage(focus);
   else if (S.phase === "reward") renderReward(false, focus);
   else if (S.phase === "done") renderDone(focus);
@@ -929,12 +995,38 @@ function balloons(n) {
 function announce(msg) { var a = $("announce"); a.textContent = ""; setTimeout(function () { a.textContent = msg; }, 30); }
 
 /* ---------- events ---------- */
-$("btn-start").addEventListener("click", function () { S = fresh(); S.phase = "stage"; save(); render(true); });
+function goHome() { view = "home"; render(true); }
+function goPlay() { view = "play"; reviewIdx = -1; render(true); }
+function goReview(j) { if (j >= 0 && j < S.log.length) { view = "review"; reviewIdx = j; render(true); } }
+$("btn-start").addEventListener("click", function () {
+  if (S.phase === "intro") { S = fresh(); S.phase = "stage"; save(); }
+  goPlay();
+});
+$("hud-home").addEventListener("click", goHome);
+$("home-fab").addEventListener("click", goHome);
+$("home-plist").addEventListener("click", function (ev) {
+  var b = ev.target.closest(".prow");
+  if (!b || b.disabled) return;
+  if (b.hasAttribute("data-review")) goReview(+b.getAttribute("data-review")); else goPlay();
+});
+$("hud-dots").addEventListener("click", function (ev) {
+  var b = ev.target.closest(".dot");
+  if (!b || b.disabled) return;
+  var j = +b.getAttribute("data-j");
+  if (j < S.log.length) goReview(j); else goPlay();
+});
+$("st-back").addEventListener("click", goPlay);
+$("st-giftbtn").addEventListener("click", function () {
+  var j = reviewIdx;
+  $("st-giftbtn").hidden = true;
+  mountGift($("st-gift"), j + 1, "Stage " + ROMAN[j] + " · " + money(CONFIG.rewards[j]));
+  $("st-gift").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+});
 
 var busy = false;
 $("st-form").addEventListener("submit", function (ev) {
   ev.preventDefault();
-  if (busy || S.phase !== "stage") return;
+  if (busy || S.phase !== "stage" || view !== "play") return;
   var ins = Array.prototype.slice.call(document.querySelectorAll(".st-in"));
   var raws = ins.map(function (x) { return x.value; });
   var empty = ins.filter(function (x) { return !x.value.trim(); });
@@ -947,6 +1039,7 @@ $("st-form").addEventListener("submit", function (ev) {
     if (res.ok) {
       S.log = S.log.slice(0, idx);
       S.log[idx] = { id: makeId(ROMAN[idx]), at: Date.now(), hint: !!S.hint, tries: S.tries + 1 };
+      S.ans[idx] = raws.map(function (x) { return String(x).trim().slice(0, 40); });
       S.phase = "reward"; save();
       ins.forEach(function (x) { x.blur(); });
       announce("Correct! Stage " + ROMAN[idx] + " cleared.");
@@ -965,6 +1058,7 @@ $("st-form").addEventListener("submit", function (ev) {
 });
 
 $("st-hintbtn").addEventListener("click", function () {
+  if (view === "review") { setHint(true, reviewIdx); return; }
   S.hint = true; save(); setHint(true);
   var box = $("st-hint"); box.setAttribute("tabindex", "-1"); box.focus();
 });
