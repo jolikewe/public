@@ -523,7 +523,7 @@ var CONFIG = {
   // How long the apparent ending lingers before "one more thing" appears (ms).
   egg_delay_ms: 3500,
 
-  storageKey: "birthday-easter-v3"
+  storageKey: "birthday-easter-v4"
 };
 
 /* =====================================================================
@@ -533,6 +533,18 @@ var CONFIG = {
 var STAGES = [
   {
     topic: "Probability",
+    title: "Rainy Days",
+    body: "<p>Tomorrow, it will rain in City A with probability <em>0.3</em> and in City B with probability <em>0.4</em>.</p>" +
+          "<p>Nobody knows how the weather in the two cities is related.</p>" +
+          "<p>What are the minimum and maximum possible probabilities that it stays dry in <em>both</em> cities tomorrow?</p>",
+    fmt: "Two probabilities: fraction, decimal or percentage",
+    fields: ["Minimum probability", "Maximum probability"],
+    hint: "Draw the rain in each city as a circle in a Venn diagram. “Dry in both” is everything outside both circles. What happens to that outside area as you slide the circles from fully separate (never rains in both) to one sitting inside the other (as overlapping as possible)?",
+    d: 2,
+    k: "a0b38926c93443938bdd2f4c6c0a95e2c3787eee94345da334f25bd8b97f2665"
+  },
+  {
+    topic: "Conditional probability",
     title: "Three Coins in a Red Packet",
     body: "<p>A red packet holds three coins: two are fair, and one has heads on both sides.</p>" +
           "<p>You pull one out at random and flip it three times. It lands <em>heads, heads, heads</em>.</p>" +
@@ -540,19 +552,7 @@ var STAGES = [
     fmt: "Probability: fraction, decimal or percentage",
     hint: "Do it in two steps. First update your belief about which coin you’re holding after three heads. Then average the chance of a fourth head over the two possibilities.",
     d: 2,
-    k: "34914084163795fac0e7775711e246f9cbac40df5cf74da111b2fa92136b44aa"
-  },
-  {
-    topic: "Statistics",
-    title: "Rainy Days",
-    body: "<p>On any given day, it rains in City A with probability <em>0.2</em> and in City B with probability <em>0.8</em>.</p>" +
-          "<p>Let X = 1 if it rains in City A (0 if not), and Y = 1 if it rains in City B (0 if not). How the two cities’ weather is related is unknown.</p>" +
-          "<p>What are the largest and smallest possible values of the correlation between X and Y?</p>",
-    fmt: "Two numbers: fractions or decimals",
-    fields: ["Largest possible correlation", "Smallest possible correlation"],
-    hint: "With the two rain probabilities fixed, the correlation depends only on P(it rains in both). How large and how small can that joint probability possibly be?",
-    d: 2,
-    k: "b0231819985fce127811450d7a243013e7a4bdbec6c0af7012539b54241783eb"
+    k: "4e1a5cebdf4bde100e5d9312be86f8f54e327722de9d3495f306f00de059aaa6"
   },
   {
     topic: "Geometric probability",
