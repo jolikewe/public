@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#fff4ee">
 <meta name="robots" content="noindex">
-<title>Birthday Easter</title>
+<title>Birthday Easter · Cheerina’s 21st</title>
 <style>
 :root{
   --bg:#fff4ee; --card:#ffffff; --ink:#3b2340; --muted:#86708a; --soft:#b9a5b8;
@@ -325,6 +325,19 @@ body.party .aurora{display:none}
 .prow:not(:disabled):hover{border-color:var(--pink-l)}
 .solved-note{display:inline-flex;gap:8px;align-items:center;justify-content:center;padding:10px 16px;border-radius:14px;background:#eefbf6;color:#1f6f58;font-weight:800;font-size:15px}
 .answer[readonly]{background:#f4fbf8;border-color:#bfe9da;color:#1f6f58}
+
+/* ---------- v6: personal touches ---------- */
+.bln-body b{position:absolute;inset:0;display:grid;place-items:center;font-size:17px;font-weight:900;color:rgba(255,255,255,.95);text-shadow:0 1px 2px rgba(80,40,140,.35);padding-bottom:4px}
+.foil{display:flex;justify-content:center;gap:2px;margin-bottom:4px}
+.foil span{position:relative;font-size:96px;font-weight:900;line-height:1;letter-spacing:-.04em;
+  background:linear-gradient(135deg,#fff8dc 0%,#ffd36e 28%,#f0a93a 50%,#fff3c4 68%,#e5a133 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 0 rgba(140,40,80,.25)) drop-shadow(0 0 18px rgba(255,230,160,.45));animation:bob 4s ease-in-out infinite}
+.foil span:nth-child(2){animation-delay:-1.7s}
+.foil.small span{font-size:64px}
+.reward .so-far,.bday .so-far{margin:14px auto 0;max-width:320px}
+.lock .tag{display:inline-flex;align-items:center;gap:6px}
+.cute-lock{display:block;flex:none}
+.prow .ic.lockic{background:#efeaff}
 </style>
 </head>
 <body>
@@ -347,14 +360,14 @@ body.party .aurora{display:none}
       <div class="bunch" role="group" aria-label="Balloons">
         <button class="bln" type="button" aria-label="Balloon" style="--c:#ffb48a;--rot:-20deg;--lift:6px;--w:40px;--d:-.6s"><span class="bln-body"></span></button>
         <button class="bln" type="button" aria-label="Balloon" style="--c:#ff8fb3;--rot:-9deg;--lift:26px;--w:48px;--d:-1.9s"><span class="bln-body"></span></button>
-        <button class="bln" type="button" aria-label="Balloon" style="--c:#a98bff;--rot:0deg;--lift:46px;--w:56px;--d:-3.1s"><span class="bln-body"></span></button>
+        <button class="bln" type="button" aria-label="Balloon" style="--c:#a98bff;--rot:0deg;--lift:46px;--w:58px;--d:-3.1s"><span class="bln-body"><b>21</b></span></button>
         <button class="bln" type="button" aria-label="Balloon" style="--c:#ffd36e;--rot:9deg;--lift:24px;--w:48px;--d:-1.2s"><span class="bln-body"></span></button>
         <button class="bln" type="button" aria-label="Balloon" style="--c:#5fd3b3;--rot:20deg;--lift:4px;--w:40px;--d:-2.5s"><span class="bln-body"></span></button>
       </div>
       <p class="tap-hint" aria-hidden="true">psst… try tapping the balloons</p>
-      <span class="tag">A little birthday challenge</span>
+      <span class="tag">Cheerina’s 21st birthday challenge 🎂</span>
       <h1 tabindex="-1" id="in-title">Birthday Easter</h1>
-      <p class="lede"><span id="in-count">7</span> stages. Can you clear them all?</p>
+      <p class="lede"><span id="in-count">7</span> stages. Can you clear them all, Cheerina?</p>
       <ol class="rules">
         <li><span class="n">01</span><div>Each stage is a brain teaser.</div></li>
         <li><span class="n">02</span><div>One hint per stage.</div></li>
@@ -397,6 +410,7 @@ body.party .aurora{display:none}
         <h2 id="rw-title" tabindex="-1">Nice one! 🎉</h2>
         <div class="amount" id="rw-amt">S$0</div>
         <div class="amount-sub">gift unlocked</div>
+        <p class="so-far" id="rw-sofar"><span>Collected so far</span><span>S$0</span></p>
         <dl class="rows">
           <dt>Attempts</dt><dd id="rw-tries">—</dd>
           <dt>Hint used</dt><dd id="rw-hint">—</dd>
@@ -425,38 +439,40 @@ body.party .aurora{display:none}
     <!-- Easter egg -->
     <section class="screen egg" id="s-egg" hidden>
       <div class="step" id="eg-1">
-        <p class="lead">Before you go…</p>
-        <h2 tabindex="-1" id="eg-1-title">Want more questions? 😏</h2>
+        <p class="lead">Before you go, Cheerina…</p>
+        <h2 tabindex="-1" id="eg-1-title">Want more questions? 👀</h2>
         <div class="chips" role="group" aria-labelledby="eg-1-title">
-          <button class="chip" type="button" data-a="Yes, bring them on">💪 Yes! Bring them on.</button>
-          <button class="chip" type="button" data-a="Please, no more">😩 Please, no more.</button>
-          <button class="chip" type="button" data-a="Only if there's cake">🍰 Only if there’s cake.</button>
+          <button class="chip" type="button" data-a="Yes, bring them on">🙋‍♀️ Yes! Bring them on.</button>
+          <button class="chip" type="button" data-a="Please, no more">🙅‍♀️ Please, no more.</button>
+          <button class="chip" type="button" data-a="Only if there's cake">🧁 Only if there’s cake.</button>
         </div>
       </div>
       <div class="step" id="eg-2" hidden>
         <p class="lead" id="eg-2-lead">Okay okay, no more. Promise.</p>
-        <h2 tabindex="-1" id="eg-2-title">So… how did you find it?</h2>
+        <h2 tabindex="-1" id="eg-2-title">How did you find it?</h2>
         <div class="chips" role="group" aria-labelledby="eg-2-title" id="eg-2-chips">
-          <button class="chip" type="button" aria-pressed="false" data-b="Loved it">😍 Loved it</button>
-          <button class="chip" type="button" aria-pressed="false" data-b="Brutal">😵 Brutal</button>
-          <button class="chip" type="button" aria-pressed="false" data-b="Too easy">😎 Too easy, honestly</button>
+          <button class="chip" type="button" aria-pressed="false" data-b="Loved it">🥰 Loved it</button>
+          <button class="chip" type="button" aria-pressed="false" data-b="Brutal">🥵 Brutal</button>
+          <button class="chip" type="button" aria-pressed="false" data-b="Too easy">😌 Too easy, honestly</button>
           <button class="chip" type="button" aria-pressed="false" data-b="The last one will haunt me">👻 The last one will haunt me</button>
         </div>
         <label for="eg-text">Or say it in your own words (optional)</label>
         <textarea id="eg-text" maxlength="400"></textarea>
-        <button class="btn btn-main" type="button" id="eg-send">Send ✨</button>
+        <button class="btn btn-main" type="button" id="eg-send">Send 💌</button>
       </div>
     </section>
 
     <!-- Birthday finale -->
     <section class="screen bday" id="s-bday" hidden>
-      <p class="pre">ONE MORE THING</p>
-      <h1 tabindex="-1" id="bd-title">HAPPY<br>BIRTHDAY!</h1>
+      <div class="foil" aria-hidden="true"><span>2</span><span>1</span></div>
+      <p class="pre">CHEERINA, ONE MORE THING…</p>
+      <h1 tabindex="-1" id="bd-title">HAPPY 21ST<br>BIRTHDAY!</h1>
       <p class="tease">You really thought <span id="bd-pool">S$0</span> was the whole present?</p>
       <div class="card">
         <span class="tag">Bonus gift unlocked</span>
         <div class="amount" id="bd-amt" style="margin-top:12px">S$0</div>
         <p class="noprob">No brain teaser required this time.</p>
+        <p class="so-far" id="bd-sofar"><span>Collected so far</span><span>S$0</span></p>
       </div>
       <div class="after">
         <button class="btn btn-main" type="button" id="bd-open">🎁 Open your bonus gift</button>
@@ -469,13 +485,14 @@ body.party .aurora{display:none}
     <!-- Final wrap-up -->
     <section class="screen bday fin" id="s-fin" hidden>
       <p class="pre">QUIZ COMPLETE</p>
-      <h1 tabindex="-1" id="fn-title">That’s a wrap! 🎂</h1>
+      <div class="foil small" aria-hidden="true"><span>2</span><span>1</span></div>
+      <h1 tabindex="-1" id="fn-title">That’s a wrap, Cheerina! 🎂</h1>
       <div class="card">
         <span class="tag">Total collected</span>
         <div class="amount" id="fn-amt" style="margin-top:12px">S$0</div>
         <p class="noprob">7 brain teasers + 1 birthday bonus</p>
       </div>
-      <p class="tease" style="margin-top:22px">Happy birthday! Hope the brain teasers were (mostly) fun. 💝</p>
+      <p class="tease" style="margin-top:22px">Happy 21st birthday! Hope the brain teasers were (mostly) fun. 💝</p>
     </section>
   </main>
 
@@ -524,7 +541,7 @@ var CONFIG = {
   // How long the apparent ending lingers before "one more thing" appears (ms).
   egg_delay_ms: 3500,
 
-  storageKey: "birthday-easter-v4"
+  storageKey: "birthday-easter-v6"
 };
 
 /* =====================================================================
@@ -541,8 +558,7 @@ var STAGES = [
     fmt: "Two probabilities: fraction, decimal or percentage",
     fields: ["Minimum probability", "Maximum probability"],
     hint: "Draw the rain in each city as a circle in a Venn diagram. “Dry in both” is everything outside both circles. What happens to that outside area as you slide the circles from fully separate (never rains in both) to one sitting inside the other (as overlapping as possible)?",
-    d: 2,
-    k: "a0b38926c93443938bdd2f4c6c0a95e2c3787eee94345da334f25bd8b97f2665"
+    d: 2, k: "a0b38926c93443938bdd2f4c6c0a95e2c3787eee94345da334f25bd8b97f2665"
   },
   {
     topic: "Conditional probability",
@@ -552,39 +568,37 @@ var STAGES = [
           "<p>What is the probability that a fourth flip of the same coin is also heads?</p>",
     fmt: "Probability: fraction, decimal or percentage",
     hint: "Do it in two steps. First update your belief about which coin you’re holding after three heads. Then average the chance of a fourth head over the two possibilities.",
-    d: 2,
-    k: "4e1a5cebdf4bde100e5d9312be86f8f54e327722de9d3495f306f00de059aaa6"
+    d: 2, k: "4e1a5cebdf4bde100e5d9312be86f8f54e327722de9d3495f306f00de059aaa6"
+  },
+  {
+    topic: "Counting",
+    title: "Birthday Ping-Pong",
+    body: "<p>Sixteen friends enter a knockout ping-pong tournament at the party: 8 first-round matches, then 4, then 2, then the final. The bracket is drawn uniformly at random.</p>" +
+          "<p>You and your best friend are by far the two best players: either of you <em>always</em> beats anyone else, and a match between you two is 50/50.</p>" +
+          "<p>What is the probability that you two meet in the final?</p>",
+    fmt: "Probability: fraction, decimal or percentage",
+    hint: "You two only ever lose to each other. So when do you meet in the final rather than in an earlier round? Think about which half of the bracket each of you lands in.",
+    d: 2, k: "43637eab9f4be017e8fa04bf410ed97cfd6f56afdfcfe69db0d73c7f59ac6c17"
   },
   {
     topic: "Geometric probability",
-    title: "Snip the Streamer",
-    body: "<p>A 1-metre party streamer is cut at two points, each chosen independently and uniformly at random along its length. That leaves three pieces.</p>" +
-          "<p>What is the probability that the three pieces can be arranged into a triangle?</p>",
+    title: "Fashionably Late",
+    body: "<p>Mei and her friend agree to meet at a café. Each arrives at a uniformly random time between 7:00 and 8:00 pm, independently.</p>" +
+          "<p>Mei will wait <em>20 minutes</em> for her friend. Her friend will only wait <em>10 minutes</em> for Mei. Whoever arrives first leaves if the other hasn’t shown up by then.</p>" +
+          "<p>What is the probability that they meet?</p>",
     fmt: "Probability: fraction, decimal or percentage",
-    hint: "Three lengths make a triangle exactly when every piece is shorter than half the streamer. Plot the two cut points as one point in a unit square and find the area where that holds.",
-    d: 2,
-    k: "fac18074ca35686c776b8c56e698e1eb0e76c117506943c8fd990e8065c83b45"
-  },
-  {
-    topic: "Symmetry",
-    title: "Birthday Ping-Pong",
-    body: "<p>Sixteen friends enter a knockout ping-pong tournament at the party: 8 first-round matches, then 4, then 2, then the final. The bracket is drawn uniformly at random, and every match is a 50/50 coin flip.</p>" +
-          "<p>What is the probability that you and your best friend play each other at some point in the tournament?</p>",
-    fmt: "Exact probability: fraction, or decimal/percentage to 4 decimal places",
-    hint: "Count the matches. How many are played in total, and how many possible pairs of friends are there? By symmetry, every pair is equally likely to meet.",
-    d: 4,
-    k: "972755b36b3dd503b349959ae198395c63c28d74c545f810b9b2c99aecb843b8"
+    hint: "Plot it: put Mei’s arrival time (0 to 60 minutes after 7pm) on the x-axis and her friend’s on the y-axis. Every possible pair of arrivals is a point in a 60 × 60 square. Draw the two straight lines that mark the edges of “they meet”, shade the region between them, and the probability is the shaded area ÷ the area of the square.",
+    d: 2, k: "1cb518fae89601d8fc955139440d46df40ca0e8b7e1a1591c436a901885376c8"
   },
   {
     topic: "Optimal decisions",
     title: "Three Ang Baos",
-    body: "<p>Each ang bao contains an amount between S$0 and S$100, with every value equally likely (treat it as continuous), independently of the others.</p>" +
+    body: "<p>Each ang bao contains an amount between S$0 and S$10, with every value equally likely (treat it as continuous), independently of the others.</p>" +
           "<p>You may open up to three, one at a time. After opening one, you either <em>keep it</em> (the game ends) or <em>discard it forever</em> and open the next. If you reach the third, you must keep it.</p>" +
           "<p>Playing optimally, what is your expected payout?</p>",
     fmt: "Amount in S$, to the nearest cent",
-    hint: "Work backwards. With one ang bao left it’s worth S$50 on average. With two left, keep the current one only if it beats what continuing is worth, then repeat the logic one more time.",
-    d: 2,
-    k: "53f5bf2ffdea5ffed7a843ff8562c13af959260c1cd8a03adf02da368ac34af8"
+    hint: "Work backwards. With one ang bao left it’s worth S$5 on average. With two left, keep the current one only if it beats what continuing is worth, then repeat the logic one more time.",
+    d: 2, k: "b4fcf112af76e53371b3d24f0d73ef9b82b24f9978ed619d76befe48680f4c68"
   },
   {
     topic: "Expected value",
@@ -593,9 +607,8 @@ var STAGES = [
           "<p>You repeatedly pick two loose ends uniformly at random and tie them together, until no loose ends remain. The ribbons end up joined into one or more closed loops.</p>" +
           "<p>What is the expected number of loops?</p>",
     fmt: "A number, as a fraction or to 2 decimal places",
-    hint: "Tie one pair at a time. When there are 2k loose ends left, what’s the chance the tie you make closes a loop? Add up the expected loops created at each tie: linearity does the rest.",
-    d: 2,
-    k: "6d2377f3bff0fb7771b3709223e2f46aabd1ae9dbe8b72437933b2ae9b9daa6a"
+    hint: "Start small. With 1 ribbon, its two ends must be tied together: exactly 1 loop. With 2 ribbons, take any loose end: what’s the chance it gets tied to the other end of its own piece, closing a loop? Whatever happens, the tied pieces then behave like one ribbon, so you’re back to a smaller case. Expected loops = the sum of the chances of closing a loop at each step, for 1, 2, 3 and 4 ribbons.",
+    d: 2, k: "6d2377f3bff0fb7771b3709223e2f46aabd1ae9dbe8b72437933b2ae9b9daa6a"
   },
   {
     topic: "Final stage",
@@ -606,14 +619,14 @@ var STAGES = [
           "<p>Using the strategy that minimises the expected number of rounds, how many rounds do you expect to play?</p>",
     fmt: "A number, as a fraction or to 2 decimal places",
     hint: "All that matters is which prizes you already hold. Start from the states where you’re missing just one prize, work backwards, and at each state pick the game with the smallest expected rounds remaining.",
-    d: 2,
-    k: "8ac4ff66b5130cfc3d06ae278c9d3c288c9355ccebe71a98e0973a0862a006d0"
+    d: 2, k: "8ac4ff66b5130cfc3d06ae278c9d3c288c9355ccebe71a98e0973a0862a006d0"
   }
 ];
 
 var ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 var N = STAGES.length;
 var LOCK_ITER = 250000;
+var LOCK_SVG = '<svg class="cute-lock" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M7.5 10.5V8a4.5 4.5 0 0 1 9 0v2.5" fill="none" stroke="#8f6cff" stroke-width="2.4" stroke-linecap="round"/><rect x="4" y="10" width="16" height="12" rx="4.5" fill="#c9b6ff"/><circle cx="9" cy="15.3" r="1.15" fill="#3b2357"/><circle cx="15" cy="15.3" r="1.15" fill="#3b2357"/><path d="M10.7 17.6q1.3 1.1 2.6 0" fill="none" stroke="#3b2357" stroke-width="1.1" stroke-linecap="round"/><ellipse cx="7.2" cy="17.6" rx="1.3" ry=".8" fill="#ff8fb3" opacity=".85"/><ellipse cx="16.8" cy="17.6" rx="1.3" ry=".8" fill="#ff8fb3" opacity=".85"/></svg>';
 
 function $(id) { return document.getElementById(id); }
 function money(n) { return CONFIG.currency + Number(n).toLocaleString("en-US", { maximumFractionDigits: 2 }); }
@@ -757,14 +770,14 @@ function mountGift(el, k, label, onOpened) {
       ? '<div class="qr-ph" role="img" aria-label="QR code placeholder: ' + esc(label) + '"><b>QR CODE HERE</b><span>' + esc(label) + '</span></div>'
       : '<img class="qr-img" src="' + esc(opened) + '" alt="Gift QR code: ' + esc(label) + '">';
     el.innerHTML = '<div class="qr-card">' + img +
-      '<p class="secret"><span aria-hidden="true">🤫</span>This QR code is just for you. Please don’t share it with anyone else.</p>' +
-      '<p class="so-far"><span>Collected so far</span><span>' + money(soFar(k)) + '</span></p></div>';
+      '<p class="secret"><span aria-hidden="true">🙊</span>This QR code is just for you. Please don’t share it with anyone else.</p>' +
+      '</div>';
     if (onOpened) onOpened();
     return;
   }
   var id = "lk-" + key;
   el.innerHTML = '<div class="qr-card lock" style="text-align:left">' +
-    '<span class="tag">🔒 Security check</span>' +
+    '<span class="tag">' + LOCK_SVG + ' Security check</span>' +
     '<p class="lock-q" id="' + id + '-q">' + esc(g.question || "Security question") + '</p>' +
     '<form id="' + id + '-f" autocomplete="off" novalidate>' +
     '<input class="answer" id="' + id + '-in" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="only you know this" aria-labelledby="' + id + '-q">' +
@@ -852,6 +865,7 @@ function renderReward(fresh, focus) {
   $("rw-tag").textContent = "Stage " + ROMAN[S.i] + " cleared";
   $("rw-title").textContent = CHEERS[S.i % CHEERS.length];
   $("rw-amt").textContent = money(CONFIG.rewards[S.i]);
+  $("rw-sofar").lastChild.textContent = money(soFar(S.i + 1));
   $("rw-id").textContent = e.id;
   $("rw-tries").textContent = String(e.tries);
   $("rw-hint").textContent = e.hint ? "Yes" : "No";
@@ -894,6 +908,7 @@ function renderEgg(focus) {
 function renderBday(celebrate, focus) {
   var amt = $("bd-amt");
   $("bd-pool").textContent = money(POOL);
+  $("bd-sofar").lastChild.textContent = money(soFar("bonus"));
   $("bd-open").hidden = !!S.rv.bonus;
   $("bd-finish").hidden = true;
   if (S.rv.bonus) mountGift($("bd-gift"), "bonus", "Birthday bonus · " + money(CONFIG.bonusAmount), function () { $("bd-finish").hidden = false; }); else $("bd-gift").hidden = true;
@@ -921,7 +936,7 @@ function renderHome(focus) {
       var isCur = j === S.i && S.phase === "stage";
       if (j < solved) rows += '<li><button type="button" class="prow" data-review="' + j + '"><span class="ic" aria-hidden="true">✓</span><span>Stage ' + ROMAN[j] + ' · ' + esc(STAGES[j].title) + '<small>Solved · tap to review</small></span></button></li>';
       else if (isCur) rows += '<li><button type="button" class="prow cur" data-go="1"><span class="ic" aria-hidden="true">▶</span><span>Stage ' + ROMAN[j] + ' · ' + esc(STAGES[j].title) + '<small>In progress · tap to continue</small></span></button></li>';
-      else rows += '<li><button type="button" class="prow" disabled><span class="ic" aria-hidden="true">🔒</span><span>Stage ' + ROMAN[j] + '<small>Locked</small></span></button></li>';
+      else rows += '<li><button type="button" class="prow" disabled><span class="ic lockic" aria-hidden="true">' + LOCK_SVG + '</span><span>Stage ' + ROMAN[j] + '<small>Locked</small></span></button></li>';
     }
     $("home-plist").innerHTML = rows;
   }
