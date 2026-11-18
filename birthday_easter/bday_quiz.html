@@ -392,6 +392,23 @@ body.party .aurora{display:none}
 .cake-tip{font-size:13.5px;font-weight:700;opacity:.92;margin-top:4px}
 .fin .card{margin-top:8px}
 .bday{padding-top:calc(64px + env(safe-area-inset-top))}
+
+/* ---------- v8: multiple choice ---------- */
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:11px 14px;border-radius:16px;border:2px solid var(--line2);background:#fffafc;text-align:left;font-size:16.5px;font-weight:700;transition:border-color .2s,background .2s,transform .12s,opacity .2s}
+.opt:not(:disabled):active{transform:scale(.98)}
+.opt:not(:disabled):hover{border-color:var(--pink-l)}
+.opt-l{flex:none;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#f4efff;color:#6a4bd8;font-weight:900;font-size:14px;transition:background .2s,color .2s}
+.opt-t .fr{font-size:.95em}
+.opt[aria-checked="true"]{border-color:var(--pink);background:#fff0f5}
+.opt[aria-checked="true"] .opt-l{background:var(--pink);color:#fff}
+.opt.wrong{border-color:#f3c1cf;background:#fff5f7;opacity:.6}
+.opt.wrong .opt-t{text-decoration:line-through;text-decoration-color:var(--bad)}
+.opt.wrong .opt-l{background:#ffe0e8;color:var(--bad)}
+.opt.right{border-color:#5fd3b3;background:#eefbf6;opacity:1}
+.opt.right .opt-l{background:#5fd3b3;color:#fff}
+.opt:disabled{cursor:default}
+.opt:disabled:not(.right){opacity:.55}
 </style>
 </head>
 <body>
@@ -441,8 +458,8 @@ body.party .aurora{display:none}
         <h2 id="st-title" tabindex="-1">Title</h2>
         <div class="q" id="st-body"></div>
         <form id="st-form" autocomplete="off" novalidate>
-          <p class="fmt" id="st-fmt">Format</p>
-          <div class="inputs" id="st-inputs"></div>
+          <p class="fmt" id="st-fmt">Choose one answer</p>
+          <div class="opts" id="st-opts" role="radiogroup" aria-labelledby="st-fmt"></div>
           <button class="btn btn-main" type="submit" id="st-submit" style="margin-top:12px">Check answer</button>
         </form>
         <div class="feedback" id="st-feedback" role="status" aria-live="polite"></div>
@@ -560,7 +577,7 @@ body.party .aurora{display:none}
           </div>
           <div class="tier"></div><div class="dots"></div><div class="plate"></div>
         </div>
-        <p class="cake-tip" id="fn-tip">Tap the candles to blow them out 🕯️</p>
+        <p class="cake-tip" id="fn-tip">Blow out all the candles to unlock one last bonus 💸</p>
         <p class="wish" id="fn-wish" aria-live="polite"></p>
       </div>
       <p class="tease" style="margin-top:14px">Happy 21st birthday! Hope the brain teasers were (mostly) fun. 💝</p>
@@ -612,12 +629,12 @@ var CONFIG = {
   // How long the apparent ending lingers before "one more thing" appears (ms).
   egg_delay_ms: 2000,
 
-  storageKey: "birthday-easter-v7"
+  storageKey: "birthday-easter-v8"
 };
 
 /* =====================================================================
    STAGES. "k" is a salted SHA-256 of the normalised value(s); no plaintext.
-   "d" = decimal places compared. "fields" = labels when there are 2+ inputs.
+   Each stage is multiple choice; only the correct option hashes to "k".
    ===================================================================== */
 function F(a, b) { return '<span class="fr"><span>' + a + '</span><span>' + b + '</span></span>'; }
 
@@ -628,10 +645,14 @@ var STAGES = [
     body: "<p>Tomorrow, it will rain in City A with probability <em>0.3</em> and in City B with probability <em>0.4</em>.</p>" +
           "<p>Nobody knows how the weather in the two cities is related.</p>" +
           "<p>What are the minimum and maximum possible probabilities that it stays dry in <em>both</em> cities tomorrow?</p>",
-    fmt: "Two probabilities: fraction, decimal or percentage",
-    fields: ["Minimum probability", "Maximum probability"],
+    opts: [
+      { t: "Min 0, max 0.3", v: "a1" },
+      { t: "Min 0.12, max 0.42", v: "a2" },
+      { t: "Min 0.3, max 0.6", v: "a3" },
+      { t: "Min 0.3, max 0.7", v: "a4" }
+    ],
     hint: "Draw the rain in each city as a circle in a Venn diagram. “Dry in both” is everything outside both circles. What happens to that outside area as you slide the circles from fully separate (never rains in both) to one sitting inside the other (as overlapping as possible)?",
-    d: 2, k: "a0b38926c93443938bdd2f4c6c0a95e2c3787eee94345da334f25bd8b97f2665",
+    k: "00e5286c7a56460b4cfa81c7e3548e0936b518528f90e1ab0c5fc4e54b2d82f6",
     sol: function () { return '' +
       '<p>Call the events <b>A</b> (rain in City A) and <b>B</b> (rain in City B). “Dry in both” is everything <i>outside</i> both circles:</p>' +
       '<span class="eq">P(dry in both) = 1 − P(A ∪ B)<br>= 1 − [0.3 + 0.4 − P(A ∩ B)]<br>= 0.3 + P(A ∩ B)</span>' +
@@ -648,7 +669,7 @@ var STAGES = [
         '<text x="230" y="81" text-anchor="middle" font-size="12" font-weight="800">A</text><text x="268" y="81" text-anchor="middle" font-size="12" font-weight="800">B</text>' +
         '<text x="242" y="151" text-anchor="middle" font-size="12" fill="#1f6f58" font-weight="800">dry in both: 0.6</text>' +
       '</svg>' +
-      '<p>The overlap can be as small as <b>0</b> (the circles don’t touch, which is possible since 0.3 + 0.4 ≤ 1) and as large as <b>0.3</b> (A entirely inside B, since the overlap can’t exceed the smaller circle).</p>' +
+      '<p>The overlap can be as small as <b>0</b> (the circles don’t touch, which is possible since 0.3 + 0.4 ≤ 1) and as large as <b>0.3</b> (A entirely inside B, since the overlap can’t exceed the smaller circle). 0.12 and 0.42 would only be the answer if the cities were independent.</p>' +
       '<div class="ans-box">Minimum 0.3 · Maximum 0.6</div>'; }
   },
   {
@@ -657,17 +678,22 @@ var STAGES = [
     body: "<p>A red packet holds three coins: two are fair, and one has heads on both sides.</p>" +
           "<p>You pull one out at random and flip it three times. It lands <em>heads, heads, heads</em>.</p>" +
           "<p>What is the probability that a fourth flip of the same coin is also heads?</p>",
-    fmt: "Probability: fraction, decimal or percentage",
+    opts: [
+      { t: F(1, 2), v: "b1" },
+      { t: F(2, 3), v: "b2" },
+      { t: F(4, 5), v: "b3" },
+      { t: F(9, 10), v: "b4" }
+    ],
     hint: "Do it in two steps. First update your belief about which coin you’re holding after three heads. Then average the chance of a fourth head over the two possibilities.",
-    d: 2, k: "4e1a5cebdf4bde100e5d9312be86f8f54e327722de9d3495f306f00de059aaa6",
+    k: "77a47a271830498d21955deb1378570ecd1e283b33d26de291085557028d4ea0",
     sol: function () { return '' +
       '<h3>Step 1 · Which coin is it? (Bayes)</h3>' +
       '<p>Before flipping, P(double-headed) = ' + F(1, 3) + '. A double-headed coin gives HHH for sure; a fair coin gives HHH with probability ' + F(1, 8) + '.</p>' +
       '<span class="eq">P(double | HHH) = ' + F(F(1, 3) + ' · 1', F(1, 3) + ' · 1 + ' + F(2, 3) + ' · ' + F(1, 8)) + ' = ' + F(F(1, 3), F(5, 12)) + ' = ' + F(4, 5) + '</span>' +
       '<h3>Step 2 · Average over the two cases</h3>' +
       '<span class="eq">P(4th flip is H) = ' + F(4, 5) + ' · 1 + ' + F(1, 5) + ' · ' + F(1, 2) + ' = ' + F(9, 10) + '</span>' +
-      '<p>Three heads in a row make the trick coin much more likely, which pushes the answer well above ½.</p>' +
-      '<div class="ans-box">9/10 = 0.9</div>'; }
+      '<p>' + F(4, 5) + ' is a trap: that’s only the chance you hold the trick coin. Even a fair coin can still land heads.</p>' +
+      '<div class="ans-box">9/10</div>'; }
   },
   {
     topic: "Counting",
@@ -675,9 +701,14 @@ var STAGES = [
     body: "<p>Sixteen friends enter a knockout ping-pong tournament at the party: 8 first-round matches, then 4, then 2, then the final. The bracket is drawn uniformly at random.</p>" +
           "<p>You and your best friend are by far the two best players: either of you <em>always</em> beats anyone else, and a match between you two is 50/50.</p>" +
           "<p>What is the probability that you two meet in the final?</p>",
-    fmt: "Probability: fraction, decimal or percentage",
+    opts: [
+      { t: F(1, 8), v: "c1" },
+      { t: F(7, 15), v: "c2" },
+      { t: F(1, 2), v: "c3" },
+      { t: F(8, 15), v: "c4" }
+    ],
     hint: "You two only ever lose to each other. So when do you meet in the final rather than in an earlier round? Think about which half of the bracket each of you lands in.",
-    d: 2, k: "43637eab9f4be017e8fa04bf410ed97cfd6f56afdfcfe69db0d73c7f59ac6c17",
+    k: "8d3e7c5c308d6a295b3b3b8e724564fb4818e8ed8fd0289cb49c1dbf4d7a0de4",
     sol: function () { var c = "", j; for (j = 0; j < 8; j++) { c += '<circle cx="' + (40 + j * 34) + '" cy="40" r="11" fill="' + (j ? "#e9dfe6" : "#e8457f") + '"/>'; c += '<circle cx="' + (40 + j * 34) + '" cy="100" r="11" fill="#5fd3b3"/>'; }
       return '' +
       '<p>Neither of you ever loses to anyone else, so you both keep winning until you face each other.</p>' +
@@ -689,112 +720,133 @@ var STAGES = [
       '</svg>' +
       '<p>Fix your own spot. Your friend is equally likely to be in any of the other 15 spots, and 8 of them are in the other half (mint).</p>' +
       '<span class="eq">P(meet in the final) = ' + F(8, 15) + ' ≈ 0.533</span>' +
-      '<div class="ans-box">8/15 ≈ 0.53</div>'; }
+      '<p>It’s a little more than ½ because there are more spots left in the other half (8) than in yours (7).</p>' +
+      '<div class="ans-box">8/15</div>'; }
   },
   {
     topic: "Geometric probability",
     title: "Fashionably Late",
     body: "<p>Mei and her friend agree to meet at a café. Each arrives at a uniformly random time between 7:00 and 8:00 pm, independently.</p>" +
-          "<p>Mei will wait <em>36 minutes</em> for her friend. Her friend will only wait <em>12 minutes</em> for Mei. Whoever arrives first leaves if the other hasn’t shown up by then.</p>" +
+          "<p>Mei will wait <em>20 minutes</em> for her friend. Her friend will only wait <em>10 minutes</em> for Mei. Whoever arrives first leaves if the other hasn’t shown up by then.</p>" +
           "<p>What is the probability that they meet?</p>",
-    fmt: "Probability: fraction, decimal or percentage",
+    opts: [
+      { t: F(11, 36) + " ≈ 0.31", v: "d1" },
+      { t: F(31, 72) + " ≈ 0.43", v: "d2" },
+      { t: F(1, 2), v: "d3" },
+      { t: F(5, 9) + " ≈ 0.56", v: "d4" }
+    ],
     hint: "Plot it: put Mei’s arrival time (0 to 60 minutes after 7pm) on the x-axis and her friend’s on the y-axis. Every possible pair of arrivals is a point in a 60 × 60 square. Draw the two straight lines that mark the edges of “they meet”, shade the region between them, and the probability is the shaded area ÷ the area of the square.",
-    d: 2, k: "a8117b62043415221cdcc1fdbaecb259daf10a89fb250854f5cb6f34ccb214b0",
+    k: "337691662b090e983dd99c7f935280f17bbcde1094e4c6946cfa87f922d03f72",
     sol: function () { return '' +
       '<p>Let <i>x</i> = Mei’s arrival and <i>y</i> = her friend’s, in minutes after 7pm. Each point in the 60 × 60 square is equally likely.</p>' +
-      '<ul><li>If Mei is first, they meet when the friend arrives within 36 min: <i>y</i> − <i>x</i> ≤ 36.</li><li>If the friend is first, they meet when Mei arrives within 12 min: <i>x</i> − <i>y</i> ≤ 12.</li></ul>' +
-      '<span class="eq">They meet ⇔ −12 ≤ <i>y</i> − <i>x</i> ≤ 36</span>' +
+      '<ul><li>If Mei is first, they meet when the friend arrives within 20 min: <i>y</i> − <i>x</i> ≤ 20.</li><li>If the friend is first, they meet when Mei arrives within 10 min: <i>x</i> − <i>y</i> ≤ 10.</li></ul>' +
+      '<span class="eq">They meet ⇔ −10 ≤ <i>y</i> − <i>x</i> ≤ 20</span>' +
       '<svg viewBox="0 0 270 252" role="img" aria-label="Square with a shaded diagonal band where they meet and two unshaded corner triangles">' +
         '<rect x="40" y="10" width="200" height="200" fill="#fff" stroke="#3b2340" stroke-width="1.5"/>' +
-        '<polygon points="40,210 80,210 240,50 240,10 120,10 40,90" fill="#ffc4d8"/>' +
-        '<line x1="40" y1="90" x2="120" y2="10" stroke="#e8457f" stroke-width="2"/><line x1="80" y1="210" x2="240" y2="50" stroke="#e8457f" stroke-width="2"/>' +
-        '<text x="140" y="116" text-anchor="middle" font-size="14" font-weight="900" fill="#e8457f">meet</text>' +
-        '<text x="66" y="40" text-anchor="middle" font-size="11" font-weight="800" fill="#3b2340">½·24² = 288</text>' +
-        '<text x="196" y="186" text-anchor="middle" font-size="11" font-weight="800" fill="#3b2340">½·48² = 1152</text>' +
-        '<text x="88" y="70" font-size="10" fill="#e8457f" transform="rotate(-45 88 70)">y = x + 36</text>' +
-        '<text x="172" y="132" font-size="10" fill="#e8457f" transform="rotate(-45 172 132)">y = x − 12</text>' +
+        '<polygon points="40,210 73.3,210 240,43.3 240,10 173.3,10 40,143.3" fill="#ffc4d8"/>' +
+        '<line x1="40" y1="143.3" x2="173.3" y2="10" stroke="#e8457f" stroke-width="2"/><line x1="73.3" y1="210" x2="240" y2="43.3" stroke="#e8457f" stroke-width="2"/>' +
+        '<text x="140" y="118" text-anchor="middle" font-size="14" font-weight="900" fill="#e8457f">meet</text>' +
+        '<text x="78" y="52" text-anchor="middle" font-size="11" font-weight="800" fill="#3b2340">½·40² = 800</text>' +
+        '<text x="196" y="182" text-anchor="middle" font-size="11" font-weight="800" fill="#3b2340">½·50² = 1250</text>' +
+        '<text x="86" y="90" font-size="10" fill="#e8457f" transform="rotate(-45 86 90)">y = x + 20</text>' +
+        '<text x="168" y="138" font-size="10" fill="#e8457f" transform="rotate(-45 168 138)">y = x − 10</text>' +
         '<text x="40" y="226" text-anchor="middle" font-size="10">0</text><text x="240" y="226" text-anchor="middle" font-size="10">60</text>' +
         '<text x="30" y="14" text-anchor="end" font-size="10">60</text>' +
         '<text x="140" y="244" text-anchor="middle" font-size="11" font-weight="700">Mei arrives (x)</text>' +
         '<text x="14" y="110" text-anchor="middle" font-size="11" font-weight="700" transform="rotate(-90 14 110)">Friend arrives (y)</text>' +
       '</svg>' +
-      '<p>The two unshaded corners are right triangles with legs 60 − 36 = 24 and 60 − 12 = 48.</p>' +
-      '<span class="eq">P(meet) = 1 − ' + F("288 + 1152", "3600") + ' = 1 − 0.4 = 0.6</span>' +
-      '<div class="ans-box">0.6</div>'; }
+      '<p>The two unshaded corners are right triangles with legs 60 − 20 = 40 and 60 − 10 = 50.</p>' +
+      '<span class="eq">P(meet) = 1 − ' + F("800 + 1250", "3600") + ' = 1 − ' + F(41, 72) + ' = ' + F(31, 72) + ' ≈ 0.43</span>' +
+      '<p>(If both waited 20 minutes it would be ' + F(5, 9) + '; if both waited 10, ' + F(11, 36) + '.)</p>' +
+      '<div class="ans-box">31/72 ≈ 0.43</div>'; }
   },
   {
     topic: "Optimal decisions",
     title: "Three Ang Baos",
-    body: "<p>Each ang bao contains an amount between $0 and $64, with every value equally likely (treat it as continuous), independently of the others.</p>" +
+    body: "<p>Each ang bao contains an amount between $0 and $100, with every value equally likely (treat it as continuous), independently of the others.</p>" +
           "<p>You may open up to three, one at a time. After opening one, you either <em>keep it</em> (the game ends) or <em>discard it forever</em> and open the next. If you reach the third, you must keep it.</p>" +
           "<p>Playing optimally, what is your expected payout?</p>",
-    fmt: "Amount in $, to the nearest cent",
-    hint: "Work backwards. With one ang bao left it’s worth $32 on average. With two left, keep the current one only if it beats what continuing is worth, then repeat the logic one more time.",
-    d: 2, k: "e5d7579c42677ad462d266426b8cb9a36254e351ae07ce9cbc9aab1690c99123",
+    opts: [
+      { t: "$50.00", v: "e1" },
+      { t: "$62.50", v: "e2" },
+      { t: "$69.53", v: "e3" },
+      { t: "$75.00", v: "e4" }
+    ],
+    hint: "Work backwards. With one ang bao left it’s worth $50 on average. With two left, keep the current one only if it beats what continuing is worth, then repeat the logic one more time.",
+    k: "65ca42046839b941db2aa3d2b566daed8cbe0c7774e6d77717df97082ea3f88b",
     sol: function () { return '' +
       '<p>Work backwards from the last ang bao. At each step, keep what you’re holding only if it beats the value of carrying on.</p>' +
-      '<h3>One left</h3><p>You must keep it: worth its average, <b>$32</b>.</p>' +
-      '<h3>Two left</h3><p>Keep the first if it’s more than $32 (half the time, and then it averages $48); otherwise take the last one.</p>' +
-      '<span class="eq">E₂ = ' + F(1, 2) + ' · 48 + ' + F(1, 2) + ' · 32 = 40</span>' +
-      '<h3>Three left</h3><p>Keep the first if it’s more than $40. That happens with probability ' + F(24, 64) + ' = ' + F(3, 8) + ', and then it averages (40 + 64)/2 = $52.</p>' +
-      '<span class="eq">E₃ = ' + F(3, 8) + ' · 52 + ' + F(5, 8) + ' · 40 = 19.5 + 25 = 44.5</span>' +
-      '<svg viewBox="0 0 320 84" role="img" aria-label="Number line from 0 to 64 with thresholds at 32 and 40">' +
+      '<h3>One left</h3><p>You must keep it: worth its average, <b>$50</b>.</p>' +
+      '<h3>Two left</h3><p>Keep the first if it’s more than $50 (half the time, and then it averages $75); otherwise take the last one.</p>' +
+      '<span class="eq">E₂ = ' + F(1, 2) + ' · 75 + ' + F(1, 2) + ' · 50 = 62.5</span>' +
+      '<h3>Three left</h3><p>Keep the first if it’s more than $62.50. That happens with probability ' + F(37.5, 100) + ' = ' + F(3, 8) + ', and then it averages (62.5 + 100)/2 = $81.25.</p>' +
+      '<span class="eq">E₃ = ' + F(3, 8) + ' · 81.25 + ' + F(5, 8) + ' · 62.5 = 30.47 + 39.06 ≈ 69.53</span>' +
+      '<svg viewBox="0 0 320 84" role="img" aria-label="Number line from 0 to 100 with thresholds at 50 and 62.50">' +
         '<line x1="20" y1="44" x2="300" y2="44" stroke="#3b2340" stroke-width="2"/>' +
         '<rect x="195" y="34" width="105" height="20" rx="6" fill="#ffc4d8"/><rect x="160" y="58" width="140" height="8" rx="4" fill="#dccfff"/>' +
         '<line x1="160" y1="36" x2="160" y2="68" stroke="#8f6cff" stroke-width="2"/><line x1="195" y1="26" x2="195" y2="54" stroke="#e8457f" stroke-width="2"/>' +
-        '<text x="20" y="80" text-anchor="middle" font-size="10">$0</text><text x="160" y="80" text-anchor="middle" font-size="10">$32</text><text x="300" y="80" text-anchor="middle" font-size="10">$64</text>' +
-        '<text x="195" y="20" text-anchor="middle" font-size="10" font-weight="800" fill="#e8457f">$40</text>' +
+        '<text x="20" y="80" text-anchor="middle" font-size="10">$0</text><text x="160" y="80" text-anchor="middle" font-size="10">$50</text><text x="300" y="80" text-anchor="middle" font-size="10">$100</text>' +
+        '<text x="195" y="20" text-anchor="middle" font-size="10" font-weight="800" fill="#e8457f">$62.50</text>' +
         '<text x="248" y="48" text-anchor="middle" font-size="10" font-weight="800">keep 1st</text>' +
-        '<text x="90" y="30" text-anchor="middle" font-size="10" fill="#8f6cff" font-weight="800">2nd: keep if &gt; $32</text>' +
+        '<text x="90" y="30" text-anchor="middle" font-size="10" fill="#8f6cff" font-weight="800">2nd: keep if &gt; $50</text>' +
       '</svg>' +
-      '<p>Strategy: keep the 1st if it’s over $40, the 2nd if it’s over $32, otherwise take the 3rd.</p>' +
-      '<div class="ans-box">$44.50</div>'; }
+      '<p>Strategy: keep the 1st if it’s over $62.50, the 2nd if it’s over $50, otherwise take the 3rd. ($62.50 is what you’d get with only two ang baos.)</p>' +
+      '<div class="ans-box">$69.53</div>'; }
   },
   {
     topic: "Expected value",
     title: "Tangled Ribbons",
-    body: "<p>A gift bag holds <i>n</i> pieces of ribbon. You can see all 2<i>n</i> ends poking out, but you can’t tell which ends belong to the same ribbon.</p>" +
+    body: "<p>A gift bag holds <em>four</em> pieces of ribbon. You can see their eight ends poking out, but you can’t tell which ends belong to the same ribbon.</p>" +
           "<p>You repeatedly pick two loose ends uniformly at random and tie them together, until no loose ends remain. The ribbons end up joined into one or more closed loops.</p>" +
-          "<p>What is the smallest number of ribbons <i>n</i> for which the expected number of loops is at least 2?</p>",
-    fmt: "A whole number",
-    hint: "Start small. With 1 ribbon, its two ends must be tied together: exactly 1 loop. With 2 ribbons, take any loose end: what’s the chance it gets tied to the other end of its own piece, closing a loop? Whatever happens, the tied pieces then behave like one ribbon, so you’re back to a smaller case. Expected loops = the sum of the chances of closing a loop at each step.",
-    d: 2, k: "b6c69bb126e248e80d9a9003c81e91f3aec52acee95aaa4425184aeb2d512239",
-    sol: function () { var rows = "", acc = 0, k; for (k = 1; k <= 8; k++) { acc += 1 / (2 * k - 1); rows += '<tr' + (k === 8 ? ' class="hl"' : "") + '><td>' + k + '</td><td>+ 1/' + (2 * k - 1) + '</td><td>' + acc.toFixed(3) + '</td></tr>'; }
-      return '' +
+          "<p>What is the expected number of loops?</p>",
+    opts: [
+      { t: "1", v: "f1" },
+      { t: F(4, 3) + " ≈ 1.33", v: "f2" },
+      { t: F(176, 105) + " ≈ 1.68", v: "f3" },
+      { t: F(25, 12) + " ≈ 2.08", v: "f4" }
+    ],
+    hint: "Start small. With 1 ribbon, its two ends must be tied together: exactly 1 loop. With 2 ribbons, take any loose end: what’s the chance it gets tied to the other end of its own piece, closing a loop? Whatever happens, the tied pieces then behave like one ribbon, so you’re back to a smaller case. Expected loops = the sum of the chances of closing a loop at each step, for 1, 2, 3 and 4 ribbons.",
+    k: "34c0a0148eb5f75b7fe9596e0012f87d15a1407090a128f7bc1b6b34df1fbaee",
+    sol: function () { return '' +
       '<p>Tie one pair at a time. Suppose <i>k</i> separate pieces remain, so 2<i>k</i> loose ends. Grab any end: its partner is one of the other 2<i>k</i> − 1 ends, and exactly one of those is the other end of its own piece.</p>' +
       '<span class="eq">P(this tie closes a loop) = ' + F(1, "2<i>k</i> − 1") + '</span>' +
-      '<p>Either way, one fewer piece remains: a closed loop is set aside, or two pieces become one longer piece. So with <i>n</i> ribbons you go through <i>k</i> = <i>n</i>, <i>n</i> − 1, …, 1, and by linearity of expectation:</p>' +
-      '<span class="eq">E[loops] = 1 + ' + F(1, 3) + ' + ' + F(1, 5) + ' + … + ' + F(1, "2<i>n</i> − 1") + '</span>' +
-      '<table><thead><tr><th>n ribbons</th><th>new term</th><th>expected loops</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-      '<p>The total is still below 2 at <i>n</i> = 7 (≈ 1.955) and first passes 2 at <i>n</i> = 8 (≈ 2.022).</p>' +
-      '<div class="ans-box">8 ribbons</div>'; }
+      '<p>Either way, one fewer piece remains: a closed loop is set aside, or two pieces become one longer piece. So with 4 ribbons you go through <i>k</i> = 4, 3, 2, 1, and by linearity of expectation:</p>' +
+      '<table><thead><tr><th>pieces left (k)</th><th>chance this tie closes a loop</th></tr></thead><tbody>' +
+        '<tr><td>4</td><td>1/7</td></tr><tr><td>3</td><td>1/5</td></tr><tr><td>2</td><td>1/3</td></tr><tr><td>1</td><td>1</td></tr></tbody></table>' +
+      '<span class="eq">E[loops] = 1 + ' + F(1, 3) + ' + ' + F(1, 5) + ' + ' + F(1, 7) + ' = ' + F(176, 105) + ' ≈ 1.68</span>' +
+      '<p>' + F(25, 12) + ' = 1 + ½ + ⅓ + ¼ is a trap: that’s the pattern for shuffled cards, not ribbons with two ends each.</p>' +
+      '<div class="ans-box">176/105 ≈ 1.68</div>'; }
   },
   {
     topic: "Final stage",
     title: "Three Games, Three Prizes",
     body: "<p>There are three games:</p>" +
-          "<p><em>Game 1</em> always gives you Prize 1.<br><em>Game 2</em> gives Prize 1 or Prize 2, each with probability 1/2.<br><em>Game 3</em> gives Prize 1 or Prize 2 each with probability 1/4, and Prize 3 with probability 1/2.</p>" +
+          "<p><em>Game 1</em> always gives you Prize 1.<br><em>Game 2</em> gives Prize 1 or Prize 2, each with probability 1/2.<br><em>Game 3</em> gives Prize 1, Prize 2 or Prize 3, each with probability 1/3.</p>" +
           "<p>Each round you choose any one game to play, and you see what you won before choosing the next. You want to collect all three prizes.</p>" +
           "<p>Using the strategy that minimises the expected number of rounds, how many rounds do you expect to play?</p>",
-    fmt: "A number, as a fraction or to 2 decimal places",
+    opts: [
+      { t: "4", v: "g1" },
+      { t: F(13, 3) + " ≈ 4.33", v: "g2" },
+      { t: "4.75", v: "g3" },
+      { t: "5.5", v: "g4" }
+    ],
     hint: "All that matters is which prizes you already hold. Start from the states where you’re missing just one prize, work backwards, and at each state pick the game with the smallest expected rounds remaining.",
-    d: 2, k: "094cef795a392071788a0f9c38d74b44dca992d3fa6ae0f436aaefc92efb9c8e",
+    k: "0ffd06fa1f52cd1e41937839eaaced68b0713743f47c25024ee24289f57f9b2f",
     sol: function () { return '' +
       '<p>Only the set of prizes you hold matters. Let E(S) be the expected rounds still needed when holding S, and work backwards. If a game might give a prize you already have, you just stay put, so for example:</p>' +
-      '<span class="eq">E({1}) via Game 3: E = 1 + ' + F(1, 4) + 'E + ' + F(1, 4) + ' · E({1,2}) + ' + F(1, 2) + ' · E({1,3}) ⇒ E = ' + F(10, 3) + '</span>' +
+      '<span class="eq">E({2}) via Game 3: E = 1 + ' + F(1, 3) + 'E + ' + F(1, 3) + ' · E({1,2}) + ' + F(1, 3) + ' · E({2,3}) ⇒ E = ' + F(7, 2) + '</span>' +
       '<table><thead><tr><th>Holding</th><th>Best game</th><th>Expected rounds left</th></tr></thead><tbody>' +
-        '<tr><td>{1, 2}</td><td>Game 3</td><td>2</td></tr>' +
+        '<tr><td>{1, 2}</td><td>Game 3</td><td>3</td></tr>' +
         '<tr><td>{1, 3}</td><td>Game 2</td><td>2</td></tr>' +
         '<tr><td>{2, 3}</td><td>Game 1</td><td>1</td></tr>' +
-        '<tr><td>{1}</td><td>Game 3</td><td>10/3</td></tr>' +
-        '<tr><td>{2}</td><td>Game 3</td><td>8/3</td></tr>' +
+        '<tr><td>{1}</td><td>Game 3</td><td>4</td></tr>' +
+        '<tr><td>{2}</td><td>Game 3</td><td>7/2</td></tr>' +
         '<tr><td>{3}</td><td>Game 2</td><td>5/2</td></tr>' +
-        '<tr class="hl"><td>nothing</td><td>Game 3</td><td>15/4</td></tr>' +
+        '<tr class="hl"><td>nothing</td><td>Game 3</td><td>13/3</td></tr>' +
       '</tbody></table>' +
-      '<p>From the start, Game 3 beats the alternatives (Game 1 gives 13/3, Game 2 gives 4):</p>' +
-      '<span class="eq">E(∅) = 1 + ' + F(1, 4) + ' · ' + F(10, 3) + ' + ' + F(1, 4) + ' · ' + F(8, 3) + ' + ' + F(1, 2) + ' · ' + F(5, 2) + ' = ' + F(15, 4) + '</span>' +
-      '<p>The twist is that all three games get used: Game 3 first, Game 2 once you hold Prize 3, and Game 1 for the very last prize if it’s Prize 1.</p>' +
-      '<div class="ans-box">15/4 = 3.75 rounds</div>'; }
+      '<span class="eq">E(∅) = 1 + ' + F(1, 3) + '(4 + ' + F(7, 2) + ' + ' + F(5, 2) + ') = 1 + ' + F(10, 3) + ' = ' + F(13, 3) + ' ≈ 4.33</span>' +
+      '<p>Starting with Game 2 instead gives 4.75, and stubbornly playing Game 3 every round gives 3 · (1 + ½ + ⅓) = 5.5. Switching games at the right moments saves over a round.</p>' +
+      '<div class="ans-box">13/3 ≈ 4.33 rounds</div>'; }
   }
 ];
 
@@ -864,11 +916,11 @@ var store = {
   set: function (v) { try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(v)); } catch (e) {} },
   clear: function () { try { localStorage.removeItem(CONFIG.storageKey); } catch (e) {} }
 };
-function fresh() { return { v: 7, phase: "intro", i: 0, log: [], hint: false, tries: 0, rv: {}, opened: {}, egg: {}, bonus: null, ans: {}, cake: false }; }
+function fresh() { return { v: 8, phase: "intro", i: 0, log: [], hint: false, tries: 0, rv: {}, opened: {}, egg: {}, bonus: null, ans: {}, cake: false }; }
 var PHASES = ["intro", "stage", "solved", "reward", "done", "egg", "bday", "fin"];
 var S = (function () {
   var s = store.get(), f = fresh();
-  if (!s || s.v !== 7 || !Array.isArray(s.log)) return f;
+  if (!s || s.v !== 8 || !Array.isArray(s.log)) return f;
   for (var key in f) if (!(key in s)) s[key] = f[key];
   s.i = Math.min(Math.max(0, s.i | 0), N - 1);
   if (PHASES.indexOf(s.phase) < 0) s.phase = "intro";
@@ -950,14 +1002,8 @@ function sha256(str) {
   return Promise.resolve(sha256Fallback(str));
 }
 
-function verify(stageNo, raws) {
-  var st = STAGES[stageNo - 1], parts = [];
-  for (var j = 0; j < raws.length; j++) {
-    var v = readNumber(raws[j]);
-    if (v === null) return Promise.resolve({ ok: false, unreadable: true });
-    parts.push(canon(v, st.d || 2));
-  }
-  return sha256("vault|" + stageNo + "|" + parts.join(";")).then(function (h) { return { ok: h === st.k }; });
+function verify(stageNo, v) {
+  return sha256("vault|" + stageNo + "|" + v).then(function (h) { return { ok: h === STAGES[stageNo - 1].k }; });
 }
 
 /* ---------- gift locks (PBKDF2 + AES-GCM) ---------- */
@@ -1046,20 +1092,18 @@ function renderHud() {
 function renderStage(focus, rIdx) {
   var review = typeof rIdx === "number" && rIdx >= 0, idx = review ? rIdx : S.i;
   var mode = review ? "review" : (S.phase === "solved" ? "solved" : "play");
-  var st = STAGES[idx], labels = st.fields || [null], html = "", prev = mode === "play" ? [] : (S.ans[idx] || []);
+  var st = STAGES[idx], html = "", chosen = mode === "play" ? -1 : S.ans[idx];
   $("st-tag").textContent = "Stage " + ROMAN[idx] + " · " + st.topic;
   $("st-title").textContent = st.title;
   $("st-card").setAttribute("data-n", ROMAN[idx]);
   $("st-body").innerHTML = st.body;
-  $("st-fmt").textContent = st.fmt;
-  for (var j = 0; j < labels.length; j++) {
-    html += '<div>' + (labels[j] ? '<label for="st-in' + j + '">' + esc(labels[j]) + '</label>' : "") +
-      '<input class="answer st-in" id="st-in' + j + '" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="' +
-      (labels.length > 1 ? "answer" : "your answer") + '"' + (labels[j] ? "" : ' aria-label="Your answer"') + ' aria-describedby="st-fmt st-feedback"' +
-      (mode !== "play" ? ' readonly value="' + esc(prev[j] != null ? prev[j] : "✓") + '"' : "") + '></div>';
+  picked = -1;
+  for (var j = 0; j < st.opts.length; j++) {
+    var right = mode !== "play" && j === chosen;
+    html += '<button type="button" class="opt' + (right ? " right" : "") + '" role="radio" aria-checked="' + (right ? "true" : "false") + '" data-j="' + j + '"' + (mode !== "play" ? " disabled" : "") + '>' +
+      '<span class="opt-l" aria-hidden="true">' + (right ? "✓" : "ABCDEFG".charAt(j)) + '</span><span class="opt-t">' + st.opts[j].t + '</span></button>';
   }
-  $("st-inputs").innerHTML = html;
-  Array.prototype.forEach.call(document.querySelectorAll(".st-in"), function (x) { x.addEventListener("input", function () { x.classList.remove("bad"); }); });
+  $("st-opts").innerHTML = html;
   $("st-submit").hidden = mode !== "play";
   var e = S.log[idx];
   $("st-feedback").innerHTML = mode === "solved" ? '<p class="yay-note">🎉 Correct!</p>'
@@ -1081,6 +1125,7 @@ function setHint(open, idx) {
   else { box.hidden = true; btn.hidden = false; btn.setAttribute("aria-expanded", "false"); }
 }
 
+var picked = -1;
 var CHEERS = ["Nice one! 🎉", "Too easy? 😏", "Look at you go! ✨", "Big brain! 🧠", "Unstoppable! 🚀", "Wow, okay! 🤩", "Legend! 🏆"];
 function renderReward(fresh, focus) {
   var e = S.log[S.i], k = S.i + 1;
@@ -1148,7 +1193,7 @@ function renderFin(celebrate, focus) {
     '<figcaption>' + esc(CONFIG.photoCaption || "") + '</figcaption>';
   var cs = $("fn-candles").querySelectorAll(".candle");
   for (var j = 0; j < cs.length; j++) cs[j].classList.toggle("out", !!S.cake);
-  $("fn-wish").textContent = S.cake ? "Make a wish ✨" : "";
+  $("fn-wish").innerHTML = S.cake ? 'Gotcha! 😜 No more money.<br>Just make a wish ✨' : "";
   $("fn-tip").hidden = !!S.cake;
   show("fin", focus ? "fn-title" : null);
   if (celebrate && !reduced) { countUp(amt, total, 1600); confetti(110); balloonsRise(12); Sound.play("fanfare"); }
@@ -1301,21 +1346,17 @@ var busy = false;
 $("st-form").addEventListener("submit", function (ev) {
   ev.preventDefault();
   if (busy || S.phase !== "stage" || view !== "play") return;
-  var ins = Array.prototype.slice.call(document.querySelectorAll(".st-in"));
-  var raws = ins.map(function (x) { return x.value; });
-  var empty = ins.filter(function (x) { return !x.value.trim(); });
-  if (empty.length) { empty[0].focus(); return; }
+  if (picked < 0) { $("st-feedback").innerHTML = '<p class="nope-sub">Pick an answer first 👆</p>'; return; }
   busy = true;
-  var idx = S.i;
-  verify(idx + 1, raws).then(function (res) {
+  var idx = S.i, choice = picked, btn = document.querySelector('.opt[data-j="' + choice + '"]');
+  verify(idx + 1, STAGES[idx].opts[choice].v).then(function (res) {
     busy = false;
     if (S.phase !== "stage" || S.i !== idx) return;
     if (res.ok) {
       S.log = S.log.slice(0, idx);
       S.log[idx] = { id: makeId(ROMAN[idx]), at: Date.now(), hint: !!S.hint, tries: S.tries + 1 };
-      S.ans[idx] = raws.map(function (x) { return String(x).trim().slice(0, 40); });
+      S.ans[idx] = choice;
       S.phase = "solved"; save();
-      ins.forEach(function (x) { x.blur(); });
       Sound.play("correct"); confetti(36);
       announce("Correct! Stage " + ROMAN[idx] + " solved.");
       if (navigator.vibrate) try { navigator.vibrate([18, 40, 18]); } catch (e) {}
@@ -1324,14 +1365,21 @@ $("st-form").addEventListener("submit", function (ev) {
     } else {
       S.tries++; save();
       Sound.play("wrong");
-      $("st-feedback").innerHTML = '<p class="nope">Not quite!</p><p class="nope-sub">' +
-        (res.unreadable ? "Try a number, a fraction like 3/4, or a percentage." : "Have another go. No limit on tries.") + "</p>";
-      ins.forEach(function (x) { x.classList.add("bad"); });
+      $("st-feedback").innerHTML = '<p class="nope">Not quite!</p><p class="nope-sub">Have another go. No limit on tries.</p>';
+      if (btn) { btn.classList.add("wrong"); btn.setAttribute("aria-checked", "false"); }
+      picked = -1;
       var card = $("st-card"); card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
       if (navigator.vibrate) try { navigator.vibrate(90); } catch (e) {}
-      ins[0].select();
     }
   });
+});
+$("st-opts").addEventListener("click", function (ev) {
+  var b = ev.target.closest(".opt");
+  if (!b || b.disabled || view !== "play" || S.phase !== "stage") return;
+  picked = +b.getAttribute("data-j");
+  Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (o) { o.setAttribute("aria-checked", String(o === b)); });
+  $("st-feedback").innerHTML = "";
+  Sound.play("tap");
 });
 
 $("st-hintbtn").addEventListener("click", function () {
@@ -1410,7 +1458,7 @@ Array.prototype.forEach.call(document.querySelectorAll(".candle"), function (c) 
     if (!left) {
       S.cake = true; save();
       setTimeout(function () {
-        var w = $("fn-wish"); w.textContent = "Make a wish ✨"; w.classList.remove("on"); void w.offsetWidth; w.classList.add("on");
+        var w = $("fn-wish"); w.innerHTML = 'Gotcha! 😜 No more money.<br>Just make a wish ✨'; w.classList.remove("on"); void w.offsetWidth; w.classList.add("on");
         $("fn-tip").hidden = true; Sound.play("fanfare"); confetti(60);
         var r = $("fn-candles").getBoundingClientRect(); sparkleAt(r.left + r.width / 2, r.top, "#ffd36e", 24, 90);
       }, 350);
