@@ -400,7 +400,7 @@ var CONFIG = {
   // How long the apparent ending lingers before "Before you go…" appears (ms).
   egg_delay_ms: 4500,
 
-  storageKey: "birthday-easter-v1"
+  storageKey: "birthday-easter-v2"
 };
 
 /* =====================================================================
@@ -418,22 +418,23 @@ var STAGES = [
     k: "34914084163795fac0e7775711e246f9cbac40df5cf74da111b2fa92136b44aa"
   },
   {
-    topic: "Combinatorics",
-    title: "Grandma’s Rule",
-    body: "<p>Ten ang baos sit in a row on the table. Grandma’s rule: you may take any selection you like, but you may never take two that are next to each other.</p>" +
-          "<p>Counting the option of taking none at all, how many different selections are possible?</p>",
-    fmt: "A whole number",
-    hint: "Let f(n) be the answer for n ang baos in a row. Look at the last ang bao: either you leave it, or you take it, and then its neighbour is off-limits.",
-    k: "7c2481a8c384a566649c211b696f466aac768ac931f07d20e73e5b0c787cbecc"
-  },
-  {
     topic: "Statistics",
     title: "Five Stocks, One Correlation",
     body: "<p>Five stocks all have the same volatility, and every pair of them has exactly the same correlation ρ.</p>" +
           "<p>What is the smallest value ρ can possibly take?</p>",
     fmt: "A number between −1 and 1 (fraction or decimal)",
     hint: "No portfolio can have negative variance. Try holding one unit of every stock and write down the variance in terms of ρ.",
-    k: "4654f58f816ab290cea69da09bfc9cd019c164904bb59969855655374885ed33"
+    k: "feb6ac37134c798a61b414a85fe1bd30d9a20220a095b62ecfd6de865f3fbebb"
+  },
+  {
+    topic: "Pricing & arbitrage",
+    title: "The Friend Who Knows",
+    body: "<p>A stock trades at S$100 today. Tomorrow it will be worth either S$120 or S$90, nothing else.</p>" +
+          "<p>A friend offers a contract that pays S$30 if the stock ends at S$120, and nothing if it ends at S$90. Your friend is very sure the stock will rise: “90% likely”, they say.</p>" +
+          "<p>You can buy or short any amount of the stock and borrow or lend cash at zero interest, with no fees. At what price for the contract is there no riskless profit available to anyone?</p>",
+    fmt: "Price in S$",
+    hint: "The 90% is a distraction. Can you build exactly the contract’s payoff using some shares and some borrowed cash? Then the price is whatever that costs.",
+    k: "393cd6352d0e7e9cd22927ebab1c713ede8a0f2c160ac9352b70551701b333e6"
   },
   {
     topic: "Optimal decisions",
@@ -446,33 +447,34 @@ var STAGES = [
     k: "84f714bc836167ebf77cbc4ed135a855247188c5dbfa5d5c52946f95e73c6e31"
   },
   {
-    topic: "Pricing & arbitrage",
-    title: "The Friend Who Knows",
-    body: "<p>A stock trades at S$100 today. Tomorrow it will be worth either S$120 or S$90, nothing else.</p>" +
-          "<p>A friend offers a contract that pays S$30 if the stock ends at S$120, and nothing if it ends at S$90. Your friend is very sure the stock will rise: “90% likely”, they say.</p>" +
-          "<p>You can buy or short any amount of the stock and borrow or lend cash at zero interest, with no fees. At what price for the contract is there no riskless profit available to anyone?</p>",
-    fmt: "Price in S$",
-    hint: "The 90% is a distraction. Can you build exactly the contract’s payoff using some shares and some borrowed cash? Then the price is whatever that costs.",
-    k: "3472a6f2bc11b0a37ea3b55f3204ea7f5280ba8375b0e0cc7ab2fb8a56ba49fd"
-  },
-  {
     topic: "Game theory",
     title: "Rock Pays Triple",
     body: "<p>You play rock–paper–scissors against a perfectly rational opponent. A win pays S$1 and a tie pays nothing, except that when <em>Rock beats Scissors</em> the winner collects S$3.</p>" +
           "<p>Both players know the rules and play the optimal (equilibrium) strategy. What fraction of the time should you play Rock?</p>",
     fmt: "Probability: fraction, decimal or percentage",
     hint: "In equilibrium your opponent mixes so that Rock, Paper and Scissors all earn you exactly the same expected amount. Write the three expected payoffs and set them equal.",
-    k: "209925e9ba46510c16713019631bcfc8a5e934e27413741bdbf0a1fdd11585ed"
+    k: "e3ff02c33b0213b26b9cf33f790a933de861d62357116bb8d7ee7ca3e56aba40"
   },
   {
-    topic: "Final stage",
+    topic: "Expected value",
     title: "Record Highs",
     body: "<p>Six sealed ang baos contain S$10, S$20, S$30, S$40, S$50 and S$60, one amount each. They are opened one at a time in a uniformly random order.</p>" +
           "<p>You keep an ang bao only if, at the moment it is opened, it contains more than every ang bao opened before it. (The first one opened is always kept.)</p>" +
           "<p>What is your expected total take-home?</p>",
     fmt: "Amount in S$, to the nearest cent",
     hint: "Don’t track the sequence. For each amount on its own, ask: what is the chance it gets kept? Only the amounts larger than it matter. Then add up using linearity of expectation.",
-    k: "de49c09fe9faf2c9a3db0d7c174d902d0a3b424887f4ab43bb4027f87b0f5f8e"
+    k: "8224f91dd56b962807306e347efb957053e767ec4ff3be446103be9f493904cb"
+  },
+  {
+    topic: "Final stage",
+    title: "Three Games, Three Prizes",
+    body: "<p>There are three games:</p>" +
+          "<p><em>Game 1</em> always gives you Prize 1.<br><em>Game 2</em> gives Prize 1 or Prize 2, each with probability 1/2.<br><em>Game 3</em> gives Prize 1, Prize 2 or Prize 3, each with probability 1/3.</p>" +
+          "<p>Each round you choose any one game to play, and you see what you won before choosing the next. You want to collect all three prizes.</p>" +
+          "<p>Using the strategy that minimises the expected number of rounds, how many rounds do you expect to play?</p>",
+    fmt: "A number, as a fraction or to 2 decimal places",
+    hint: "All that matters is which prizes you already hold. Start from the states where you’re missing just one prize, work backwards, and at each state pick the game with the smallest expected rounds remaining.",
+    k: "8ac4ff66b5130cfc3d06ae278c9d3c288c9355ccebe71a98e0973a0862a006d0"
   }
 ];
 
