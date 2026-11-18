@@ -338,11 +338,66 @@ body.party .aurora{display:none}
 .lock .tag{display:inline-flex;align-items:center;gap:6px}
 .cute-lock{display:block;flex:none}
 .prow .ic.lockic{background:#efeaff}
+
+/* ---------- v7 ---------- */
+.sound-btn{position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:15;width:44px;height:44px;border-radius:50%;border:1px solid #fff;
+  background:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:var(--shadow);font-size:18px;display:grid;place-items:center}
+#st-done{margin-top:14px}
+#st-done .btn+.btn,#st-done .btn+div+.btn,#st-done .card+.btn{margin-top:10px}
+.yay-note{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:14px;background:linear-gradient(135deg,#fff0f5,#f4efff);color:var(--pink);font-weight:900;font-size:17px;animation:pop .5s cubic-bezier(.3,1.6,.5,1) both}
+.sol{margin:10px 0;font-size:15.5px;line-height:1.65;text-align:left}
+.sol .tag{margin-bottom:6px}
+.sol h3{font-size:16px;font-weight:800;margin:16px 0 6px;color:var(--pink)}
+.sol p+p{margin-top:8px}
+.sol ul{margin:6px 0 0 18px}
+.sol .eq{display:block;text-align:center;margin:12px 0;padding:10px 8px;border-radius:12px;background:#faf6ff;font-family:"Cambria Math","STIX Two Math","Latin Modern Math","Times New Roman",serif;font-size:17px;white-space:normal;line-height:2.1;overflow-wrap:anywhere}
+.fr{white-space:nowrap;display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 2px;font-size:.9em}
+.fr>span{padding:0 3px;line-height:1.25}
+.fr>span:first-child{border-bottom:1.3px solid currentColor}
+.sol svg{display:block;width:100%;height:auto;margin:10px auto;font-family:var(--round)}
+.sol table{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0}
+.sol th,.sol td{padding:7px 6px;border-bottom:1px dashed var(--line2);text-align:center}
+.sol th{font-size:12px;color:var(--muted);font-weight:800}
+.sol tr.hl td{background:#fff0f5;font-weight:800;color:var(--pink)}
+.ans-box{margin-top:14px;padding:12px 14px;border-radius:14px;background:#eefbf6;color:#1f6f58;font-weight:800;text-align:center}
+.bln.flying{animation:flyaway 3.6s cubic-bezier(.45,0,.7,1) forwards;pointer-events:none}
+@keyframes flyaway{0%{transform:none}25%{transform:translate(calc(var(--fx) * .25),-14vh) rotate(calc(var(--fr) * -1))}100%{transform:translate(var(--fx),-125vh) rotate(var(--fr))}}
+.glit{position:fixed;z-index:40;width:5px;height:5px;border-radius:1px;pointer-events:none;animation:glit 1.8s ease-out forwards}
+@keyframes glit{0%{opacity:0;transform:translate(-50%,-50%)}12%{opacity:1}60%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--r))}}
+.photo{position:relative;margin:22px auto 6px;width:min(270px,76vw);background:#fff;padding:12px 12px 44px;border-radius:6px;box-shadow:0 18px 40px rgba(60,10,40,.3);transform:rotate(-3deg);color:var(--ink);transition:transform .3s}
+.photo:hover{transform:rotate(0) scale(1.02)}
+.photo::before{content:"";position:absolute;top:-12px;left:50%;width:96px;height:26px;margin-left:-48px;background:rgba(255,211,110,.8);transform:rotate(4deg);border-radius:2px}
+.photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px}
+.photo .ph{aspect-ratio:4/5;display:grid;place-items:center;border:2px dashed var(--pink-l);border-radius:4px;color:var(--muted);font-weight:700;background:#fff7fa}
+.photo figcaption{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-weight:800;font-size:15px}
+.cake-wrap{margin:30px auto 0;text-align:center}
+.cake{position:relative;width:230px;height:160px;margin:0 auto}
+.cake .tier{position:absolute;left:22px;right:22px;bottom:10px;height:82px;border-radius:16px 16px 10px 10px;background:linear-gradient(#ffd6e4,#ff9cbd)}
+.cake .tier::before{content:"";position:absolute;left:-4px;right:-4px;top:-6px;height:24px;border-radius:14px;background:#fffaf5}
+.cake .tier::after{content:"";position:absolute;left:-2px;right:-2px;top:14px;height:14px;background:radial-gradient(circle at 7px 0,#fffaf5 7px,transparent 7.5px) 0 0/26px 14px repeat-x}
+.cake .dots{position:absolute;left:34px;right:34px;bottom:24px;height:30px;background:radial-gradient(circle,#ffd36e 2.5px,transparent 3px) 0 0/22px 15px,radial-gradient(circle,#a98bff 2.5px,transparent 3px) 11px 7px/22px 15px}
+.cake .plate{position:absolute;left:0;right:0;bottom:0;height:16px;border-radius:50%;background:#fff;box-shadow:0 6px 14px rgba(60,10,40,.25)}
+.candles{position:absolute;left:0;right:0;bottom:90px;display:flex;justify-content:center;gap:18px}
+.candle{position:relative;width:12px;height:44px;border:0;padding:0;border-radius:3px;background:repeating-linear-gradient(135deg,#fff 0 5px,var(--cc,#a98bff) 5px 10px);cursor:pointer}
+.candle::before{content:"";position:absolute;inset:-30px -10px 0}
+.flame{position:absolute;left:50%;top:-23px;width:12px;height:20px;margin-left:-6px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  background:radial-gradient(circle at 50% 70%,#fffbe0 0 25%,#ffd36e 45%,#ff8a3d 85%);box-shadow:0 0 14px 5px rgba(255,190,90,.6);animation:flicker .16s ease-in-out infinite alternate;transform-origin:50% 100%;transition:opacity .25s,transform .25s}
+@keyframes flicker{to{transform:scale(.9,1.08) rotate(3deg)}}
+.candle.out .flame{animation:none;opacity:0;transform:scale(.2)}
+.smoke{position:absolute;left:50%;top:-20px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:rgba(255,255,255,.7);opacity:0;pointer-events:none}
+.candle.out .smoke{animation:smoke 1.5s ease-out forwards}
+@keyframes smoke{0%{opacity:.85;transform:none}100%{opacity:0;transform:translate(8px,-46px) scale(3.2)}}
+.wish{margin-top:12px;font-weight:900;font-size:21px;min-height:32px}
+.wish.on{animation:pop .6s cubic-bezier(.3,1.6,.5,1) both}
+.cake-tip{font-size:13.5px;font-weight:700;opacity:.92;margin-top:4px}
+.fin .card{margin-top:8px}
+.bday{padding-top:calc(64px + env(safe-area-inset-top))}
 </style>
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 <button class="home-fab" id="home-fab" type="button" hidden>🏠 Home</button>
+<button class="sound-btn" id="sound-btn" type="button" aria-pressed="true" aria-label="Sound on">🔊</button>
 <div class="app">
 
   <header class="hud" id="hud" hidden>
@@ -351,23 +406,23 @@ body.party .aurora{display:none}
   </header>
 
   <main>
-    <!-- Intro -->
+    <!-- Home -->
     <section class="screen intro" id="s-intro" hidden>
       <span class="twinkle" style="left:6%;top:14%;color:#ffd36e" aria-hidden="true">✦</span>
       <span class="twinkle" style="right:8%;top:8%;color:#a98bff;animation-delay:-.8s" aria-hidden="true">✦</span>
       <span class="twinkle" style="left:14%;top:38%;color:#ff8fb3;font-size:11px;animation-delay:-1.6s" aria-hidden="true">✦</span>
       <span class="twinkle" style="right:12%;top:33%;color:#5fd3b3;font-size:12px;animation-delay:-2.1s" aria-hidden="true">✦</span>
       <div class="bunch" role="group" aria-label="Balloons">
-        <button class="bln" type="button" aria-label="Balloon" style="--c:#ffb48a;--rot:-20deg;--lift:6px;--w:40px;--d:-.6s"><span class="bln-body"></span></button>
-        <button class="bln" type="button" aria-label="Balloon" style="--c:#ff8fb3;--rot:-9deg;--lift:26px;--w:48px;--d:-1.9s"><span class="bln-body"></span></button>
-        <button class="bln" type="button" aria-label="Balloon" style="--c:#a98bff;--rot:0deg;--lift:46px;--w:58px;--d:-3.1s"><span class="bln-body"><b>21</b></span></button>
-        <button class="bln" type="button" aria-label="Balloon" style="--c:#ffd36e;--rot:9deg;--lift:24px;--w:48px;--d:-1.2s"><span class="bln-body"></span></button>
-        <button class="bln" type="button" aria-label="Balloon" style="--c:#5fd3b3;--rot:20deg;--lift:4px;--w:40px;--d:-2.5s"><span class="bln-body"></span></button>
+        <button class="bln" data-kind="pop" type="button" aria-label="Balloon" style="--c:#ffb48a;--rot:-20deg;--lift:6px;--w:40px;--d:-.6s"><span class="bln-body"></span></button>
+        <button class="bln" data-kind="fly" type="button" aria-label="Balloon" style="--c:#ff8fb3;--rot:-9deg;--lift:26px;--w:48px;--d:-1.9s"><span class="bln-body"></span></button>
+        <button class="bln" data-kind="pop" type="button" aria-label="Balloon" style="--c:#a98bff;--rot:0deg;--lift:46px;--w:56px;--d:-3.1s"><span class="bln-body"></span></button>
+        <button class="bln" data-kind="fly" type="button" aria-label="Balloon" style="--c:#ffd36e;--rot:9deg;--lift:24px;--w:48px;--d:-1.2s"><span class="bln-body"></span></button>
+        <button class="bln" data-kind="pop" type="button" aria-label="Balloon" style="--c:#5fd3b3;--rot:20deg;--lift:4px;--w:40px;--d:-2.5s"><span class="bln-body"></span></button>
       </div>
       <p class="tap-hint" aria-hidden="true">psst… try tapping the balloons</p>
       <span class="tag">Cheerina’s 21st birthday challenge 🎂</span>
       <h1 tabindex="-1" id="in-title">Birthday Easter</h1>
-      <p class="lede"><span id="in-count">7</span> stages. Can you clear them all, Cheerina?</p>
+      <p class="lede"><span id="in-count">7</span> stages. Can you clear them all?</p>
       <ol class="rules">
         <li><span class="n">01</span><div>Each stage is a brain teaser.</div></li>
         <li><span class="n">02</span><div>One hint per stage.</div></li>
@@ -379,7 +434,7 @@ body.party .aurora{display:none}
       <p class="fine">Wrong answer? Just try again, as many times as you like. Progress saves on this device.</p>
     </section>
 
-    <!-- Stage -->
+    <!-- Stage (play / solved / review) -->
     <section class="screen" id="s-stage" hidden>
       <div class="card" id="st-card">
         <span class="tag" id="st-tag">Stage I</span>
@@ -396,8 +451,11 @@ body.party .aurora{display:none}
           <div class="hint" id="st-hint" hidden></div>
         </div>
       </div>
-      <div class="after" id="st-after" hidden>
-        <button class="btn btn-main" type="button" id="st-giftbtn">🎁 View this gift</button>
+      <div id="st-done" hidden>
+        <button class="btn btn-soft" type="button" id="st-solbtn" aria-expanded="false" aria-controls="st-sol">📖 Show solution</button>
+        <div class="card sol" id="st-sol" hidden></div>
+        <button class="btn btn-main" type="button" id="st-continue">Continue 🎁</button>
+        <button class="btn btn-soft" type="button" id="st-giftbtn">🎁 View this gift</button>
         <div id="st-gift" class="qr-wrap" hidden></div>
         <button class="btn btn-soft" type="button" id="st-back">Continue where you left off →</button>
       </div>
@@ -408,9 +466,9 @@ body.party .aurora{display:none}
       <div class="card reward" id="rw-card">
         <span class="tag" id="rw-tag">Stage I cleared</span>
         <h2 id="rw-title" tabindex="-1">Nice one! 🎉</h2>
-        <div class="amount" id="rw-amt">S$0</div>
+        <div class="amount" id="rw-amt">$0</div>
         <div class="amount-sub">gift unlocked</div>
-        <p class="so-far" id="rw-sofar"><span>Collected so far</span><span>S$0</span></p>
+        <p class="so-far" id="rw-sofar"><span>Collected so far</span><span>$0</span></p>
         <dl class="rows">
           <dt>Attempts</dt><dd id="rw-tries">—</dd>
           <dt>Hint used</dt><dd id="rw-hint">—</dd>
@@ -430,7 +488,7 @@ body.party .aurora{display:none}
         <span class="tag">All done</span>
         <h2 class="big" tabindex="-1" id="dn-title">All 7 stages cleared! 🎉</h2>
         <ul class="ledger" id="dn-ledger"></ul>
-        <p class="collected" id="dn-total">You collected S$0</p>
+        <p class="collected" id="dn-total">You collected $0</p>
         <p class="closed">That was the final stage. Well played!</p>
       </div>
       <button class="whisper" type="button" id="dn-whisper" hidden>Wait… one more thing 👀</button>
@@ -462,17 +520,16 @@ body.party .aurora{display:none}
       </div>
     </section>
 
-    <!-- Birthday finale -->
+    <!-- Birthday reveal -->
     <section class="screen bday" id="s-bday" hidden>
-      <div class="foil" aria-hidden="true"><span>2</span><span>1</span></div>
       <p class="pre">CHEERINA, ONE MORE THING…</p>
       <h1 tabindex="-1" id="bd-title">HAPPY 21ST<br>BIRTHDAY!</h1>
-      <p class="tease">You really thought <span id="bd-pool">S$0</span> was the whole present?</p>
+      <p class="tease" id="bd-tease">We know $0 isn’t enough…</p>
       <div class="card">
         <span class="tag">Bonus gift unlocked</span>
-        <div class="amount" id="bd-amt" style="margin-top:12px">S$0</div>
+        <div class="amount" id="bd-amt" style="margin-top:12px">$0</div>
         <p class="noprob">No brain teaser required this time.</p>
-        <p class="so-far" id="bd-sofar"><span>Collected so far</span><span>S$0</span></p>
+        <p class="so-far" id="bd-sofar"><span>Collected so far</span><span>$0</span></p>
       </div>
       <div class="after">
         <button class="btn btn-main" type="button" id="bd-open">🎁 Open your bonus gift</button>
@@ -482,17 +539,31 @@ body.party .aurora{display:none}
       <p class="echo" id="bd-echo"></p>
     </section>
 
-    <!-- Final wrap-up -->
+    <!-- Final page -->
     <section class="screen bday fin" id="s-fin" hidden>
       <p class="pre">QUIZ COMPLETE</p>
-      <div class="foil small" aria-hidden="true"><span>2</span><span>1</span></div>
-      <h1 tabindex="-1" id="fn-title">That’s a wrap, Cheerina! 🎂</h1>
+      <h1 tabindex="-1" id="fn-title">That’s a wrap! 🎂</h1>
+      <figure class="photo" id="fn-photo"></figure>
       <div class="card">
         <span class="tag">Total collected</span>
-        <div class="amount" id="fn-amt" style="margin-top:12px">S$0</div>
+        <div class="amount" id="fn-amt" style="margin-top:12px">$0</div>
         <p class="noprob">7 brain teasers + 1 birthday bonus</p>
       </div>
-      <p class="tease" style="margin-top:22px">Happy 21st birthday! Hope the brain teasers were (mostly) fun. 💝</p>
+      <div class="cake-wrap">
+        <div class="cake">
+          <div class="candles" id="fn-candles">
+            <button class="candle" type="button" aria-label="Blow out candle" style="--cc:#ff8fb3"><span class="flame"></span><span class="smoke"></span></button>
+            <button class="candle" type="button" aria-label="Blow out candle" style="--cc:#a98bff"><span class="flame"></span><span class="smoke"></span></button>
+            <button class="candle" type="button" aria-label="Blow out candle" style="--cc:#5fd3b3"><span class="flame"></span><span class="smoke"></span></button>
+            <button class="candle" type="button" aria-label="Blow out candle" style="--cc:#ffd36e"><span class="flame"></span><span class="smoke"></span></button>
+            <button class="candle" type="button" aria-label="Blow out candle" style="--cc:#6fc3ff"><span class="flame"></span><span class="smoke"></span></button>
+          </div>
+          <div class="tier"></div><div class="dots"></div><div class="plate"></div>
+        </div>
+        <p class="cake-tip" id="fn-tip">Tap the candles to blow them out 🕯️</p>
+        <p class="wish" id="fn-wish" aria-live="polite"></p>
+      </div>
+      <p class="tease" style="margin-top:14px">Happy 21st birthday! Hope the brain teasers were (mostly) fun. 💝</p>
     </section>
   </main>
 
@@ -502,7 +573,7 @@ body.party .aurora{display:none}
 <div class="overlay" id="overlay" hidden aria-hidden="true">
   <div class="wrap">
     <div class="gift"><div class="box"></div><div class="lid"><div class="bow"></div></div></div>
-    <p class="yay">Correct! 🎉</p>
+    <p class="yay">Here’s your gift! 🎁</p>
   </div>
 </div>
 <p class="sr" id="announce" aria-live="assertive"></p>
@@ -515,18 +586,18 @@ body.party .aurora{display:none}
    CONFIGURATION: edit this block only.
    ===================================================================== */
 var CONFIG = {
-  currency: "S$",
+  currency: "$",
 
   // Stage gifts, in order (one per stage). Each should be larger than the last.
-  // The bonus should be the largest gift.
   rewards: [18, 28, 38, 48, 88, 108, 188],
 
   // Birthday bonus revealed after the Easter egg (the biggest gift).
   bonusAmount: 488,
 
-  // Each gift's QR code is encrypted. It opens only with the answer to its
-  // security question; the answer itself is never stored in this file.
-  // Generate "lock" with lock_gift.mjs. Leave lock "" to show a placeholder.
+  // Photo for the final page: a data URI ("data:image/jpeg;base64,...") or an image path/URL.
+  photo: "",
+  photoCaption: "Happy 21st 💝",
+
   gifts: {
     1: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.GZZGEpoVkpVPZCDR5+EraA==.0TxYKdAa0j3jOTyJ.L79wAguIF1bn2gTSS4SN5SBotNvQHN+0gWa5FP0L4Nn3m26NX8IUdsF0G7zG+Ubtzm05JB2//BXsOi6TQ4oPzx/7J/iOMMYynXQBEUpOqb7YrQ7Qzdlw10xesQizZapccIpsrg6/fT/8FMXIR+JVw36R/PuTfB48/Z/RsWjsEiytlK75hqI5YIWpymtpks2pU74DDqxg7RQGwCUJSPUKzF4GWTcRDvzSnpY65mam06KwjbT4LG2ZswBRuyuSMAIDj2tqwt+hfKJ5MxAjXr613kaTcjvsCR03UjflTkf7fmU4iwG7MBfOtZIfAmYv8JxILp236uW6h9jW380yKRMhs5l9FgvIYIxcbVmANE2/phFH+R2TfFJch+DPrjSJ4IXWEKcwFK9yadFlNXrwd7NskcI9g3kHp6i/zKMB4dVIkFhB6XCidqQlEHdFS7lvTWyG1zGuJ1pIvVqWuQZRMvxRxF3nbieH0076mSwyVvGKiFubz4n++fUUzwh26e2ocEAXV/sSN8oZKq+ngqXDVtjsFq+09cvnQybw/4Q+GhfgF+Qxj+yGYTUWnmNQ418o5/ppLtcuGUpDoZpEDS4na8mmJG1EZnW7V/q3qpuyo+wJVjcnByZLm77oc86Pb9ATacZ5Qa14cTNOQVY4Zxx7jz0NWMq6fMKR0qbnIYqrSNP7ci7sb+iKyRjXjs+yjPMPYnf4ouOQ23P7mq1m4PhWpO62K2LT9sWOGzmDD/c3nvVGaaxee+ixZrxSSIROxbmK9MCmNUd65eLsqBA/IZ++GcY/OJkysk+lJEJI6EVxq3fttDTcsXGQyLxbeSwsq4Rn4WqC60MkCepAoz5UOaZSs9fJOk7CyhznOdPImGdxyGDGcpNh+mZIVb8Dt6sl3/jeR3iNPT8c2YXHOa0m6nOq7IRa5PvbXavLQGAmWnmxFugEvCppH12r5C6qJF5G7tOwb4zlxnjPvKMf7YuLJ3SMgaGo7j44g/pVmLfLPsAw+lvrxOF+Fv52o3j4wQHLiOROT40ye7ydSTeQKBc9ujEvZ2WpuMjY/EVCyr+L6Y0MFKYpR7OpMl0E83LNWPFTjc2bLHodyRYb5THEFgN6KC+3rL8SsMxvI+lkA4yAuZGTi12RsOAXRnDdfjNTRMgO" },
     2: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.wUBAg5iTdMp5DpLw28tLTg==.GpgytbTt8uIaFwB5.RcxKer2k4VlScDL+J0ehHT3789wnfVMfNJFBL8iPdn8dolU6I0wto1uxocjOE6y9z5F2eXtF/VrUBpnpGaHl+5Ey+3V+Gf7nrWc+H3XSXKCHjthbQjSrtB7l/MIxtyFMzjpNQ3/DH0a2BzW6bSO1JSrTWWVNtNrvIX7MxQiMP/tvUN7MXgmrGhS53xcDpWgHYEug8BOJ78l9yA/CSA27m8Vo4PMz5wBw5HJgMg2p6WD097MMqMt7mUIUg2QCFrClvhSI6KMDwIfH4s4/ktTwPRmoQX6LIv+b6IH2lkHo/Yt6gJf8JUDR2aQWI0neNDJlel1uiPr8TCdQmgt8q0/FaCGF0bDITrqdoLCqvIYMZc40O6yk5MVLOcePFYLC/bd5MqZcX+tCYq9702UFQTalZoWxbsPnehXrJYJNVuFPQ1msWkZuFzm/MUhuON86gXU1als1gJpcqeE1GGGhuaSg/f8q02ryOo62HvprWcVK9PJnRPcgF0d7iJcp23c/gyf0gsw/ouz8fog0U1o8K5vcxsbaKA57ajuxfyjSSgL8I/U4gPah0ZayKk2zvOtLvOs9uaj3XEl9EgNEamTgnQI858N6LZ75FU4DKChTHkVk15L0FWSxPxTO3X4fhNpLsCFtYPeDOFT3caYLeko/L02w0IlR1QUdV4le9LOzXg+CjF5JBLCtqJxKfLDyCLva3DbdNQoNfa/O2KucT1qbhtgtk2xxz4UtOnD5dZTfzH13Ccet6hXnI5DAAyZctTze/20THVT+babhYyNoKk3qPlrcyl0Xu7D6zKEDKF2NoBXDlv1ud97bulb1YoXbywh1TFc+lDKocuWNfxhbI/mq3dZQ5xHv6t9nduZXma7cn1mju/hOtl5w6230comMZWbvF0LsQp7lJMNarmvgC18nVptxmuwUr7zQRgGe2Dzci73HGz4uwY23Wf57/0rCpc8gSQIKhPNGle/8y7Usqwgj1og5VRlSiYeAusjQSUoHhuDrWEnrQ8+9/xF8TMoHvBtbZvOHw//CKrbZyjJS1lenPdNtc8TMPpE3iarODnPvldTPlH+ywlVRsflyvmIjRMlj9GbMtE6IJ42zMqzsULOMYepiuYo7ANw/nTi87UMylw7HeY8iDVq4gTXCIW4GB8psQA==" },
@@ -539,15 +610,17 @@ var CONFIG = {
   },
 
   // How long the apparent ending lingers before "one more thing" appears (ms).
-  egg_delay_ms: 3500,
+  egg_delay_ms: 2000,
 
-  storageKey: "birthday-easter-v6"
+  storageKey: "birthday-easter-v7"
 };
 
 /* =====================================================================
    STAGES. "k" is a salted SHA-256 of the normalised value(s); no plaintext.
    "d" = decimal places compared. "fields" = labels when there are 2+ inputs.
    ===================================================================== */
+function F(a, b) { return '<span class="fr"><span>' + a + '</span><span>' + b + '</span></span>'; }
+
 var STAGES = [
   {
     topic: "Probability",
@@ -558,7 +631,25 @@ var STAGES = [
     fmt: "Two probabilities: fraction, decimal or percentage",
     fields: ["Minimum probability", "Maximum probability"],
     hint: "Draw the rain in each city as a circle in a Venn diagram. “Dry in both” is everything outside both circles. What happens to that outside area as you slide the circles from fully separate (never rains in both) to one sitting inside the other (as overlapping as possible)?",
-    d: 2, k: "a0b38926c93443938bdd2f4c6c0a95e2c3787eee94345da334f25bd8b97f2665"
+    d: 2, k: "a0b38926c93443938bdd2f4c6c0a95e2c3787eee94345da334f25bd8b97f2665",
+    sol: function () { return '' +
+      '<p>Call the events <b>A</b> (rain in City A) and <b>B</b> (rain in City B). “Dry in both” is everything <i>outside</i> both circles:</p>' +
+      '<span class="eq">P(dry in both) = 1 − P(A ∪ B)<br>= 1 − [0.3 + 0.4 − P(A ∩ B)]<br>= 0.3 + P(A ∩ B)</span>' +
+      '<p>So it all depends on the overlap P(A ∩ B), the chance it rains in both cities.</p>' +
+      '<svg viewBox="0 0 320 160" role="img" aria-label="Two Venn diagrams: separate circles, and circle A inside circle B">' +
+        '<text x="80" y="14" text-anchor="middle" font-size="12" font-weight="800" fill="#3b2340">Never rain in both</text>' +
+        '<rect x="5" y="22" width="150" height="110" rx="12" fill="#dff7ef" stroke="#5fd3b3"/>' +
+        '<circle cx="52" cy="77" r="30" fill="#ffc4d8" stroke="#e8457f"/><circle cx="118" cy="77" r="33" fill="#dccfff" stroke="#8f6cff"/>' +
+        '<text x="52" y="81" text-anchor="middle" font-size="12" font-weight="800">A</text><text x="118" y="81" text-anchor="middle" font-size="12" font-weight="800">B</text>' +
+        '<text x="80" y="151" text-anchor="middle" font-size="12" fill="#1f6f58" font-weight="800">dry in both: 0.3</text>' +
+        '<text x="242" y="14" text-anchor="middle" font-size="12" font-weight="800" fill="#3b2340">A sits inside B</text>' +
+        '<rect x="167" y="22" width="150" height="110" rx="12" fill="#dff7ef" stroke="#5fd3b3"/>' +
+        '<circle cx="242" cy="77" r="40" fill="#dccfff" stroke="#8f6cff"/><circle cx="230" cy="77" r="24" fill="#ffc4d8" stroke="#e8457f"/>' +
+        '<text x="230" y="81" text-anchor="middle" font-size="12" font-weight="800">A</text><text x="268" y="81" text-anchor="middle" font-size="12" font-weight="800">B</text>' +
+        '<text x="242" y="151" text-anchor="middle" font-size="12" fill="#1f6f58" font-weight="800">dry in both: 0.6</text>' +
+      '</svg>' +
+      '<p>The overlap can be as small as <b>0</b> (the circles don’t touch, which is possible since 0.3 + 0.4 ≤ 1) and as large as <b>0.3</b> (A entirely inside B, since the overlap can’t exceed the smaller circle).</p>' +
+      '<div class="ans-box">Minimum 0.3 · Maximum 0.6</div>'; }
   },
   {
     topic: "Conditional probability",
@@ -568,7 +659,15 @@ var STAGES = [
           "<p>What is the probability that a fourth flip of the same coin is also heads?</p>",
     fmt: "Probability: fraction, decimal or percentage",
     hint: "Do it in two steps. First update your belief about which coin you’re holding after three heads. Then average the chance of a fourth head over the two possibilities.",
-    d: 2, k: "4e1a5cebdf4bde100e5d9312be86f8f54e327722de9d3495f306f00de059aaa6"
+    d: 2, k: "4e1a5cebdf4bde100e5d9312be86f8f54e327722de9d3495f306f00de059aaa6",
+    sol: function () { return '' +
+      '<h3>Step 1 · Which coin is it? (Bayes)</h3>' +
+      '<p>Before flipping, P(double-headed) = ' + F(1, 3) + '. A double-headed coin gives HHH for sure; a fair coin gives HHH with probability ' + F(1, 8) + '.</p>' +
+      '<span class="eq">P(double | HHH) = ' + F(F(1, 3) + ' · 1', F(1, 3) + ' · 1 + ' + F(2, 3) + ' · ' + F(1, 8)) + ' = ' + F(F(1, 3), F(5, 12)) + ' = ' + F(4, 5) + '</span>' +
+      '<h3>Step 2 · Average over the two cases</h3>' +
+      '<span class="eq">P(4th flip is H) = ' + F(4, 5) + ' · 1 + ' + F(1, 5) + ' · ' + F(1, 2) + ' = ' + F(9, 10) + '</span>' +
+      '<p>Three heads in a row make the trick coin much more likely, which pushes the answer well above ½.</p>' +
+      '<div class="ans-box">9/10 = 0.9</div>'; }
   },
   {
     topic: "Counting",
@@ -578,54 +677,129 @@ var STAGES = [
           "<p>What is the probability that you two meet in the final?</p>",
     fmt: "Probability: fraction, decimal or percentage",
     hint: "You two only ever lose to each other. So when do you meet in the final rather than in an earlier round? Think about which half of the bracket each of you lands in.",
-    d: 2, k: "43637eab9f4be017e8fa04bf410ed97cfd6f56afdfcfe69db0d73c7f59ac6c17"
+    d: 2, k: "43637eab9f4be017e8fa04bf410ed97cfd6f56afdfcfe69db0d73c7f59ac6c17",
+    sol: function () { var c = "", j; for (j = 0; j < 8; j++) { c += '<circle cx="' + (40 + j * 34) + '" cy="40" r="11" fill="' + (j ? "#e9dfe6" : "#e8457f") + '"/>'; c += '<circle cx="' + (40 + j * 34) + '" cy="100" r="11" fill="#5fd3b3"/>'; }
+      return '' +
+      '<p>Neither of you ever loses to anyone else, so you both keep winning until you face each other.</p>' +
+      '<ul><li>Same half of the bracket → you collide <b>before</b> the final.</li><li>Opposite halves → you can only meet <b>in</b> the final, and you will.</li></ul>' +
+      '<svg viewBox="0 0 320 128" role="img" aria-label="Bracket: your half with 7 other spots, the other half with 8 spots">' +
+        '<text x="29" y="18" font-size="12" font-weight="800" fill="#3b2340">Your half</text>' +
+        '<text x="29" y="78" font-size="12" font-weight="800" fill="#3b2340">Other half</text>' + c +
+        '<text x="40" y="44" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">YOU</text>' +
+      '</svg>' +
+      '<p>Fix your own spot. Your friend is equally likely to be in any of the other 15 spots, and 8 of them are in the other half (mint).</p>' +
+      '<span class="eq">P(meet in the final) = ' + F(8, 15) + ' ≈ 0.533</span>' +
+      '<div class="ans-box">8/15 ≈ 0.53</div>'; }
   },
   {
     topic: "Geometric probability",
     title: "Fashionably Late",
     body: "<p>Mei and her friend agree to meet at a café. Each arrives at a uniformly random time between 7:00 and 8:00 pm, independently.</p>" +
-          "<p>Mei will wait <em>20 minutes</em> for her friend. Her friend will only wait <em>10 minutes</em> for Mei. Whoever arrives first leaves if the other hasn’t shown up by then.</p>" +
+          "<p>Mei will wait <em>36 minutes</em> for her friend. Her friend will only wait <em>12 minutes</em> for Mei. Whoever arrives first leaves if the other hasn’t shown up by then.</p>" +
           "<p>What is the probability that they meet?</p>",
     fmt: "Probability: fraction, decimal or percentage",
     hint: "Plot it: put Mei’s arrival time (0 to 60 minutes after 7pm) on the x-axis and her friend’s on the y-axis. Every possible pair of arrivals is a point in a 60 × 60 square. Draw the two straight lines that mark the edges of “they meet”, shade the region between them, and the probability is the shaded area ÷ the area of the square.",
-    d: 2, k: "1cb518fae89601d8fc955139440d46df40ca0e8b7e1a1591c436a901885376c8"
+    d: 2, k: "a8117b62043415221cdcc1fdbaecb259daf10a89fb250854f5cb6f34ccb214b0",
+    sol: function () { return '' +
+      '<p>Let <i>x</i> = Mei’s arrival and <i>y</i> = her friend’s, in minutes after 7pm. Each point in the 60 × 60 square is equally likely.</p>' +
+      '<ul><li>If Mei is first, they meet when the friend arrives within 36 min: <i>y</i> − <i>x</i> ≤ 36.</li><li>If the friend is first, they meet when Mei arrives within 12 min: <i>x</i> − <i>y</i> ≤ 12.</li></ul>' +
+      '<span class="eq">They meet ⇔ −12 ≤ <i>y</i> − <i>x</i> ≤ 36</span>' +
+      '<svg viewBox="0 0 270 252" role="img" aria-label="Square with a shaded diagonal band where they meet and two unshaded corner triangles">' +
+        '<rect x="40" y="10" width="200" height="200" fill="#fff" stroke="#3b2340" stroke-width="1.5"/>' +
+        '<polygon points="40,210 80,210 240,50 240,10 120,10 40,90" fill="#ffc4d8"/>' +
+        '<line x1="40" y1="90" x2="120" y2="10" stroke="#e8457f" stroke-width="2"/><line x1="80" y1="210" x2="240" y2="50" stroke="#e8457f" stroke-width="2"/>' +
+        '<text x="140" y="116" text-anchor="middle" font-size="14" font-weight="900" fill="#e8457f">meet</text>' +
+        '<text x="66" y="40" text-anchor="middle" font-size="11" font-weight="800" fill="#3b2340">½·24² = 288</text>' +
+        '<text x="196" y="186" text-anchor="middle" font-size="11" font-weight="800" fill="#3b2340">½·48² = 1152</text>' +
+        '<text x="88" y="70" font-size="10" fill="#e8457f" transform="rotate(-45 88 70)">y = x + 36</text>' +
+        '<text x="172" y="132" font-size="10" fill="#e8457f" transform="rotate(-45 172 132)">y = x − 12</text>' +
+        '<text x="40" y="226" text-anchor="middle" font-size="10">0</text><text x="240" y="226" text-anchor="middle" font-size="10">60</text>' +
+        '<text x="30" y="14" text-anchor="end" font-size="10">60</text>' +
+        '<text x="140" y="244" text-anchor="middle" font-size="11" font-weight="700">Mei arrives (x)</text>' +
+        '<text x="14" y="110" text-anchor="middle" font-size="11" font-weight="700" transform="rotate(-90 14 110)">Friend arrives (y)</text>' +
+      '</svg>' +
+      '<p>The two unshaded corners are right triangles with legs 60 − 36 = 24 and 60 − 12 = 48.</p>' +
+      '<span class="eq">P(meet) = 1 − ' + F("288 + 1152", "3600") + ' = 1 − 0.4 = 0.6</span>' +
+      '<div class="ans-box">0.6</div>'; }
   },
   {
     topic: "Optimal decisions",
     title: "Three Ang Baos",
-    body: "<p>Each ang bao contains an amount between S$0 and S$10, with every value equally likely (treat it as continuous), independently of the others.</p>" +
+    body: "<p>Each ang bao contains an amount between $0 and $64, with every value equally likely (treat it as continuous), independently of the others.</p>" +
           "<p>You may open up to three, one at a time. After opening one, you either <em>keep it</em> (the game ends) or <em>discard it forever</em> and open the next. If you reach the third, you must keep it.</p>" +
           "<p>Playing optimally, what is your expected payout?</p>",
-    fmt: "Amount in S$, to the nearest cent",
-    hint: "Work backwards. With one ang bao left it’s worth S$5 on average. With two left, keep the current one only if it beats what continuing is worth, then repeat the logic one more time.",
-    d: 2, k: "b4fcf112af76e53371b3d24f0d73ef9b82b24f9978ed619d76befe48680f4c68"
+    fmt: "Amount in $, to the nearest cent",
+    hint: "Work backwards. With one ang bao left it’s worth $32 on average. With two left, keep the current one only if it beats what continuing is worth, then repeat the logic one more time.",
+    d: 2, k: "e5d7579c42677ad462d266426b8cb9a36254e351ae07ce9cbc9aab1690c99123",
+    sol: function () { return '' +
+      '<p>Work backwards from the last ang bao. At each step, keep what you’re holding only if it beats the value of carrying on.</p>' +
+      '<h3>One left</h3><p>You must keep it: worth its average, <b>$32</b>.</p>' +
+      '<h3>Two left</h3><p>Keep the first if it’s more than $32 (half the time, and then it averages $48); otherwise take the last one.</p>' +
+      '<span class="eq">E₂ = ' + F(1, 2) + ' · 48 + ' + F(1, 2) + ' · 32 = 40</span>' +
+      '<h3>Three left</h3><p>Keep the first if it’s more than $40. That happens with probability ' + F(24, 64) + ' = ' + F(3, 8) + ', and then it averages (40 + 64)/2 = $52.</p>' +
+      '<span class="eq">E₃ = ' + F(3, 8) + ' · 52 + ' + F(5, 8) + ' · 40 = 19.5 + 25 = 44.5</span>' +
+      '<svg viewBox="0 0 320 84" role="img" aria-label="Number line from 0 to 64 with thresholds at 32 and 40">' +
+        '<line x1="20" y1="44" x2="300" y2="44" stroke="#3b2340" stroke-width="2"/>' +
+        '<rect x="195" y="34" width="105" height="20" rx="6" fill="#ffc4d8"/><rect x="160" y="58" width="140" height="8" rx="4" fill="#dccfff"/>' +
+        '<line x1="160" y1="36" x2="160" y2="68" stroke="#8f6cff" stroke-width="2"/><line x1="195" y1="26" x2="195" y2="54" stroke="#e8457f" stroke-width="2"/>' +
+        '<text x="20" y="80" text-anchor="middle" font-size="10">$0</text><text x="160" y="80" text-anchor="middle" font-size="10">$32</text><text x="300" y="80" text-anchor="middle" font-size="10">$64</text>' +
+        '<text x="195" y="20" text-anchor="middle" font-size="10" font-weight="800" fill="#e8457f">$40</text>' +
+        '<text x="248" y="48" text-anchor="middle" font-size="10" font-weight="800">keep 1st</text>' +
+        '<text x="90" y="30" text-anchor="middle" font-size="10" fill="#8f6cff" font-weight="800">2nd: keep if &gt; $32</text>' +
+      '</svg>' +
+      '<p>Strategy: keep the 1st if it’s over $40, the 2nd if it’s over $32, otherwise take the 3rd.</p>' +
+      '<div class="ans-box">$44.50</div>'; }
   },
   {
     topic: "Expected value",
     title: "Tangled Ribbons",
-    body: "<p>A gift bag holds four pieces of ribbon. You can see their eight ends poking out, but you can’t tell which ends belong to the same ribbon.</p>" +
+    body: "<p>A gift bag holds <i>n</i> pieces of ribbon. You can see all 2<i>n</i> ends poking out, but you can’t tell which ends belong to the same ribbon.</p>" +
           "<p>You repeatedly pick two loose ends uniformly at random and tie them together, until no loose ends remain. The ribbons end up joined into one or more closed loops.</p>" +
-          "<p>What is the expected number of loops?</p>",
-    fmt: "A number, as a fraction or to 2 decimal places",
-    hint: "Start small. With 1 ribbon, its two ends must be tied together: exactly 1 loop. With 2 ribbons, take any loose end: what’s the chance it gets tied to the other end of its own piece, closing a loop? Whatever happens, the tied pieces then behave like one ribbon, so you’re back to a smaller case. Expected loops = the sum of the chances of closing a loop at each step, for 1, 2, 3 and 4 ribbons.",
-    d: 2, k: "6d2377f3bff0fb7771b3709223e2f46aabd1ae9dbe8b72437933b2ae9b9daa6a"
+          "<p>What is the smallest number of ribbons <i>n</i> for which the expected number of loops is at least 2?</p>",
+    fmt: "A whole number",
+    hint: "Start small. With 1 ribbon, its two ends must be tied together: exactly 1 loop. With 2 ribbons, take any loose end: what’s the chance it gets tied to the other end of its own piece, closing a loop? Whatever happens, the tied pieces then behave like one ribbon, so you’re back to a smaller case. Expected loops = the sum of the chances of closing a loop at each step.",
+    d: 2, k: "b6c69bb126e248e80d9a9003c81e91f3aec52acee95aaa4425184aeb2d512239",
+    sol: function () { var rows = "", acc = 0, k; for (k = 1; k <= 8; k++) { acc += 1 / (2 * k - 1); rows += '<tr' + (k === 8 ? ' class="hl"' : "") + '><td>' + k + '</td><td>+ 1/' + (2 * k - 1) + '</td><td>' + acc.toFixed(3) + '</td></tr>'; }
+      return '' +
+      '<p>Tie one pair at a time. Suppose <i>k</i> separate pieces remain, so 2<i>k</i> loose ends. Grab any end: its partner is one of the other 2<i>k</i> − 1 ends, and exactly one of those is the other end of its own piece.</p>' +
+      '<span class="eq">P(this tie closes a loop) = ' + F(1, "2<i>k</i> − 1") + '</span>' +
+      '<p>Either way, one fewer piece remains: a closed loop is set aside, or two pieces become one longer piece. So with <i>n</i> ribbons you go through <i>k</i> = <i>n</i>, <i>n</i> − 1, …, 1, and by linearity of expectation:</p>' +
+      '<span class="eq">E[loops] = 1 + ' + F(1, 3) + ' + ' + F(1, 5) + ' + … + ' + F(1, "2<i>n</i> − 1") + '</span>' +
+      '<table><thead><tr><th>n ribbons</th><th>new term</th><th>expected loops</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+      '<p>The total is still below 2 at <i>n</i> = 7 (≈ 1.955) and first passes 2 at <i>n</i> = 8 (≈ 2.022).</p>' +
+      '<div class="ans-box">8 ribbons</div>'; }
   },
   {
     topic: "Final stage",
     title: "Three Games, Three Prizes",
     body: "<p>There are three games:</p>" +
-          "<p><em>Game 1</em> always gives you Prize 1.<br><em>Game 2</em> gives Prize 1 or Prize 2, each with probability 1/2.<br><em>Game 3</em> gives Prize 1, Prize 2 or Prize 3, each with probability 1/3.</p>" +
+          "<p><em>Game 1</em> always gives you Prize 1.<br><em>Game 2</em> gives Prize 1 or Prize 2, each with probability 1/2.<br><em>Game 3</em> gives Prize 1 or Prize 2 each with probability 1/4, and Prize 3 with probability 1/2.</p>" +
           "<p>Each round you choose any one game to play, and you see what you won before choosing the next. You want to collect all three prizes.</p>" +
           "<p>Using the strategy that minimises the expected number of rounds, how many rounds do you expect to play?</p>",
     fmt: "A number, as a fraction or to 2 decimal places",
     hint: "All that matters is which prizes you already hold. Start from the states where you’re missing just one prize, work backwards, and at each state pick the game with the smallest expected rounds remaining.",
-    d: 2, k: "8ac4ff66b5130cfc3d06ae278c9d3c288c9355ccebe71a98e0973a0862a006d0"
+    d: 2, k: "094cef795a392071788a0f9c38d74b44dca992d3fa6ae0f436aaefc92efb9c8e",
+    sol: function () { return '' +
+      '<p>Only the set of prizes you hold matters. Let E(S) be the expected rounds still needed when holding S, and work backwards. If a game might give a prize you already have, you just stay put, so for example:</p>' +
+      '<span class="eq">E({1}) via Game 3: E = 1 + ' + F(1, 4) + 'E + ' + F(1, 4) + ' · E({1,2}) + ' + F(1, 2) + ' · E({1,3}) ⇒ E = ' + F(10, 3) + '</span>' +
+      '<table><thead><tr><th>Holding</th><th>Best game</th><th>Expected rounds left</th></tr></thead><tbody>' +
+        '<tr><td>{1, 2}</td><td>Game 3</td><td>2</td></tr>' +
+        '<tr><td>{1, 3}</td><td>Game 2</td><td>2</td></tr>' +
+        '<tr><td>{2, 3}</td><td>Game 1</td><td>1</td></tr>' +
+        '<tr><td>{1}</td><td>Game 3</td><td>10/3</td></tr>' +
+        '<tr><td>{2}</td><td>Game 3</td><td>8/3</td></tr>' +
+        '<tr><td>{3}</td><td>Game 2</td><td>5/2</td></tr>' +
+        '<tr class="hl"><td>nothing</td><td>Game 3</td><td>15/4</td></tr>' +
+      '</tbody></table>' +
+      '<p>From the start, Game 3 beats the alternatives (Game 1 gives 13/3, Game 2 gives 4):</p>' +
+      '<span class="eq">E(∅) = 1 + ' + F(1, 4) + ' · ' + F(10, 3) + ' + ' + F(1, 4) + ' · ' + F(8, 3) + ' + ' + F(1, 2) + ' · ' + F(5, 2) + ' = ' + F(15, 4) + '</span>' +
+      '<p>The twist is that all three games get used: Game 3 first, Game 2 once you hold Prize 3, and Game 1 for the very last prize if it’s Prize 1.</p>' +
+      '<div class="ans-box">15/4 = 3.75 rounds</div>'; }
   }
 ];
 
 var ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 var N = STAGES.length;
-var LOCK_ITER = 250000;
 var LOCK_SVG = '<svg class="cute-lock" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M7.5 10.5V8a4.5 4.5 0 0 1 9 0v2.5" fill="none" stroke="#8f6cff" stroke-width="2.4" stroke-linecap="round"/><rect x="4" y="10" width="16" height="12" rx="4.5" fill="#c9b6ff"/><circle cx="9" cy="15.3" r="1.15" fill="#3b2357"/><circle cx="15" cy="15.3" r="1.15" fill="#3b2357"/><path d="M10.7 17.6q1.3 1.1 2.6 0" fill="none" stroke="#3b2357" stroke-width="1.1" stroke-linecap="round"/><ellipse cx="7.2" cy="17.6" rx="1.3" ry=".8" fill="#ff8fb3" opacity=".85"/><ellipse cx="16.8" cy="17.6" rx="1.3" ry=".8" fill="#ff8fb3" opacity=".85"/></svg>';
 
 function $(id) { return document.getElementById(id); }
@@ -638,21 +812,68 @@ if (CONFIG.bonusAmount <= Math.max.apply(null, CONFIG.rewards)) console.warn("bo
 var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
 
+/* ---------- sound (synthesised, no files) ---------- */
+var Sound = (function () {
+  var ctx = null, on = true;
+  try { on = localStorage.getItem("birthday-easter-sound") !== "off"; } catch (e) {}
+  function ac() {
+    if (!ctx) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ctx = new C(); }
+    if (ctx.state === "suspended") ctx.resume();
+    return ctx;
+  }
+  function tone(f, t0, dur, type, vol, f2) {
+    var c = ac(); if (!c) return;
+    var t = c.currentTime + t0, o = c.createOscillator(), g = c.createGain();
+    o.type = type || "sine"; o.frequency.setValueAtTime(f, t);
+    if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol || 0.15, t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + dur + 0.05);
+  }
+  function noise(t0, dur, vol, ftype, freq) {
+    var c = ac(); if (!c) return;
+    var len = Math.max(1, Math.floor(c.sampleRate * dur)), buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0);
+    for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+    var src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+    src.buffer = buf; f.type = ftype || "highpass"; f.frequency.value = freq || 800; g.gain.value = vol || 0.3;
+    src.connect(f); f.connect(g); g.connect(c.destination); src.start(c.currentTime + t0);
+  }
+  var fx = {
+    tap: function () { tone(880, 0, 0.06, "sine", 0.05); },
+    squeak: function () { tone(500 + Math.random() * 150, 0, 0.14, "sine", 0.1, 860); },
+    pop: function () { noise(0, 0.14, 0.8, "highpass", 500); tone(240, 0, 0.09, "triangle", 0.22, 80); for (var i = 0; i < 6; i++) tone(1900 + Math.random() * 1600, 0.06 + i * 0.05, 0.2, "sine", 0.045); },
+    whoosh: function () { tone(330, 0, 1.0, "sine", 0.1, 1320); noise(0, 0.8, 0.12, "bandpass", 1400); },
+    correct: function () { [523.25, 659.25, 783.99, 1046.5].forEach(function (f, i) { tone(f, i * 0.09, 0.4, "triangle", 0.16); }); },
+    wrong: function () { tone(330, 0, 0.16, "triangle", 0.12, 300); tone(247, 0.15, 0.28, "triangle", 0.12, 220); },
+    chime: function () { [1318.5, 1760, 2093].forEach(function (f, i) { tone(f, i * 0.13, 1.0, "sine", 0.08); }); },
+    gift: function () { noise(0, 0.3, 0.12, "highpass", 2500); [784, 988, 1175, 1568].forEach(function (f, i) { tone(f, 0.45 + i * 0.07, 0.45, "triangle", 0.13); }); },
+    unlock: function () { tone(660, 0, 0.1, "square", 0.04); tone(990, 0.09, 0.35, "triangle", 0.14); tone(1320, 0.18, 0.4, "sine", 0.08); },
+    sparkle: function () { for (var i = 0; i < 4; i++) tone(1800 + Math.random() * 1500, i * 0.045, 0.16, "sine", 0.04); },
+    puff: function () { noise(0, 0.35, 0.4, "lowpass", 900); },
+    fanfare: function () { [523.25, 659.25, 783.99, 1046.5].forEach(function (f, i) { tone(f, i * 0.12, 0.3, "triangle", 0.15); }); [523.25, 659.25, 783.99, 1046.5].forEach(function (f) { tone(f, 0.55, 1.4, "triangle", 0.08); }); }
+  };
+  return {
+    play: function (n) { if (!on) return; try { if (fx[n]) fx[n](); } catch (e) {} },
+    isOn: function () { return on; },
+    set: function (v) { on = !!v; try { localStorage.setItem("birthday-easter-sound", on ? "on" : "off"); } catch (e) {} if (on) ac(); }
+  };
+})();
+
 /* ---------- storage ---------- */
 var store = {
   get: function () { try { var raw = localStorage.getItem(CONFIG.storageKey); return raw ? JSON.parse(raw) : null; } catch (e) { return null; } },
   set: function (v) { try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(v)); } catch (e) {} },
   clear: function () { try { localStorage.removeItem(CONFIG.storageKey); } catch (e) {} }
 };
-function fresh() { return { v: 3, phase: "intro", i: 0, log: [], hint: false, tries: 0, rv: {}, opened: {}, egg: {}, bonus: null, ans: {} }; }
+function fresh() { return { v: 7, phase: "intro", i: 0, log: [], hint: false, tries: 0, rv: {}, opened: {}, egg: {}, bonus: null, ans: {}, cake: false }; }
+var PHASES = ["intro", "stage", "solved", "reward", "done", "egg", "bday", "fin"];
 var S = (function () {
   var s = store.get(), f = fresh();
-  if (!s || s.v !== 3 || !Array.isArray(s.log)) return f;
+  if (!s || s.v !== 7 || !Array.isArray(s.log)) return f;
   for (var key in f) if (!(key in s)) s[key] = f[key];
   s.i = Math.min(Math.max(0, s.i | 0), N - 1);
-  if (["intro", "stage", "reward", "done", "egg", "bday", "fin"].indexOf(s.phase) < 0) s.phase = "intro";
-  if (s.phase === "reward" && !s.log[s.i]) s.phase = "stage";
-  if ((s.phase === "done" || s.phase === "egg" || s.phase === "bday" || s.phase === "fin") && s.log.length < N) s.phase = "stage";
+  if (PHASES.indexOf(s.phase) < 0) s.phase = "intro";
+  if ((s.phase === "reward" || s.phase === "solved") && !s.log[s.i]) s.phase = "stage";
+  if (["done", "egg", "bday", "fin"].indexOf(s.phase) >= 0 && s.log.length < N) s.phase = "stage";
   if ((s.phase === "bday" || s.phase === "fin") && !s.bonus) s.phase = "egg";
   return s;
 })();
@@ -759,10 +980,9 @@ function openLock(payload, answer) {
 }
 
 /* ---------- gift panel ---------- */
-function giftKey(k) { return String(k); }
 function soFar(k) { return k === "bonus" ? POOL : sum(CONFIG.rewards.slice(0, +k - 1)); }
 function mountGift(el, k, label, onOpened) {
-  var g = CONFIG.gifts[k] || {}, key = giftKey(k), opened = S.opened[key];
+  var g = CONFIG.gifts[k] || {}, key = String(k), opened = S.opened[key];
   el.hidden = false;
   if (!opened && !g.lock) { S.opened[key] = opened = "placeholder"; save(); }
   if (opened) {
@@ -770,8 +990,7 @@ function mountGift(el, k, label, onOpened) {
       ? '<div class="qr-ph" role="img" aria-label="QR code placeholder: ' + esc(label) + '"><b>QR CODE HERE</b><span>' + esc(label) + '</span></div>'
       : '<img class="qr-img" src="' + esc(opened) + '" alt="Gift QR code: ' + esc(label) + '">';
     el.innerHTML = '<div class="qr-card">' + img +
-      '<p class="secret"><span aria-hidden="true">🙊</span>This QR code is just for you. Please don’t share it with anyone else.</p>' +
-      '</div>';
+      '<p class="secret"><span aria-hidden="true">🤫</span>This QR code is just for you. Please don’t share it with anyone else.</p></div>';
     if (onOpened) onOpened();
     return;
   }
@@ -790,9 +1009,9 @@ function mountGift(el, k, label, onOpened) {
     working = true; fb.className = "lock-fb wait"; fb.textContent = "Checking…";
     openLock(g.lock, inp.value).then(function (data) {
       working = false;
-      if (data) { S.opened[key] = data; save(); mountGift(el, k, label, onOpened); }
+      if (data) { S.opened[key] = data; save(); Sound.play("unlock"); mountGift(el, k, label, onOpened); }
       else if (!(window.crypto && crypto.subtle)) { fb.className = "lock-fb"; fb.textContent = "Please open this page from its https:// link to unlock gifts."; }
-      else { fb.className = "lock-fb"; fb.textContent = "Hmm, that’s not it. Try again."; inp.classList.add("bad"); inp.select(); }
+      else { fb.className = "lock-fb"; fb.textContent = "Hmm, that’s not it. Try again."; Sound.play("wrong"); inp.classList.add("bad"); inp.select(); }
     });
   });
   inp.addEventListener("input", function () { inp.classList.remove("bad"); fb.textContent = ""; });
@@ -804,11 +1023,11 @@ var SCREENS = { intro: "s-intro", stage: "s-stage", reward: "s-reward", done: "s
 var whisperTimer = null;
 var view = "home", reviewIdx = -1;   // not saved: every refresh opens the home page
 
-function show(phase, focusId) {
-  for (var p in SCREENS) $(SCREENS[p]).hidden = p !== phase;
-  document.body.classList.toggle("party", phase === "bday" || phase === "fin");
-  $("home-fab").hidden = !(phase === "egg" || phase === "bday" || phase === "fin");
-  var hud = phase === "stage" || phase === "reward" || phase === "done";
+function show(screen, focusId) {
+  for (var p in SCREENS) $(SCREENS[p]).hidden = p !== screen;
+  document.body.classList.toggle("party", screen === "bday" || screen === "fin");
+  $("home-fab").hidden = !(screen === "egg" || screen === "bday" || screen === "fin");
+  var hud = screen === "stage" || screen === "reward" || screen === "done";
   $("hud").hidden = !hud;
   if (hud) renderHud();
   if (focusId) { var f = $(focusId); if (f) try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); } }
@@ -826,30 +1045,34 @@ function renderHud() {
 
 function renderStage(focus, rIdx) {
   var review = typeof rIdx === "number" && rIdx >= 0, idx = review ? rIdx : S.i;
-  var st = STAGES[idx], labels = st.fields || [null], html = "", prev = review ? (S.ans[idx] || []) : [];
+  var mode = review ? "review" : (S.phase === "solved" ? "solved" : "play");
+  var st = STAGES[idx], labels = st.fields || [null], html = "", prev = mode === "play" ? [] : (S.ans[idx] || []);
   $("st-tag").textContent = "Stage " + ROMAN[idx] + " · " + st.topic;
   $("st-title").textContent = st.title;
   $("st-card").setAttribute("data-n", ROMAN[idx]);
   $("st-body").innerHTML = st.body;
   $("st-fmt").textContent = st.fmt;
   for (var j = 0; j < labels.length; j++) {
-    var lab = labels[j] || "Your answer";
-    html += '<div>' + (labels[j] ? '<label for="st-in' + j + '">' + esc(lab) + '</label>' : "") +
+    html += '<div>' + (labels[j] ? '<label for="st-in' + j + '">' + esc(labels[j]) + '</label>' : "") +
       '<input class="answer st-in" id="st-in' + j + '" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="' +
       (labels.length > 1 ? "answer" : "your answer") + '"' + (labels[j] ? "" : ' aria-label="Your answer"') + ' aria-describedby="st-fmt st-feedback"' +
-      (review ? ' readonly value="' + esc(prev[j] != null ? prev[j] : "✓") + '"' : "") + '></div>';
+      (mode !== "play" ? ' readonly value="' + esc(prev[j] != null ? prev[j] : "✓") + '"' : "") + '></div>';
   }
   $("st-inputs").innerHTML = html;
   Array.prototype.forEach.call(document.querySelectorAll(".st-in"), function (x) { x.addEventListener("input", function () { x.classList.remove("bad"); }); });
-  $("st-submit").hidden = review;
+  $("st-submit").hidden = mode !== "play";
   var e = S.log[idx];
-  $("st-feedback").innerHTML = review ? '<p class="solved-note">✓ Solved' + (e ? " in " + e.tries + (e.tries === 1 ? " attempt" : " attempts") : "") + '</p>' : "";
-  setHint(review ? false : S.hint, idx);
-  $("st-after").hidden = !review;
-  if (review) {
-    $("st-gift").hidden = true; $("st-gift").innerHTML = ""; $("st-giftbtn").hidden = false;
-    $("st-back").textContent = S.phase === "stage" ? "Back to Stage " + ROMAN[S.i] + " →" : "Continue where you left off →";
-  }
+  $("st-feedback").innerHTML = mode === "solved" ? '<p class="yay-note">🎉 Correct!</p>'
+    : mode === "review" ? '<p class="solved-note">✓ Solved' + (e ? " in " + e.tries + (e.tries === 1 ? " attempt" : " attempts") : "") + '</p>' : "";
+  setHint(mode === "play" ? S.hint : false, idx);
+  $("st-done").hidden = mode === "play";
+  $("st-sol").hidden = true; $("st-sol").innerHTML = "";
+  $("st-solbtn").textContent = "📖 Show solution"; $("st-solbtn").setAttribute("aria-expanded", "false");
+  $("st-continue").hidden = mode !== "solved";
+  $("st-giftbtn").hidden = mode !== "review";
+  $("st-gift").hidden = true; $("st-gift").innerHTML = "";
+  $("st-back").hidden = mode !== "review";
+  if (mode === "review") $("st-back").textContent = S.phase === "stage" ? "Back to Stage " + ROMAN[S.i] + " →" : "Continue where you left off →";
   show("stage", focus ? "st-title" : null);
 }
 function setHint(open, idx) {
@@ -865,7 +1088,7 @@ function renderReward(fresh, focus) {
   $("rw-tag").textContent = "Stage " + ROMAN[S.i] + " cleared";
   $("rw-title").textContent = CHEERS[S.i % CHEERS.length];
   $("rw-amt").textContent = money(CONFIG.rewards[S.i]);
-  $("rw-sofar").lastChild.textContent = money(soFar(S.i + 1));
+  $("rw-sofar").lastChild.textContent = money(soFar(k));
   $("rw-id").textContent = e.id;
   $("rw-tries").textContent = String(e.tries);
   $("rw-hint").textContent = e.hint ? "Yes" : "No";
@@ -887,10 +1110,10 @@ function renderDone(focus) {
   w.classList.remove("on"); w.hidden = true;
   clearTimeout(whisperTimer);
   whisperTimer = setTimeout(function () {
-    if (S.phase !== "done") return;
-    w.hidden = false;
+    if (S.phase !== "done" || view !== "play") return;
+    w.hidden = false; Sound.play("chime");
     requestAnimationFrame(function () { requestAnimationFrame(function () { w.classList.add("on"); }); });
-  }, reduced ? 1200 : CONFIG.egg_delay_ms);
+  }, reduced ? 1000 : CONFIG.egg_delay_ms);
   show("done", focus ? "dn-title" : null);
 }
 
@@ -907,7 +1130,7 @@ function renderEgg(focus) {
 
 function renderBday(celebrate, focus) {
   var amt = $("bd-amt");
-  $("bd-pool").textContent = money(POOL);
+  $("bd-tease").textContent = "We know " + money(POOL) + " isn’t enough…";
   $("bd-sofar").lastChild.textContent = money(soFar("bonus"));
   $("bd-open").hidden = !!S.rv.bonus;
   $("bd-finish").hidden = true;
@@ -915,14 +1138,20 @@ function renderBday(celebrate, focus) {
   var said = [S.egg.b, S.egg.c].filter(Boolean);
   $("bd-echo").textContent = said.length ? "Your review: “" + said.join(" / ") + "”. Noted. Bonus unchanged. 😌" : "";
   show("bday", focus ? "bd-title" : null);
-  if (celebrate && !reduced) { countUp(amt, CONFIG.bonusAmount, 1500); confetti(90); balloons(9); }
+  if (celebrate && !reduced) { countUp(amt, CONFIG.bonusAmount, 1500); confetti(90); balloonsRise(9); Sound.play("fanfare"); }
   else amt.textContent = money(CONFIG.bonusAmount);
 }
 
 function renderFin(celebrate, focus) {
   var amt = $("fn-amt"), total = POOL + CONFIG.bonusAmount;
+  $("fn-photo").innerHTML = (CONFIG.photo ? '<img src="' + esc(CONFIG.photo) + '" alt="Birthday photo">' : '<div class="ph">Photo goes here 📸</div>') +
+    '<figcaption>' + esc(CONFIG.photoCaption || "") + '</figcaption>';
+  var cs = $("fn-candles").querySelectorAll(".candle");
+  for (var j = 0; j < cs.length; j++) cs[j].classList.toggle("out", !!S.cake);
+  $("fn-wish").textContent = S.cake ? "Make a wish ✨" : "";
+  $("fn-tip").hidden = !!S.cake;
   show("fin", focus ? "fn-title" : null);
-  if (celebrate && !reduced) { countUp(amt, total, 1600); confetti(110); balloons(12); }
+  if (celebrate && !reduced) { countUp(amt, total, 1600); confetti(110); balloonsRise(12); Sound.play("fanfare"); }
   else amt.textContent = money(total);
 }
 
@@ -947,21 +1176,22 @@ function renderHome(focus) {
 function render(focus) {
   clearTimeout(whisperTimer);
   if (view === "home") { renderHome(focus); return; }
-  if (view === "review") { renderStage(focus, reviewIdx); if (focus) window.scrollTo(0, 0); return; }
-  if (S.phase === "stage") renderStage(focus);
+  if (view === "review") renderStage(focus, reviewIdx);
+  else if (S.phase === "stage" || S.phase === "solved") renderStage(focus);
   else if (S.phase === "reward") renderReward(false, focus);
   else if (S.phase === "done") renderDone(focus);
   else if (S.phase === "egg") renderEgg(focus);
   else if (S.phase === "bday") renderBday(false, focus);
   else if (S.phase === "fin") renderFin(false, focus);
-  else show("intro", null);
+  else { renderHome(focus); return; }
   if (focus) window.scrollTo(0, 0);
 }
 
 /* ---------- effects ---------- */
 var PARTY = ["#ff8fb3", "#ffd36e", "#5fd3b3", "#a98bff", "#6fc3ff", "#f2665a", "#ffffff"];
-function playCorrect(done) {
+function playGift(done) {
   var o = $("overlay");
+  Sound.play("gift");
   if (reduced) { done(); return; }
   o.hidden = false; o.classList.remove("run", "out"); void o.offsetWidth; o.classList.add("run");
   setTimeout(function () { confetti(40); }, 600);
@@ -979,6 +1209,7 @@ function countUp(el, to, ms) {
   })(t0);
 }
 function confetti(n) {
+  if (reduced) return;
   for (var j = 0; j < n; j++) {
     var f = document.createElement("span");
     f.className = "fleck";
@@ -993,7 +1224,7 @@ function confetti(n) {
     setTimeout(function (x) { return function () { x.remove(); }; }(f), 6500);
   }
 }
-function balloons(n) {
+function balloonsRise(n) {
   var cols = ["#ff8fb3", "#ffd36e", "#5fd3b3", "#a98bff", "#6fc3ff", "#ffb48a"];
   for (var j = 0; j < n; j++) {
     var b = document.createElement("span");
@@ -1008,14 +1239,47 @@ function balloons(n) {
     setTimeout(function (x) { return function () { x.remove(); }; }(b), 13000);
   }
 }
+function sparkleAt(x, y, color, count, spread) {
+  var cols = [color, "#ffd36e", "#ffffff", color, "#ffe9a8", "#ff8fb3", "#a98bff"];
+  for (var j = 0; j < count; j++) {
+    var f = document.createElement("span"), a = (j / count) * Math.PI * 2 + Math.random() * 0.5, d = spread * (0.4 + Math.random() * 0.8);
+    f.className = "sparkle"; f.textContent = j % 3 ? "✦" : "✧";
+    f.style.left = x + "px"; f.style.top = y + "px";
+    f.style.color = cols[j % cols.length];
+    f.style.fontSize = (9 + Math.random() * 14) + "px";
+    f.style.setProperty("--dx", Math.cos(a) * d + "px");
+    f.style.setProperty("--dy", Math.sin(a) * d + "px");
+    f.style.animationDelay = (Math.random() * 0.15) + "s";
+    document.body.appendChild(f);
+    setTimeout(function (el) { return function () { el.remove(); }; }(f), 1200);
+  }
+}
+function glitterAt(x, y, color, count) {
+  var cols = [color, "#ffd36e", "#ffffff", "#ffe9a8", "#ff8fb3", "#a98bff", "#6fc3ff"];
+  for (var j = 0; j < count; j++) {
+    var f = document.createElement("span"), a = Math.random() * Math.PI * 2, d = 30 + Math.random() * 140;
+    f.className = "glit";
+    f.style.left = x + "px"; f.style.top = y + "px";
+    f.style.background = cols[j % cols.length];
+    f.style.boxShadow = "0 0 6px " + cols[j % cols.length];
+    f.style.setProperty("--dx", Math.cos(a) * d + "px");
+    f.style.setProperty("--dy", Math.sin(a) * d + 60 + Math.random() * 80 + "px");
+    f.style.setProperty("--r", (Math.random() * 720 - 360) + "deg");
+    f.style.animationDuration = (1.2 + Math.random() * 1.2) + "s";
+    document.body.appendChild(f);
+    setTimeout(function (el) { return function () { el.remove(); }; }(f), 2600);
+  }
+}
 function announce(msg) { var a = $("announce"); a.textContent = ""; setTimeout(function () { a.textContent = msg; }, 30); }
 
-/* ---------- events ---------- */
+/* ---------- navigation ---------- */
 function goHome() { view = "home"; render(true); }
 function goPlay() { view = "play"; reviewIdx = -1; render(true); }
 function goReview(j) { if (j >= 0 && j < S.log.length) { view = "review"; reviewIdx = j; render(true); } }
+
 $("btn-start").addEventListener("click", function () {
   if (S.phase === "intro") { S = fresh(); S.phase = "stage"; save(); }
+  Sound.play("tap");
   goPlay();
 });
 $("hud-home").addEventListener("click", goHome);
@@ -1031,14 +1295,8 @@ $("hud-dots").addEventListener("click", function (ev) {
   var j = +b.getAttribute("data-j");
   if (j < S.log.length) goReview(j); else goPlay();
 });
-$("st-back").addEventListener("click", goPlay);
-$("st-giftbtn").addEventListener("click", function () {
-  var j = reviewIdx;
-  $("st-giftbtn").hidden = true;
-  mountGift($("st-gift"), j + 1, "Stage " + ROMAN[j] + " · " + money(CONFIG.rewards[j]));
-  $("st-gift").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
-});
 
+/* ---------- answering ---------- */
 var busy = false;
 $("st-form").addEventListener("submit", function (ev) {
   ev.preventDefault();
@@ -1056,13 +1314,16 @@ $("st-form").addEventListener("submit", function (ev) {
       S.log = S.log.slice(0, idx);
       S.log[idx] = { id: makeId(ROMAN[idx]), at: Date.now(), hint: !!S.hint, tries: S.tries + 1 };
       S.ans[idx] = raws.map(function (x) { return String(x).trim().slice(0, 40); });
-      S.phase = "reward"; save();
+      S.phase = "solved"; save();
       ins.forEach(function (x) { x.blur(); });
-      announce("Correct! Stage " + ROMAN[idx] + " cleared.");
+      Sound.play("correct"); confetti(36);
+      announce("Correct! Stage " + ROMAN[idx] + " solved.");
       if (navigator.vibrate) try { navigator.vibrate([18, 40, 18]); } catch (e) {}
-      playCorrect(function () { renderReward(true, true); window.scrollTo(0, 0); });
+      renderStage(false);
+      $("st-done").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
     } else {
       S.tries++; save();
+      Sound.play("wrong");
       $("st-feedback").innerHTML = '<p class="nope">Not quite!</p><p class="nope-sub">' +
         (res.unreadable ? "Try a number, a fraction like 3/4, or a percentage." : "Have another go. No limit on tries.") + "</p>";
       ins.forEach(function (x) { x.classList.add("bad"); });
@@ -1074,31 +1335,54 @@ $("st-form").addEventListener("submit", function (ev) {
 });
 
 $("st-hintbtn").addEventListener("click", function () {
-  if (view === "review") { setHint(true, reviewIdx); return; }
+  Sound.play("tap");
+  if (view === "review" || S.phase === "solved") { setHint(true, view === "review" ? reviewIdx : S.i); return; }
   S.hint = true; save(); setHint(true);
   var box = $("st-hint"); box.setAttribute("tabindex", "-1"); box.focus();
 });
+$("st-solbtn").addEventListener("click", function () {
+  var box = $("st-sol"), idx = view === "review" ? reviewIdx : S.i, open = box.hidden;
+  Sound.play("tap");
+  if (open) { box.innerHTML = '<span class="tag">Solution</span>' + STAGES[idx].sol(); box.hidden = false; }
+  else { box.hidden = true; }
+  this.textContent = open ? "📕 Hide solution" : "📖 Show solution";
+  this.setAttribute("aria-expanded", String(open));
+  if (open) box.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+});
+$("st-continue").addEventListener("click", function () {
+  if (S.phase !== "solved" || view !== "play") return;
+  S.phase = "reward"; save();
+  playGift(function () { renderReward(true, true); window.scrollTo(0, 0); });
+});
+$("st-back").addEventListener("click", goPlay);
+$("st-giftbtn").addEventListener("click", function () {
+  var j = reviewIdx;
+  $("st-giftbtn").hidden = true;
+  mountGift($("st-gift"), j + 1, "Stage " + ROMAN[j] + " · " + money(CONFIG.rewards[j]));
+  $("st-gift").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+});
 
+/* ---------- gifts ---------- */
 $("rw-open").addEventListener("click", function () {
-  S.rv[S.i + 1] = true; save(); renderReward(false, false);
+  S.rv[S.i + 1] = true; save(); Sound.play("tap"); renderReward(false, false);
   $("rw-gift").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
 });
 $("rw-next").addEventListener("click", function () {
   if (S.phase !== "reward") return;
   if (S.i >= N - 1) S.phase = "done";
   else { S.i++; S.phase = "stage"; S.hint = false; S.tries = 0; }
-  save(); render(true);
+  save(); Sound.play("tap"); render(true);
 });
 
-$("dn-whisper").addEventListener("click", function () { S.phase = "egg"; S.egg = {}; save(); render(true); });
-
+/* ---------- easter egg + finale ---------- */
+$("dn-whisper").addEventListener("click", function () { S.phase = "egg"; S.egg = {}; save(); Sound.play("tap"); render(true); });
 Array.prototype.forEach.call(document.querySelectorAll("#eg-1 .chip"), function (b) {
-  b.addEventListener("click", function () { S.egg.a = b.getAttribute("data-a"); save(); renderEgg(true); });
+  b.addEventListener("click", function () { S.egg.a = b.getAttribute("data-a"); save(); Sound.play("tap"); renderEgg(true); });
 });
 Array.prototype.forEach.call(document.querySelectorAll("#eg-2-chips .chip"), function (b) {
   b.addEventListener("click", function () {
     var v = b.getAttribute("data-b");
-    S.egg.b = S.egg.b === v ? "" : v; save(); renderEgg(false);
+    S.egg.b = S.egg.b === v ? "" : v; save(); Sound.play("tap"); renderEgg(false);
   });
 });
 $("eg-text").addEventListener("input", function () { S.egg.c = this.value.slice(0, 400); save(); });
@@ -1112,13 +1396,80 @@ $("eg-send").addEventListener("click", function () {
   renderBday(true, true);
 });
 $("bd-open").addEventListener("click", function () {
-  S.rv.bonus = true; save(); renderBday(false, false);
+  S.rv.bonus = true; save(); Sound.play("tap"); renderBday(false, false);
   $("bd-gift").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
 });
-
 $("bd-finish").addEventListener("click", function () {
   S.phase = "fin"; save(); window.scrollTo(0, 0); renderFin(true, true);
 });
+Array.prototype.forEach.call(document.querySelectorAll(".candle"), function (c) {
+  c.addEventListener("click", function () {
+    if (c.classList.contains("out")) return;
+    c.classList.add("out"); Sound.play("puff");
+    var left = document.querySelectorAll(".candle:not(.out)").length;
+    if (!left) {
+      S.cake = true; save();
+      setTimeout(function () {
+        var w = $("fn-wish"); w.textContent = "Make a wish ✨"; w.classList.remove("on"); void w.offsetWidth; w.classList.add("on");
+        $("fn-tip").hidden = true; Sound.play("fanfare"); confetti(60);
+        var r = $("fn-candles").getBoundingClientRect(); sparkleAt(r.left + r.width / 2, r.top, "#ffd36e", 24, 90);
+      }, 350);
+    }
+  });
+});
+// Tap anywhere on the party pages for a little sparkle.
+var lastSpark = 0;
+document.addEventListener("pointerdown", function (ev) {
+  if (!document.body.classList.contains("party") || ev.target.closest("button, a, input, textarea, .qr-card, .photo")) return;
+  var now = Date.now(); if (now - lastSpark < 120) return; lastSpark = now;
+  sparkleAt(ev.clientX, ev.clientY, PARTY[Math.floor(Math.random() * PARTY.length)], 10, 50);
+  Sound.play("sparkle");
+});
+
+/* ---------- home balloons: some fly away, some pop ---------- */
+var REGROW_MS = 12000;
+Array.prototype.forEach.call(document.querySelectorAll(".bln"), function (b) {
+  var pressure = 0, last = 0, deflate = null, kind = b.getAttribute("data-kind");
+  function regrow() {
+    b.style.setProperty("--s", "1");
+    b.classList.remove("popped", "wob", "flying"); b.classList.add("regrow");
+    setTimeout(function () { b.classList.remove("regrow"); }, 750);
+  }
+  b.addEventListener("click", function () {
+    if (b.classList.contains("popped") || b.classList.contains("flying")) return;
+    if (kind === "fly") {
+      b.style.setProperty("--fx", (Math.random() * 120 - 60) + "px");
+      b.style.setProperty("--fr", (Math.random() * 30 - 15) + "deg");
+      b.classList.add("flying"); Sound.play("whoosh");
+      var r0 = b.getBoundingClientRect(); sparkleAt(r0.left + r0.width / 2, r0.bottom, getComputedStyle(b).getPropertyValue("--c").trim(), 8, 30);
+      setTimeout(regrow, REGROW_MS);
+      return;
+    }
+    var now = Date.now();
+    pressure = now - last < 700 ? pressure + 1 : 1; last = now;
+    b.style.setProperty("--s", (1 + Math.min(pressure, 4) * 0.08).toFixed(2));
+    b.classList.remove("wob"); void b.offsetWidth; b.classList.add("wob");
+    Sound.play("squeak");
+    if (navigator.vibrate) try { navigator.vibrate(8); } catch (e) {}
+    clearTimeout(deflate);
+    deflate = setTimeout(function () { pressure = 0; b.style.setProperty("--s", "1"); }, 900);
+    if (pressure >= 4) {
+      clearTimeout(deflate); pressure = 0;
+      var r = b.querySelector(".bln-body").getBoundingClientRect(), col = getComputedStyle(b).getPropertyValue("--c").trim() || "#ff8fb3";
+      b.classList.add("popped");
+      sparkleAt(r.left + r.width / 2, r.top + r.height / 2, col, 30, 110);
+      glitterAt(r.left + r.width / 2, r.top + r.height / 2, col, 50);
+      Sound.play("pop");
+      if (navigator.vibrate) try { navigator.vibrate([30, 20, 15]); } catch (e) {}
+      setTimeout(regrow, REGROW_MS);
+    }
+  });
+});
+
+/* ---------- sound toggle + reset ---------- */
+function syncSoundBtn() { var b = $("sound-btn"), on = Sound.isOn(); b.textContent = on ? "🔊" : "🔇"; b.setAttribute("aria-pressed", String(on)); b.setAttribute("aria-label", on ? "Sound on" : "Sound off"); }
+$("sound-btn").addEventListener("click", function () { Sound.set(!Sound.isOn()); syncSoundBtn(); Sound.play("tap"); });
+syncSoundBtn();
 
 var armT = null;
 $("reset").addEventListener("click", function () {
@@ -1130,50 +1481,7 @@ $("reset").addEventListener("click", function () {
     return;
   }
   clearTimeout(armT); b.classList.remove("arm"); b.textContent = "reset progress";
-  store.clear(); S = fresh(); render(true);
-});
-
-
-/* ---------- balloons: tap to wobble, tap fast to pop ---------- */
-function burstAt(x, y, color) {
-  var cols = [color, "#ffd36e", "#ffffff", color, "#ffe9a8"];
-  for (var j = 0; j < 16; j++) {
-    var f = document.createElement("span"), a = (j / 16) * Math.PI * 2 + Math.random() * 0.4, d = 40 + Math.random() * 80;
-    f.className = "sparkle"; f.textContent = j % 3 ? "✦" : "✧";
-    f.style.left = x + "px"; f.style.top = y + "px";
-    f.style.color = cols[j % cols.length];
-    f.style.fontSize = (10 + Math.random() * 12) + "px";
-    f.style.setProperty("--dx", Math.cos(a) * d + "px");
-    f.style.setProperty("--dy", Math.sin(a) * d + "px");
-    f.style.animationDelay = (Math.random() * 0.12) + "s";
-    document.body.appendChild(f);
-    setTimeout(function (el) { return function () { el.remove(); }; }(f), 1100);
-  }
-}
-Array.prototype.forEach.call(document.querySelectorAll(".bln"), function (b) {
-  var pressure = 0, last = 0, deflate = null;
-  b.addEventListener("click", function () {
-    if (b.classList.contains("popped")) return;
-    var now = Date.now();
-    pressure = now - last < 700 ? pressure + 1 : 1; last = now;
-    b.style.setProperty("--s", (1 + Math.min(pressure, 5) * 0.07).toFixed(2));
-    b.classList.remove("wob"); void b.offsetWidth; b.classList.add("wob");
-    if (navigator.vibrate) try { navigator.vibrate(8); } catch (e) {}
-    clearTimeout(deflate);
-    deflate = setTimeout(function () { pressure = 0; b.style.setProperty("--s", "1"); }, 900);
-    if (pressure >= 5) {
-      clearTimeout(deflate); pressure = 0;
-      var r = b.querySelector(".bln-body").getBoundingClientRect();
-      b.classList.add("popped");
-      burstAt(r.left + r.width / 2, r.top + r.height / 2, getComputedStyle(b).getPropertyValue("--c").trim() || "#ff8fb3");
-      if (navigator.vibrate) try { navigator.vibrate([30, 20, 15]); } catch (e) {}
-      setTimeout(function () {
-        b.style.setProperty("--s", "1");
-        b.classList.remove("popped", "wob"); b.classList.add("regrow");
-        setTimeout(function () { b.classList.remove("regrow"); }, 750);
-      }, 4500);
-    }
-  });
+  store.clear(); S = fresh(); view = "home"; render(true);
 });
 
 $("in-count").textContent = String(N);
