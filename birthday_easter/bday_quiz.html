@@ -418,6 +418,7 @@ body.party .aurora{display:none}
 .ledger li.miss{color:var(--muted)}
 .ledger li.miss .ok{background:#ffb48a}
 .ledger li.miss b{font-weight:700;font-size:13px}
+.opt.wrong:disabled{opacity:1}
 .answer.bad[readonly]{background:#fff3f5;border-color:#f3c1cf;color:var(--bad);text-decoration:line-through}
 </style>
 </head>
@@ -451,7 +452,7 @@ body.party .aurora{display:none}
       <h1 tabindex="-1" id="in-title">Birthday Easter</h1>
       <p class="lede"><span id="in-count">7</span> stages. Can you clear them all?</p>
       <ol class="rules">
-        <li><span class="n">01</span><div>Each stage is a brain teaser.</div></li>
+        <li><span class="n">01</span><div>Brain teasers… and a few questions only you can answer 😉</div></li>
         <li><span class="n">02</span><div>One try per question. Miss it? Move on and come back to it later.</div></li>
         <li><span class="n">03</span><div>One hint per stage.</div></li>
         <li><span class="n">04</span><div>No time limit.</div></li>
@@ -618,7 +619,7 @@ var CONFIG = {
   currency: "$",
 
   // Stage gifts, in order (one per stage). Each should be larger than the last.
-  rewards: [18, 28, 38, 48, 88, 108, 188],
+  rewards: [8, 18, 28, 38, 48, 58, 88, 108, 118],
 
   // Birthday bonus revealed after the Easter egg (the biggest gift).
   bonusAmount: 488,
@@ -635,13 +636,15 @@ var CONFIG = {
     5: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.0e+TU1OMVCL9by4zTp3QDg==.x2X8tEij1F2L5KAk.OexulR07T3gLVwxhpHBpjHoaocOgiNvx6qhfKZLnWuiBZTf/lfOaptagswyHNQ/E0jga/bjKK6aIp850I+NFiftdPqgHVAHxxOkDbjl7F1ynYW0F94R+0PvVA0h4szrA1d1/YReROokrabibpeAwDVcXWR6eYa9phuXTQpVnCzn+0zBxckImRtOQlnGRR0oB6CgltKgkWrm0AM1Xx9E4oWIdROSDLxZAdP1a7uVvd7cqbPKCiiVKj2qZfpl+QXZUro2dh3mwKD1j4ng/YZ5gAttEmzQWJNO3Mx5GvBPP0oyJxoPyEYkdLWbX1bjI/R1Sjh17tOw0Z3td0eMKhc6XM9V1DxjuZTixbMLuFR3A2JSDdaDkQWdcepTtXEXZlf8x09g2D0rLP+sowbeh56T7uBqKpiy1kPxpPX1hTfljD3/krJ/rUMl9n1n3VMi9bxsnC7h4tWhMVDvhWj/duk1TyRU/eCQSKDICVNgPwI4i0BauunOX665ijw/XOcjyc3riMNkLIqhQJOSX3wCjm3V7ro0YFeno1FxTFa+JQr0dTLWri+NTfchUYgMEiDoxLjyZ8LC9KmVKiXF17OSbr/Qx2k+dRiv/0uxV6q29kRvuSgpgWaz1+e7p1dvASE8wRg8hxI7LuK9zk2sndRFqSTHTpc06I/56lFlHDB6dJ0GnYWAeIg83c9doAuz7wdf8A/ENx4xcKxKxZ/4JFUepMKIGQ+TX4NZBI9V8mlFFnouMaaj0Gpjahdi5bNhuRkxyek2NHdw2ZBZWoglfTI1a+YTXGwHhlYr1PajsqYSmLWvuxufVLX0EZS32K6sDovRkVZ1MfdMjTLLARHfYDHd3wYk3iOs6tQW5dqKEUP+Dmq3P8Vb1Hu5Mbu2U0KczsJuxnvQA+o9vLfOo1UUyBWcAswOpK9yNgAre43hXrYvjUGM0uToAWuPS/ehjpGrCYB15re7v4WxrPUETeInMxC9/HlzzvWNQ+tNUuczUCVd18PcSOo/I+SaRmaduEyYsqSn/1RAvy03lQ4tRA6Ld7dbuGm9JV62urdFvtx4+lPKV1eIn3OjpH0+ffTNiJM6IxZzVMTkwG+5edzAZUC01YiDlBom6MAFZ/efZfuOfSwjSKi5aJDQk5nEF9NrJOEfy" },
     6: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.+0+DBTGxCtwBtzYlepT+yQ==.+IsslvxTgv1jRFqM.xHnGNmgOpO0nahm5SMO+jizd7oIhdLuKGp5FlCWFPA/eFTcQ7NbsAml0STig5JQn30mWAHv/Iw99RrzWoU6kPYw7jkcPgWtQzPHQCSsSUSTxk5s/aAThRu9XZjiOioPP4R+h5/pBftJk/cv57VwT/au7fpO9GGCVGYOoowuIREBz9rzDBA1j8ZZQRHLFKWPFC7RX9s2EzprWH6Pi9wp/q6eqymaiqnT6J+I+YZPX+ztM9a2G4aE7luRDqPMpLJZk97paqJvaAhxjBwobB0CauZS1p/+VzBrc22zOnfA+nnacSKbMZDyqcuj4zzWfwRBB/5p/jmvRbfprv1txQceYksYSLfIpNYtbUN8uKLoD5UzSoSr2bD2CvGwTNCvcUEaK4CExbjJypHs7lgE9gFeja1CTIB5wt+d1jl7cMl/Q0k8YTAHlkEv9iEzFbIBtOV+wTCKuPabEYz12bbrcQp0KE+ocCsldiJlwGQP6jOhAo91W3XnNe3b13JVvQpDGpKAssWpA2Sz+ANj7O7fhHkt680jxtyvVbxxQ3gVx6TZL7qsXZyCNI6hlkyZzBH0m4gXN0FMmFXdWV/AkLyZnpxPZeT3JvZFllWstd25onxqvrBQv9wMjb80dbSEz+yp21nDf81B73QEjOR1osQo9M8IQJsQZ+IGSgZGrGlIT+TWDuDtR1ldr9XzsSKQsJkQT7Rgn60Yu2WIjAH0+TmkCIoYWrMZTaJWZ/Uz7grRuKvVIxnL0QTKBBVxk+Y444rhVLv3ouZ+ibheXV0XB/sWurhOeaSgoX3r1cFRDDo/UMi+7+CBb7bkEmEiRPpI/pUFDI3Idns5pIhdkrfJUf0FsPcVfIGg1hZiVxcy3X3bSVK3QTeRiiMYDmyX8CRxYhQinYEvPQqz0yCX0QdGiTMg3aFXKkMBOgkjLGp26yccr180i5GRIjd/qXeQJkQRSKvO2N0dBRtEqObwszh1SOKjXCHEYQ6ZhXmzyMpE9fSJlQ7q9zPkwmzdziS3u4GJZU3U17Cu1bp7iTfHIZhNbG1yKBBR0PfguwsPLP/LR+HgutC0+nilIiR6g4Zd0G/Jsy7pTSCdfDn/wbQ523cAiHU1cEVr8r8c7ioW1Fj/BSx/0eQ51+5mNxWlulFmZ3bAyJANgwg==" },
     7: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.d2eZxRa4E2FnIclf0Kfdlw==.9e7p9Bkwd2bMaVRh.NRz/aAaLS/8Z6UXNdDG9yjcspJwGs7mLY1yHjqF05aetGJFT26rwwX4h+WbLfrJODggpSeK+awIR60dltdERBHOEncEXhkNuQGG1ByJw60+vf7mBo1IQi01tm1Vbbj2MwtYcYDFcuJqQ3d/oUxjV75W1e9V+UHaarwYT4H8ktbT75pZ9C9y3hegbkGqiuT8iwVd+/XARSvSuaINHfAywWB96wrijKdEV5Otn/zdsx0WohmrBjg516fZK4sCVidFDSqv9a1um3BypYQJeLNrB2Cyl9tZaObiKeE62bQY7+OVOVqnQKbMicfmPk4hCn2JW6+Y3DtXAbtU5O6HjnNe62IMyDeKIKHx12vFNq/TFF99fpVdZ08mebOGI16x+PSTJ2eFRophPcxcuARwRU6f3nKa6VJieFheCmSkhdIkHq5SYayNY3yLe7zojY6iNlGc1p/J6X4WMLIxealKInAdEFJdl4qOHndPg1g+GQX41y1kxJhlPoABDozzSMD9xEyDYISGUTLMSmDlusJ8532nzucFLuPubkEMy1VP9VUBZY7TsBCyU4mXtBf8eS0zxlAUJE3WCO19icKnCRzSUr2oUTVTF3XDWpMFiZsALHNTNOyxJiKmhiQIxOUanv30l1GlZKGc4hYsibTGQGU/GB9eUF3dC9WohBFVjsGHr6YdiOWuIVCTf+K+aPHrw6ZrdCoPDj4OqoB3iXUCdTljpWEixA5zCUHk++IlNOLJ9CVZlZoe0W+YIznKBkv3Ilpafy2iJy26f6gvCrpauhsV7NGtx+sFc9BpoohP9ZRV1BdoQ87P5BjTFbS4LB8G/PT8pmgujiG9hbnY5d2YBNLchsy7oAs498xw4+yyk2ndTDZj9xt4x9HUeQq/RzPHqTGI0ADrC+cu7/ckdn0mzJgOBdt8S7MMSDOoDmCqybkgVUqGQDo73VCP9dcIFnuiEpeM4TotnAmxuqTZUfCzJ9+EcTsvxHWBB/MPQSbZABnv5G05bjuJ6I5K032R8w6jAOaLDAAhIf+FaAwz3co/4g0GmKrNeYmqXxKn2JXARlUy3qepRAxtiV2dMRIhAL03+LwM+8NaU2d9bRxovaQZiWpUQAe2Cgs24T48Jp0YSVY9zCtLbx0fc92UOfOQSLWyMAD3JIA==" },
+    8: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.NHSd5METT5cYoTtrKMsOzg==.FsasF0pxOHqN7q/9.2HWyDb84fPcdXmLkcJlP+p5JPTjJCX0hWB0Bww2czBiWrspM8H30oV3WJ99dQB6PSXyoFQZA8UWGuzReVQWDOENhvLDL/SG2VD9TCrHTl98alaNY1wdEHira9vSTCTciVBax9oIm55WZ4SCuycmQ9ihu5yNNRH0NCSE/fDNOdx+TmpLWuzShZCD5wOGx4qoUR6xa4HWDa/ZtKohJKZ2X0PXydytbtDg95XtaSQTSW7Nx5A2yJw+VcNNJmi/wI8RME2iv1+xB8Z2/11kE8eI866khlEPg/BSX9T3QN5+ztIW4PQMXRrL/SdVrjpgoA565DXMjYNwuv6zKxLxPV/5MbC2MIyPDSnPaXsQ57YyOV15RK3P74jmDtkFvz5dtqdqJj+urMogotbEdFrn7lGgItr5M4VYcV41YzNF3bh+XMFKzBbZF0TUvA7K/hozH6TU+SfZ3PX7RvnYF7ihUoCRVUWcS2LDNPyt0tj7p8yAJUA0dbT4pUg8Tc2q2nmefIzOPxKkeTsPNJQvCEanem/whSEa3htf699teEgWO5frtCWX/DbmNDEir3GVFkiur6JqllytJP0Ex3+09EQBJAtRvjmOIvJVpXKrvSAJnHEAMVTDZgfBitGJKlZjyaOtCQMEL27b0ud7fZ4vGNKF0yy1dsMYdc3RlolcTqsTV0JkZvWE2iY6RRDtS8LqktbkzATtS/PC1khbBQVOdPn3xP1l31qefvycJNo/8/gYOxuUJOMiLPfhn+vPOTq/1/Kyqgv2kD4/OWRQjmnI4jNB6CcQXfocUNKq5MHwmwGYGFz88DHr02o9Trk9OcEc8l2uAuiFuOWodELGjhdxyQueuzO/L4NFRVlkIGVvccVZHe66yf1VQ76XFke+AfYQvgXpzBDQvMgop8jitdLGA/uvhDZ9tKp2muHaI1ieAg4jC/cR+eUVoLHOIRJRcPqbBeLNu7rfWOd3HpbRbh3fv4QbZVrLJSZQBlx8aYTryL5TfZEBXJ1Qfq7+5sJNnr59O9e44v6QK/5txClMZJfVmq5QzzXmsCBfVugl00PNtMqwwen6N6j1rZ7jJXg6JqecszWLzuR8gL3QDXTOTQZI7oLEwNXvrV5kGxpVKp1GBHWt53bCX2SQ6ItRUwr5kg2oW/+QwaA==" },
+    9: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.lYXHswy9/t22Edhi+kJYDA==.FLA66IHYKGj/yMgy.YI3qsaS+fnYBu6/wyzWAWbuKK/NO5is0ZW/zSy5N0257Q30bmQZ5KgAaeikzT8ciqvT/3H48NJDgYicbKBkABBaxa689l8UEGS/fABBcZKmGBJiaT4kpzhfXr1Pj+CDi/NOwg0XNB4Kt0XeeFNUnAem+avgTNXfGR1qbEp7FvaFCsR8qrF0McOrq4VqGCFh5wTSl7dg6xs1A99xVaO4LVCco8nzWgofhsbeLDcKKyf+xjkAOBKr9Ne8UgF+qdTG70/WI7A9mm71e8+Wz7txCxuWZkoJzAMmiGS9FKshKQRQI8vQrQkEcnXtu4i7ABPElYEo4nxPLTeiF19aO1VdWwat5EKytjYk7BA+1ld2Dm+P0XQ2+aUW5K6A9iCHFlpY1rxEQ4HpSUB9JQzUjQTMMnoV4fmBV51qnhlyevjZvRfGkyCLnjF5Ib2LdzbukaEYhm6k9MAMXiZyJG1OEHSXA05UrbFwMLc2ptiZIdOWRHAp1ybCZ7Wf2Ib/AnOzfxS1UBKnTTxsRUnybTPE1Tm8VaXRgWEf2zGvxJb4F3/kR2OYjp5+Ry6HaM+GvSEfw3YFYXnicroC1k5Y6Ro1VSs2si5qsFRjhDCbufoewMtt9e08hnxHPl36F/qpvu0sOjdLPbSJkuExwTcRHEzmia599GnFOnSDMbk/lvAVaLBO287F8JUqY0KwxsiWbbIXKg3Me8ssL3dhzlUlWKNxpUrpZP2dDgsv1dB569YpqJM6yDxtVA54Ym0RT/hrfsVHmNk8xjaFeuB0214houyyJ5yZlT4MP7Ffi6gclBtbxNR3o9y1zKaVfQojph4Adct+DE+L3+NNZJ0+NXfo4+/WnorbgY9bnf7vMipZJ6pr83tSAXnRQKydDLY/h10JWP7CwBwsVizK2uLweH75wA4OmOMTUlX72xyQUywmFdKJ+OkpKnAXXHQAZIF+/ZI4CchJOzc5/mD3tETM9J+Ga/Uywz97Y9r7yET26kGuv3C3U0GoHRVr4RN4d9jHenEmk7oJOW8MUAi7F/Tc2S61m+lXhHASj/T6BwjsX+w2HjO3c+W91iZXQMEf9eRTfK98W/knUYKZHxT3mYe/vmSP2K+sGPqGo1V7pFXJiajLmY+ek92CoG2YsX9lu27E8dSNq20r33A==" },
     bonus: { question: "[Demo] What do you blow out on a birthday cake?", lock: "v1.250000.28s5GIcmrYK82DoqHlpuUA==./cVM4wLAY7qC9iPn.VRGiAa7/KNAcX//SdAAHsc4IfXEKGoZ3/IMKEO+PZBY3CFWehzOxFRO8hoiF1uREAxIFwRQ9OCx2J8qsEj+xdwUknkNvHpmVAbVKa71YiDIaPiAsLfox3kUSKQEWT0syRkilLNAyy6Ea72lpCOqQOwHKq9SA2M3lb78cLRIxsDHw5HiZuMOiHtP8QEUXPK+7wY+WDpqPoVYeB6xLHCUdUSXBiWGdOvd8yRM+Utp2UffEMpj3yQtB8WhDJiTeaOfnOP/qRTTeRCbvnlGE0EQCXPnwUo0st2rjQoAehp49ZmqF6NNFk2KTUmdYNk2QI3FJDcvDqYH+qO4/dP8dee6SCl1P8GN+S0LG+eEbhoFBTfrqOYwT4S9vqPAQqx/llkdiok37pUHVWgjjiSYw5izivex7DnMccb+BVDQJo9UNV+kZv9nRQhgBwMqg68XLMkm5jFdWbwQgdyCzmImEPXqpez8zCnuUK0PN45OgyD5JLZpRDoPEhVFQkXOjo5G6o1mSmVgXHvXic9CHxdNLXpaPrsfahI8w5PUazz8ew7u78CMdxshxI8HdkNOCMdJo5AiCVAJnpCFKBF6OiPs94gw3I+ikiK9lCrKESujtFYnwcBzVept0QR8NJe75YG4GdvoLaANgBpd1Hq8QXcIw4fZKLpgipSjEEfAmDc1+4iVUV4K6OoZ1P9yvWi3/UcnLkdE8aop5Xz4wTbHbknTjMNLA7FdK6P4XeHB+WMoW01/j6OnEciNiDBV55mRMQebVNuWHYsYj4MWGcsEgS83iQDpuKRqobvURN7O1p52mKN+Ytp2jjd/OgcBXOJLC1YJAA8yfz2TXouB9PBKyadKjS3KOUsQZ/c/25Yo3q8cnL4xdp0+hw+Xkee1yM8/lKWcmFL5O6Q41NAmpc8luj3rri3Tcp1C6xoUB14MaU5vm5J3ZvdIOG1v5lSGbLnMqnZerPC/L3ROXRUXH2/Dgfqme+mEDd2ZGuPKgg6mL7OaI6uogPhtEpyyBVSkIJGPbyhNsskHBs5PuWwQsOeL/U/Fw1+kVNzZLA25VdJ2lnwZXqCFY6KJVcl34ABU+GzeU1LcV+z5zGpcWsFXfIcBWISCbtkG65EKcTofxm4pup9W6kK3ck3FLaPLSbw/Lchk+SdpXtsh+WOXy2ufb" }
   },
 
   // How long the apparent ending lingers before "one more thing" appears (ms).
   egg_delay_ms: 2000,
 
-  storageKey: "birthday-easter-v9"
+  storageKey: "birthday-easter-v10"
 };
 
 /* =====================================================================
@@ -682,6 +685,16 @@ var STAGES = [
       '<div class="ans-box">Minimum 0.3 · Maximum 0.6</div>'; }
   },
   {
+    topic: "About you 💖",
+    title: "Little Cheerina’s Dream",
+    body: "<p>When you were little, what did you want to be when you grew up?</p>",
+    fmt: "Type your answer",
+    text: true,
+    hint: "Think back to when you were little… it involves music and turntables 🎶",
+    ks: ["36840a003dbf7e2fba1cb1eab0de2da75acdf874504838008c98808106378a2b", "adb5aeb6aa81651483409038ca5c0842af50c78855baacdddf18513e88adba9d", "fbc619249383de1432e39ad10959b1a95b5a8093b92bd8bb5e95fd6f9cb50988", "642c003a3d658ea10200d5acb055fcc42965e2021328380404febfd1fd2f100e", "6f69d5f30b22d3e37120ef4ba40f7d3d50d0d653dc41e13c2688362e46db80e5", "90057a59b74a47c2609ffa56f0c5b5dad84c2b4088b92a67e0f72285c4561dbd"],
+    sol: function () { return '<p>Turntables, headphones, a whole crowd going wild 🎧</p><div class="ans-box">A DJ! 🎧</div>'; }
+  },
+  {
     topic: "Conditional probability",
     title: "Three Coins in a Red Packet",
     body: "<p>A red packet holds three coins: two are fair, and one has heads on both sides.</p>" +
@@ -690,7 +703,7 @@ var STAGES = [
     fmt: "Probability: fraction, decimal or percentage",
     d: 2,
     hint: "Do it in two steps. First update your belief about which coin you’re holding after three heads. Then average the chance of a fourth head over the two possibilities.",
-    k: "4e1a5cebdf4bde100e5d9312be86f8f54e327722de9d3495f306f00de059aaa6",
+    k: "60516f18f9853597d71d5716e4d8827f92cb7ab139a2e7b363bf0121bd50b8df",
     sol: function () { return '' +
       '<h3>Step 1 · Which coin is it? (Bayes)</h3>' +
       '<p>Before flipping, P(double-headed) = ' + F(1, 3) + '. A double-headed coin gives HHH for sure; a fair coin gives HHH with probability ' + F(1, 8) + '.</p>' +
@@ -701,6 +714,21 @@ var STAGES = [
       '<div class="ans-box">9/10</div>'; }
   },
   {
+    topic: "About you 💖",
+    title: "Main Character Moment",
+    body: "<p>What is your best performance ever?</p>",
+    fmt: "Choose one answer",
+    opts: [
+      { t: "Twinkle Twinkle Little Star 🌟", v: "p40" },
+      { t: "Baby Shark 🦈", v: "p41" },
+      { t: "Lechu Lechu~ 💃", v: "p42" },
+      { t: "Shower concert (every night) 🚿", v: "p43" }
+    ],
+    hint: "The one that still lives rent-free in everyone’s head 💃",
+    k: "037d5861a5ceb70a0684a20e5ddefc3b780d0d0b6ea0cd489623ef6c2d0be703",
+    sol: function () { return '<p>Iconic. Legendary. No notes. 💃</p><div class="ans-box">Lechu Lechu~</div>'; }
+  },
+  {
     topic: "Counting",
     title: "Birthday Ping-Pong",
     body: "<p>Sixteen friends enter a knockout ping-pong tournament at the party: 8 first-round matches, then 4, then 2, then the final. The bracket is drawn uniformly at random.</p>" +
@@ -709,7 +737,7 @@ var STAGES = [
     fmt: "Probability: fraction, decimal or percentage",
     d: 2,
     hint: "You two only ever lose to each other. So when do you meet in the final rather than in an earlier round? Think about which half of the bracket each of you lands in.",
-    k: "43637eab9f4be017e8fa04bf410ed97cfd6f56afdfcfe69db0d73c7f59ac6c17",
+    k: "52abd0461920b4fd807bb61097085c7c4bfd7b65db34a592ae8684c0656ec6e4",
     sol: function () { var c = "", j; for (j = 0; j < 8; j++) { c += '<circle cx="' + (40 + j * 34) + '" cy="40" r="11" fill="' + (j ? "#e9dfe6" : "#e8457f") + '"/>'; c += '<circle cx="' + (40 + j * 34) + '" cy="100" r="11" fill="#5fd3b3"/>'; }
       return '' +
       '<p>Neither of you ever loses to anyone else, so you both keep winning until you face each other.</p>' +
@@ -725,6 +753,21 @@ var STAGES = [
       '<div class="ans-box">8/15</div>'; }
   },
   {
+    topic: "About you 💖",
+    title: "Be Honest",
+    body: "<p>How many times did you PMO me this year? 😤</p>",
+    fmt: "Choose one answer",
+    opts: [
+      { t: "Zero. I’m an angel 😇", v: "p60" },
+      { t: "Once or twice", v: "p61" },
+      { t: "About 10", v: "p62" },
+      { t: "Uncountable 🙃", v: "p63" }
+    ],
+    hint: "Be honest… 😏",
+    k: "ff85fa035c1944d9e30946615ce3743f1a81c17af914175b4474935ce237b6e9",
+    sol: function () { return '<p>At least you’re honest. 🙃</p><div class="ans-box">Uncountable</div>'; }
+  },
+  {
     topic: "Geometric probability",
     title: "Fashionably Late",
     body: "<p>Mei and her friend agree to meet at a café. Each arrives at a uniformly random time between 7:00 and 8:00 pm, independently.</p>" +
@@ -733,7 +776,7 @@ var STAGES = [
     fmt: "Probability: fraction, decimal or percentage",
     d: 2,
     hint: "Plot it: put Mei’s arrival time (0 to 60 minutes after 7pm) on the x-axis and her friend’s on the y-axis. Every possible pair of arrivals is a point in a 60 × 60 square. Draw the two straight lines that mark the edges of “they meet”, shade the region between them, and the probability is the shaded area ÷ the area of the square.",
-    k: "1cb518fae89601d8fc955139440d46df40ca0e8b7e1a1591c436a901885376c8",
+    k: "f262cc791102a11a09b5275ec1a20e39a5e22912d12b94ebdf6e6fbb50451697",
     sol: function () { return '' +
       '<p>Let <i>x</i> = Mei’s arrival and <i>y</i> = her friend’s, in minutes after 7pm. Each point in the 60 × 60 square is equally likely.</p>' +
       '<ul><li>If Mei is first, they meet when the friend arrives within 20 min: <i>y</i> − <i>x</i> ≤ 20.</li><li>If the friend is first, they meet when Mei arrives within 10 min: <i>x</i> − <i>y</i> ≤ 10.</li></ul>' +
@@ -758,53 +801,14 @@ var STAGES = [
       '<div class="ans-box">31/72 ≈ 0.43</div>'; }
   },
   {
-    topic: "Optimal decisions",
-    title: "Three Ang Baos",
-    body: "<p>Each ang bao contains an amount between $0 and $100, with every value equally likely (treat it as continuous), independently of the others.</p>" +
-          "<p>You may open up to three, one at a time. After opening one, you either <em>keep it</em> (the game ends) or <em>discard it forever</em> and open the next. If you reach the third, you must keep it.</p>" +
-          "<p>Playing optimally, what is your expected payout?</p>",
-    fmt: "Amount in $, to the nearest cent",
-    d: 2,
-    hint: "Work backwards. With one ang bao left it’s worth $50 on average. With two left, keep the current one only if it beats what continuing is worth, then repeat the logic one more time.",
-    k: "53f5bf2ffdea5ffed7a843ff8562c13af959260c1cd8a03adf02da368ac34af8",
-    sol: function () { return '' +
-      '<p>Work backwards from the last ang bao. At each step, keep what you’re holding only if it beats the value of carrying on.</p>' +
-      '<h3>One left</h3><p>You must keep it: worth its average, <b>$50</b>.</p>' +
-      '<h3>Two left</h3><p>Keep the first if it’s more than $50 (half the time, and then it averages $75); otherwise take the last one.</p>' +
-      '<span class="eq">E₂ = ' + F(1, 2) + ' · 75 + ' + F(1, 2) + ' · 50 = 62.5</span>' +
-      '<h3>Three left</h3><p>Keep the first if it’s more than $62.50. That happens with probability ' + F(37.5, 100) + ' = ' + F(3, 8) + ', and then it averages (62.5 + 100)/2 = $81.25.</p>' +
-      '<span class="eq">E₃ = ' + F(3, 8) + ' · 81.25 + ' + F(5, 8) + ' · 62.5 = 30.47 + 39.06 ≈ 69.53</span>' +
-      '<svg viewBox="0 0 320 84" role="img" aria-label="Number line from 0 to 100 with thresholds at 50 and 62.50">' +
-        '<line x1="20" y1="44" x2="300" y2="44" stroke="#3b2340" stroke-width="2"/>' +
-        '<rect x="195" y="34" width="105" height="20" rx="6" fill="#ffc4d8"/><rect x="160" y="58" width="140" height="8" rx="4" fill="#dccfff"/>' +
-        '<line x1="160" y1="36" x2="160" y2="68" stroke="#8f6cff" stroke-width="2"/><line x1="195" y1="26" x2="195" y2="54" stroke="#e8457f" stroke-width="2"/>' +
-        '<text x="20" y="80" text-anchor="middle" font-size="10">$0</text><text x="160" y="80" text-anchor="middle" font-size="10">$50</text><text x="300" y="80" text-anchor="middle" font-size="10">$100</text>' +
-        '<text x="195" y="20" text-anchor="middle" font-size="10" font-weight="800" fill="#e8457f">$62.50</text>' +
-        '<text x="248" y="48" text-anchor="middle" font-size="10" font-weight="800">keep 1st</text>' +
-        '<text x="90" y="30" text-anchor="middle" font-size="10" fill="#8f6cff" font-weight="800">2nd: keep if &gt; $50</text>' +
-      '</svg>' +
-      '<p>Strategy: keep the 1st if it’s over $62.50, the 2nd if it’s over $50, otherwise take the 3rd. ($62.50 is what you’d get with only two ang baos.)</p>' +
-      '<div class="ans-box">$69.53</div>'; }
-  },
-  {
-    topic: "Expected value",
-    title: "Tangled Ribbons",
-    body: "<p>A gift bag holds <em>four</em> pieces of ribbon. You can see their eight ends poking out, but you can’t tell which ends belong to the same ribbon.</p>" +
-          "<p>You repeatedly pick two loose ends uniformly at random and tie them together, until no loose ends remain. The ribbons end up joined into one or more closed loops.</p>" +
-          "<p>What is the expected number of loops?</p>",
-    fmt: "A number, as a fraction or to 2 decimal places",
-    d: 2,
-    hint: "Start small. With 1 ribbon, its two ends must be tied together: exactly 1 loop. With 2 ribbons, take any loose end: what’s the chance it gets tied to the other end of its own piece, closing a loop? Whatever happens, the tied pieces then behave like one ribbon, so you’re back to a smaller case. Expected loops = the sum of the chances of closing a loop at each step, for 1, 2, 3 and 4 ribbons.",
-    k: "6d2377f3bff0fb7771b3709223e2f46aabd1ae9dbe8b72437933b2ae9b9daa6a",
-    sol: function () { return '' +
-      '<p>Tie one pair at a time. Suppose <i>k</i> separate pieces remain, so 2<i>k</i> loose ends. Grab any end: its partner is one of the other 2<i>k</i> − 1 ends, and exactly one of those is the other end of its own piece.</p>' +
-      '<span class="eq">P(this tie closes a loop) = ' + F(1, "2<i>k</i> − 1") + '</span>' +
-      '<p>Either way, one fewer piece remains: a closed loop is set aside, or two pieces become one longer piece. So with 4 ribbons you go through <i>k</i> = 4, 3, 2, 1, and by linearity of expectation:</p>' +
-      '<table><thead><tr><th>pieces left (k)</th><th>chance this tie closes a loop</th></tr></thead><tbody>' +
-        '<tr><td>4</td><td>1/7</td></tr><tr><td>3</td><td>1/5</td></tr><tr><td>2</td><td>1/3</td></tr><tr><td>1</td><td>1</td></tr></tbody></table>' +
-      '<span class="eq">E[loops] = 1 + ' + F(1, 3) + ' + ' + F(1, 5) + ' + ' + F(1, 7) + ' = ' + F(176, 105) + ' ≈ 1.68</span>' +
-      '<p>' + F(25, 12) + ' = 1 + ½ + ⅓ + ¼ is a trap: that’s the pattern for shuffled cards, not ribbons with two ends each.</p>' +
-      '<div class="ans-box">176/105 ≈ 1.68</div>'; }
+    topic: "About you 💖",
+    title: "Growth Spurt",
+    body: "<p>In which year did you outgrow Cherry in height?</p>",
+    fmt: "A year",
+    text: true,
+    hint: "📏 It was the same year the whole world stayed at home.",
+    ks: ["5783c7aec1c3c4850c7d202b84e880ef17d8261bc13619b649b150855a54ad78", "a69d6fab8b74351aa7c70a98df672cc6062ced9983c270a31171f920dba0ae4c", "922d71e0fd0210ecf47b0562e08416d5f5f38e1a95e8adacb041690afbbcaaf4", "823b75224ce8e54bd96bce26140cee04af7c91644a4168c96b0c27146fc90123"],
+    sol: function () { return '<p>Taller than Cherry ever since. 📏</p><div class="ans-box">2020</div>'; }
   },
   {
     topic: "Final stage",
@@ -816,7 +820,7 @@ var STAGES = [
     fmt: "A number, as a fraction or to 2 decimal places",
     d: 2,
     hint: "All that matters is which prizes you already hold. Start from the states where you’re missing just one prize, work backwards, and at each state pick the game with the smallest expected rounds remaining.",
-    k: "8ac4ff66b5130cfc3d06ae278c9d3c288c9355ccebe71a98e0973a0862a006d0",
+    k: "0cf5a608570f164759c8f44bb7f8a9f3ccccf7115b6692fa6b0bf0031e4ee9ff",
     sol: function () { return '' +
       '<p>Only the set of prizes you hold matters. Let E(S) be the expected rounds still needed when holding S, and work backwards. If a game might give a prize you already have, you just stay put, so for example:</p>' +
       '<span class="eq">E({2}) via Game 3: E = 1 + ' + F(1, 3) + 'E + ' + F(1, 3) + ' · E({1,2}) + ' + F(1, 3) + ' · E({2,3}) ⇒ E = ' + F(7, 2) + '</span>' +
@@ -991,13 +995,20 @@ function sha256(str) {
 }
 
 function verify(stageNo, raws) {
-  var st = STAGES[stageNo - 1], parts = [];
+  var st = STAGES[stageNo - 1], salt = "vault|" + stageNo + "|";
+  if (st.opts) return sha256(salt + st.opts[raws].v).then(function (h) { return { ok: h === st.k }; });
+  if (st.text) {
+    var t = normSecret(raws[0]);
+    if (!t) return Promise.resolve({ ok: false, unreadable: true });
+    return sha256(salt + "text|" + t).then(function (h) { return { ok: st.ks.indexOf(h) >= 0 }; });
+  }
+  var parts = [];
   for (var j = 0; j < raws.length; j++) {
     var v = readNumber(raws[j]);
     if (v === null) return Promise.resolve({ ok: false, unreadable: true });
     parts.push(canon(v, st.d || 2));
   }
-  return sha256("vault|" + stageNo + "|" + parts.join(";")).then(function (h) { return { ok: h === st.k }; });
+  return sha256(salt + parts.join(";")).then(function (h) { return { ok: h === st.k }; });
 }
 
 /* ---------- gift locks (PBKDF2 + AES-GCM) ---------- */
@@ -1100,13 +1111,24 @@ function renderStage(focus, rIdx) {
   $("st-card").setAttribute("data-n", ROMAN[idx]);
   $("st-body").innerHTML = st.body;
   $("st-fmt").textContent = st.fmt;
+  picked = -1;
+  if (st.opts) {
+    var chosen = mode === "play" ? -1 : mode === "missed" ? S.wrong[idx] : S.ans[idx];
+    for (var o = 0; o < st.opts.length; o++) {
+      var mark = o === chosen ? (mode === "missed" ? " wrong" : " right") : "";
+      html += '<button type="button" class="opt' + mark + '" role="radio" aria-checked="' + (o === chosen ? "true" : "false") + '" data-j="' + o + '"' + (mode !== "play" ? " disabled" : "") + '>' +
+        '<span class="opt-l" aria-hidden="true">' + (mark === " right" ? "✓" : "ABCDEFG".charAt(o)) + '</span><span class="opt-t">' + st.opts[o].t + '</span></button>';
+    }
+    $("st-inputs").innerHTML = '<div class="opts" role="radiogroup" aria-labelledby="st-fmt">' + html + '</div>';
+    labels = [];
+  }
   for (var j = 0; j < labels.length; j++) {
     html += '<div>' + (labels[j] ? '<label for="st-in' + j + '">' + esc(labels[j]) + '</label>' : "") +
       '<input class="answer st-in' + (mode === "missed" ? " bad" : "") + '" id="st-in' + j + '" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="' +
       (labels.length > 1 ? "answer" : "your answer") + '"' + (labels[j] ? "" : ' aria-label="Your answer"') + ' aria-describedby="st-fmt st-feedback"' +
       (mode !== "play" ? ' readonly value="' + esc(prev[j] != null ? prev[j] : "✓") + '"' : "") + '></div>';
   }
-  $("st-inputs").innerHTML = html;
+  if (!st.opts) $("st-inputs").innerHTML = html;
   $("st-submit").hidden = mode !== "play";
   var e = S.log[idx], fb = "";
   if (mode === "solved") fb = '<p class="yay-note">🎉 Correct!</p>';
@@ -1134,6 +1156,7 @@ function setHint(open, idx) {
   else { box.hidden = true; btn.hidden = false; btn.setAttribute("aria-expanded", "false"); }
 }
 
+var picked = -1;
 var CHEERS = ["Nice one! 🎉", "Too easy? 😏", "Look at you go! ✨", "Big brain! 🧠", "Unstoppable! 🚀", "Wow, okay! 🤩", "Legend! 🏆"];
 function renderReward(fresh, focus) {
   var e = S.log[S.i], k = S.i + 1;
@@ -1201,7 +1224,7 @@ function renderBday(celebrate, focus) {
 function renderFin(celebrate, focus) {
   var amt = $("fn-amt"), total = collected() + CONFIG.bonusAmount, ns = 0;
   for (var q = 0; q < N; q++) if (solved(q)) ns++;
-  $("fn-sub").textContent = ns + (ns === 1 ? " brain teaser" : " brain teasers") + " + 1 birthday bonus";
+  $("fn-sub").textContent = ns + (ns === 1 ? " question" : " questions") + " + 1 birthday bonus";
   $("fn-photo").innerHTML = (CONFIG.photo ? '<img src="' + esc(CONFIG.photo) + '" alt="Birthday photo">' : '<div class="ph">Photo goes here 📸</div>') +
     '<figcaption>' + esc(CONFIG.photoCaption || "") + '</figcaption>';
   var cs = $("fn-candles").querySelectorAll(".candle");
@@ -1383,21 +1406,21 @@ var busy = false;
 $("st-form").addEventListener("submit", function (ev) {
   ev.preventDefault();
   if (busy || S.phase !== "stage" || view !== "play") return;
+  var idx = S.i, isMcq = !!STAGES[idx].opts;
   var ins = Array.prototype.slice.call(document.querySelectorAll(".st-in"));
-  var raws = ins.map(function (x) { return x.value; });
-  var empty = ins.filter(function (x) { return !x.value.trim(); });
-  if (empty.length) { empty[0].focus(); return; }
+  var raws = isMcq ? picked : ins.map(function (x) { return x.value; });
+  if (isMcq) { if (picked < 0) { $("st-feedback").innerHTML = '<p class="nope-sub">Pick an answer first 👆</p>'; return; } }
+  else { var empty = ins.filter(function (x) { return !x.value.trim(); }); if (empty.length) { empty[0].focus(); return; } }
   busy = true;
-  var idx = S.i;
   verify(idx + 1, raws).then(function (res) {
     busy = false;
     if (S.phase !== "stage" || S.i !== idx) return;
     if (res.unreadable) {   // doesn't use up the try
-      $("st-feedback").innerHTML = '<p class="nope-sub">Hmm, I can’t read that. Try a number, a fraction like 3/4, or a percentage. (This didn’t use your try.)</p>';
+      $("st-feedback").innerHTML = STAGES[idx].text ? '<p class="nope-sub">Type an answer first. (This didn’t use your try.)</p>' : '<p class="nope-sub">Hmm, I can’t read that. Try a number, a fraction like 3/4, or a percentage. (This didn’t use your try.)</p>';
       ins.forEach(function (x) { if (readNumber(x.value) === null) x.classList.add("bad"); });
       return;
     }
-    var clean = raws.map(function (x) { return String(x).trim().slice(0, 40); });
+    var clean = isMcq ? raws : raws.map(function (x) { return String(x).trim().slice(0, 40); });
     S.att[idx] = (S.att[idx] || 0) + 1;
     ins.forEach(function (x) { x.blur(); });
     if (res.ok) {
@@ -1421,6 +1444,14 @@ $("st-form").addEventListener("submit", function (ev) {
   });
 });
 $("st-inputs").addEventListener("input", function (ev) { if (ev.target.classList) ev.target.classList.remove("bad"); });
+$("st-inputs").addEventListener("click", function (ev) {
+  var b = ev.target.closest(".opt");
+  if (!b || b.disabled || view !== "play" || S.phase !== "stage") return;
+  picked = +b.getAttribute("data-j");
+  Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (o) { o.setAttribute("aria-checked", String(o === b)); });
+  $("st-feedback").innerHTML = "";
+  Sound.play("tap");
+});
 
 $("st-hintbtn").addEventListener("click", function () {
   Sound.play("tap");
