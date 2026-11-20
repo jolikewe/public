@@ -420,6 +420,14 @@ body.party .aurora{display:none}
 .ledger li.miss b{font-weight:700;font-size:13px}
 .opt.wrong:disabled{opacity:1}
 .answer.bad[readonly]{background:#fff3f5;border-color:#f3c1cf;color:var(--bad);text-decoration:line-through}
+
+/* ---------- v12: tick-all-that-apply ---------- */
+.opt.multi .opt-l{border-radius:8px;background:#fff;border:2px solid #d9cdf7;color:#fff;font-size:15px}
+.opt.multi[aria-checked="true"] .opt-l{background:var(--pink);border-color:var(--pink)}
+.opt.multi.right .opt-l{background:#5fd3b3;border-color:#5fd3b3}
+.opt.misspick{border-color:#f3c1cf;background:#fff5f7;opacity:1}
+.opt.misspick .opt-l{background:#ffb4c6;border-color:#ffb4c6}
+.opt-t{line-height:1.35}
 </style>
 </head>
 <body>
@@ -644,7 +652,7 @@ var CONFIG = {
   // How long the apparent ending lingers before "one more thing" appears (ms).
   egg_delay_ms: 2000,
 
-  storageKey: "birthday-easter-v10"
+  storageKey: "birthday-easter-v11"
 };
 
 /* =====================================================================
@@ -655,6 +663,16 @@ function F(a, b) { return '<span class="fr"><span>' + a + '</span><span>' + b + 
 
 var STAGES = [
   {
+    topic: "About you 💖",
+    title: "Little Cheerina’s Dream",
+    body: "<p>When you were little, what did you want to be when you grew up?</p>",
+    fmt: "Type your answer",
+    text: true,
+    hint: "Think back to when you were little… it involves music and turntables 🎶",
+    ks: ["6291e849e3dd6796062c5c8ee390b7ac5efe69b8fb65c612fadd1896578c028e", "8a47509fc10aa0a3988861c52d3e44443a947da36f596635d1a0559ec01539eb", "2b6b2fe841646b4aaa91d0b63f6e93d2dd6be16f24e14c976daf5e644bb80eb4", "2cc7ea426b0af237958cfb75ac8af67f60863f5cd789109113b0d35158ea91c1", "33e0f0a922e0128d01bf41d7fa38940d1fb9f4d0cd398ee6b25a12e9194e79b2", "01e2a8c748b8e0cae2e7df94486e6c67d0a22729b5b5acb19491c4dead43cc59"],
+    sol: function () { return '<p>Turntables, headphones, a whole crowd going wild 🎧</p><div class="ans-box">A DJ! 🎧</div>'; }
+  },
+  {
     topic: "Probability",
     title: "Rainy Days",
     body: "<p>Tomorrow, it will rain in City A with probability <em>0.3</em> and in City B with probability <em>0.4</em>.</p>" +
@@ -664,7 +682,7 @@ var STAGES = [
     fields: ["Minimum probability", "Maximum probability"],
     d: 2,
     hint: "Draw the rain in each city as a circle in a Venn diagram. “Dry in both” is everything outside both circles. What happens to that outside area as you slide the circles from fully separate (never rains in both) to one sitting inside the other (as overlapping as possible)?",
-    k: "a0b38926c93443938bdd2f4c6c0a95e2c3787eee94345da334f25bd8b97f2665",
+    k: "d914ae053cbbe31cef61c9b6606792bad6cf7108987d528f78a0a5d6d11d3a1f",
     sol: function () { return '' +
       '<p>Call the events <b>A</b> (rain in City A) and <b>B</b> (rain in City B). “Dry in both” is everything <i>outside</i> both circles:</p>' +
       '<span class="eq">P(dry in both) = 1 − P(A ∪ B)<br>= 1 − [0.3 + 0.4 − P(A ∩ B)]<br>= 0.3 + P(A ∩ B)</span>' +
@@ -686,13 +704,20 @@ var STAGES = [
   },
   {
     topic: "About you 💖",
-    title: "Little Cheerina’s Dream",
-    body: "<p>When you were little, what did you want to be when you grew up?</p>",
-    fmt: "Type your answer",
-    text: true,
-    hint: "Think back to when you were little… it involves music and turntables 🎶",
-    ks: ["36840a003dbf7e2fba1cb1eab0de2da75acdf874504838008c98808106378a2b", "adb5aeb6aa81651483409038ca5c0842af50c78855baacdddf18513e88adba9d", "fbc619249383de1432e39ad10959b1a95b5a8093b92bd8bb5e95fd6f9cb50988", "642c003a3d658ea10200d5acb055fcc42965e2021328380404febfd1fd2f100e", "6f69d5f30b22d3e37120ef4ba40f7d3d50d0d653dc41e13c2688362e46db80e5", "90057a59b74a47c2609ffa56f0c5b5dad84c2b4088b92a67e0f72285c4561dbd"],
-    sol: function () { return '<p>Turntables, headphones, a whole crowd going wild 🎧</p><div class="ans-box">A DJ! 🎧</div>'; }
+    title: "Main Character Moment",
+    body: "<p>What are you famous for?</p>",
+    fmt: "Choose all that apply",
+    multi: true,
+    opts: [
+      { t: "Galloping 🐎", v: "m3_0" },
+      { t: "Lechu Lechu~ 💃", v: "m3_1" },
+      { t: "Being Mdm Olive 🫒", v: "m3_2" },
+      { t: "Putting on an earpiece in the middle of an argument 🎧", v: "m3_3" },
+      { t: "Flooding the underneath of a table with bags of rotten bread 🍞", v: "m3_4" }
+    ],
+    hint: "Be honest… there might be more than one 👀",
+    k: "79650ff9cae12fa09fd0bf498a8d1465a5de758f904fbe9acc77476c1860ef45",
+    sol: function () { return '<p>All of the above. Obviously. Legends don’t pick just one. 🐎💃🫒🎧🍞</p><div class="ans-box">All five!</div>'; }
   },
   {
     topic: "Conditional probability",
@@ -703,7 +728,7 @@ var STAGES = [
     fmt: "Probability: fraction, decimal or percentage",
     d: 2,
     hint: "Do it in two steps. First update your belief about which coin you’re holding after three heads. Then average the chance of a fourth head over the two possibilities.",
-    k: "60516f18f9853597d71d5716e4d8827f92cb7ab139a2e7b363bf0121bd50b8df",
+    k: "992ad0afb5425c6c9ac0a0bd1bbaba2fcb1b40543162f59933f092ad719b8276",
     sol: function () { return '' +
       '<h3>Step 1 · Which coin is it? (Bayes)</h3>' +
       '<p>Before flipping, P(double-headed) = ' + F(1, 3) + '. A double-headed coin gives HHH for sure; a fair coin gives HHH with probability ' + F(1, 8) + '.</p>' +
@@ -712,21 +737,6 @@ var STAGES = [
       '<span class="eq">P(4th flip is H) = ' + F(4, 5) + ' · 1 + ' + F(1, 5) + ' · ' + F(1, 2) + ' = ' + F(9, 10) + '</span>' +
       '<p>' + F(4, 5) + ' is a trap: that’s only the chance you hold the trick coin. Even a fair coin can still land heads.</p>' +
       '<div class="ans-box">9/10</div>'; }
-  },
-  {
-    topic: "About you 💖",
-    title: "Main Character Moment",
-    body: "<p>What is your best performance ever?</p>",
-    fmt: "Choose one answer",
-    opts: [
-      { t: "Twinkle Twinkle Little Star 🌟", v: "p40" },
-      { t: "Baby Shark 🦈", v: "p41" },
-      { t: "Lechu Lechu~ 💃", v: "p42" },
-      { t: "Shower concert (every night) 🚿", v: "p43" }
-    ],
-    hint: "The one that still lives rent-free in everyone’s head 💃",
-    k: "037d5861a5ceb70a0684a20e5ddefc3b780d0d0b6ea0cd489623ef6c2d0be703",
-    sol: function () { return '<p>Iconic. Legendary. No notes. 💃</p><div class="ans-box">Lechu Lechu~</div>'; }
   },
   {
     topic: "Counting",
@@ -754,18 +764,19 @@ var STAGES = [
   },
   {
     topic: "About you 💖",
-    title: "Be Honest",
-    body: "<p>How many times did you PMO me this year? 😤</p>",
-    fmt: "Choose one answer",
+    title: "Kor’s Best Friends",
+    body: "<p>Who are Kor’s 2 best friends?</p>",
+    fmt: "Choose two",
+    multi: true,
     opts: [
-      { t: "Zero. I’m an angel 😇", v: "p60" },
-      { t: "Once or twice", v: "p61" },
-      { t: "About 10", v: "p62" },
-      { t: "Uncountable 🙃", v: "p63" }
+      { t: "Deboring 🥱", v: "m6_0" },
+      { t: "Deborah", v: "m6_1" },
+      { t: "Barfbara 🤮", v: "m6_2" },
+      { t: "Barbarah", v: "m6_3" }
     ],
-    hint: "Be honest… 😏",
-    k: "ff85fa035c1944d9e30946615ce3743f1a81c17af914175b4474935ce237b6e9",
-    sol: function () { return '<p>At least you’re honest. 🙃</p><div class="ans-box">Uncountable</div>'; }
+    hint: "Two of these are real people. The other two… are not 😌",
+    k: "9da13a3fe75973b0a97dd796a4d994895b19f0787b9887f4d01a7eb7ee284b94",
+    sol: function () { return '<p>The real ones. 👯‍♀️ (Sorry, Deboring and Barfbara.)</p><div class="ans-box">Deborah &amp; Barbarah</div>'; }
   },
   {
     topic: "Geometric probability",
@@ -803,12 +814,12 @@ var STAGES = [
   {
     topic: "About you 💖",
     title: "Growth Spurt",
-    body: "<p>In which year did you outgrow Cherry in height?</p>",
+    body: "<p>In which year did you outgrow Jie in height?</p>",
     fmt: "A year",
     text: true,
     hint: "📏 It was the same year the whole world stayed at home.",
     ks: ["5783c7aec1c3c4850c7d202b84e880ef17d8261bc13619b649b150855a54ad78", "a69d6fab8b74351aa7c70a98df672cc6062ced9983c270a31171f920dba0ae4c", "922d71e0fd0210ecf47b0562e08416d5f5f38e1a95e8adacb041690afbbcaaf4", "823b75224ce8e54bd96bce26140cee04af7c91644a4168c96b0c27146fc90123"],
-    sol: function () { return '<p>Taller than Cherry ever since. 📏</p><div class="ans-box">2020</div>'; }
+    sol: function () { return '<p>Taller than Jie ever since. 📏</p><div class="ans-box">2020</div>'; }
   },
   {
     topic: "Final stage",
@@ -996,6 +1007,7 @@ function sha256(str) {
 
 function verify(stageNo, raws) {
   var st = STAGES[stageNo - 1], salt = "vault|" + stageNo + "|";
+  if (st.multi) return sha256(salt + raws.map(function (i) { return st.opts[i].v; }).sort().join(",")).then(function (h) { return { ok: h === st.k }; });
   if (st.opts) return sha256(salt + st.opts[raws].v).then(function (h) { return { ok: h === st.k }; });
   if (st.text) {
     var t = normSecret(raws[0]);
@@ -1111,15 +1123,16 @@ function renderStage(focus, rIdx) {
   $("st-card").setAttribute("data-n", ROMAN[idx]);
   $("st-body").innerHTML = st.body;
   $("st-fmt").textContent = st.fmt;
-  picked = -1;
+  picked = st.multi ? [] : -1;
   if (st.opts) {
-    var chosen = mode === "play" ? -1 : mode === "missed" ? S.wrong[idx] : S.ans[idx];
+    var chosen = mode === "play" ? (st.multi ? [] : -1) : mode === "missed" ? S.wrong[idx] : S.ans[idx];
     for (var o = 0; o < st.opts.length; o++) {
-      var mark = o === chosen ? (mode === "missed" ? " wrong" : " right") : "";
-      html += '<button type="button" class="opt' + mark + '" role="radio" aria-checked="' + (o === chosen ? "true" : "false") + '" data-j="' + o + '"' + (mode !== "play" ? " disabled" : "") + '>' +
-        '<span class="opt-l" aria-hidden="true">' + (mark === " right" ? "✓" : "ABCDEFG".charAt(o)) + '</span><span class="opt-t">' + st.opts[o].t + '</span></button>';
+      var on = st.multi ? (chosen || []).indexOf(o) >= 0 : o === chosen;
+      var mark = on && mode !== "play" ? (mode === "missed" ? (st.multi ? " misspick" : " wrong") : " right") : "";
+      html += '<button type="button" class="opt' + (st.multi ? " multi" : "") + mark + '" role="' + (st.multi ? "checkbox" : "radio") + '" aria-checked="' + (on ? "true" : "false") + '" data-j="' + o + '"' + (mode !== "play" ? " disabled" : "") + '>' +
+        '<span class="opt-l" aria-hidden="true">' + (st.multi ? (on ? "✓" : "") : (mark === " right" ? "✓" : "ABCDEFG".charAt(o))) + '</span><span class="opt-t">' + st.opts[o].t + '</span></button>';
     }
-    $("st-inputs").innerHTML = '<div class="opts" role="radiogroup" aria-labelledby="st-fmt">' + html + '</div>';
+    $("st-inputs").innerHTML = '<div class="opts" role="' + (st.multi ? "group" : "radiogroup") + '" aria-labelledby="st-fmt">' + html + '</div>';
     labels = [];
   }
   for (var j = 0; j < labels.length; j++) {
@@ -1409,7 +1422,10 @@ $("st-form").addEventListener("submit", function (ev) {
   var idx = S.i, isMcq = !!STAGES[idx].opts;
   var ins = Array.prototype.slice.call(document.querySelectorAll(".st-in"));
   var raws = isMcq ? picked : ins.map(function (x) { return x.value; });
-  if (isMcq) { if (picked < 0) { $("st-feedback").innerHTML = '<p class="nope-sub">Pick an answer first 👆</p>'; return; } }
+  if (isMcq) {
+    if (STAGES[idx].multi ? !picked.length : picked < 0) { $("st-feedback").innerHTML = '<p class="nope-sub">Pick an answer first 👆</p>'; return; }
+    if (STAGES[idx].multi) raws = picked.slice().sort(function (x, y) { return x - y; });
+  }
   else { var empty = ins.filter(function (x) { return !x.value.trim(); }); if (empty.length) { empty[0].focus(); return; } }
   busy = true;
   verify(idx + 1, raws).then(function (res) {
@@ -1447,8 +1463,16 @@ $("st-inputs").addEventListener("input", function (ev) { if (ev.target.classList
 $("st-inputs").addEventListener("click", function (ev) {
   var b = ev.target.closest(".opt");
   if (!b || b.disabled || view !== "play" || S.phase !== "stage") return;
-  picked = +b.getAttribute("data-j");
-  Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (o) { o.setAttribute("aria-checked", String(o === b)); });
+  var j = +b.getAttribute("data-j");
+  if (STAGES[S.i].multi) {
+    var at = picked.indexOf(j);
+    if (at >= 0) picked.splice(at, 1); else picked.push(j);
+    b.setAttribute("aria-checked", String(at < 0));
+    b.querySelector(".opt-l").textContent = at < 0 ? "✓" : "";
+  } else {
+    picked = j;
+    Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (o) { o.setAttribute("aria-checked", String(o === b)); });
+  }
   $("st-feedback").innerHTML = "";
   Sound.play("tap");
 });
