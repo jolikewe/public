@@ -617,8 +617,9 @@ body.party .aurora{display:none}
         </div>
         <p class="cake-tip" id="fn-tip">Blow out all the candles to unlock one last bonus 💸</p>
         <p class="wish" id="fn-wish" aria-live="polite"></p>
+        <button class="btn btn-main" type="button" id="fn-bonus" hidden style="margin:14px auto 0;max-width:320px">🎁 Your bonus gift is still locked</button>
       </div>
-      <p class="tease" style="margin-top:14px">Happy 21st birthday! Hope the brain teasers were (mostly) fun. 💝</p>
+      <p class="tease" style="margin-top:14px">Happy 21st birthday! 💝</p>
     </section>
   </main>
 
@@ -1072,7 +1073,7 @@ function clearOverlays() {
     setTimeout(function () { el.remove(); }, 380);
   });
 }
-function mountGift(el, k, label, onOpened) {
+function mountGift(el, k, label, onOpened, onFail) {
   var g = CONFIG.gifts[k] || {}, key = String(k), opened = S.opened[key];
   el.hidden = false;
   if (!opened && !g.lock) { S.opened[key] = opened = "placeholder"; save(); }
@@ -1107,7 +1108,7 @@ function mountGift(el, k, label, onOpened) {
       working = false;
       if (data) { S.opened[key] = data; save(); Sound.play("unlock"); mountGift(el, k, label, onOpened); }
       else if (!(window.crypto && crypto.subtle)) { fb.className = "lock-fb"; fb.textContent = "Please open this page from its https:// link to unlock gifts."; }
-      else { fb.className = "lock-fb"; fb.textContent = "Hmm, that’s not it. Try again."; Sound.play("wrong"); inp.classList.add("bad"); inp.select(); }
+      else { fb.className = "lock-fb"; fb.textContent = onFail ? "Hmm, that’s not it. Try again, or skip and open it later from Home." : "Hmm, that’s not it. Try again."; Sound.play("wrong"); inp.classList.add("bad"); inp.select(); if (onFail) onFail(); }
     });
   });
   inp.addEventListener("input", function () { inp.classList.remove("bad"); fb.textContent = ""; });
@@ -1217,7 +1218,9 @@ function renderReward(fresh, focus) {
   $("rw-next").textContent = nextLabel(S.i);
   $("rw-next").hidden = true;
   $("rw-open").hidden = !!S.rv[k];
-  if (S.rv[k]) mountGift($("rw-gift"), k, "Stage " + ROMAN[S.i] + " · " + money(CONFIG.rewards[S.i]), function () { $("rw-next").hidden = false; });
+  if (S.rv[k]) mountGift($("rw-gift"), k, "Stage " + ROMAN[S.i] + " · " + money(CONFIG.rewards[S.i]),
+    function () { $("rw-next").hidden = false; $("rw-next").textContent = nextLabel(S.i); },
+    function () { var b = $("rw-next"); b.hidden = false; b.textContent = nextLabel(S.i).replace(/^Next: /, "Skip for now → ").replace(/^Finish →$/, "Skip for now → Finish"); });
   else $("rw-gift").hidden = true;
   show("reward", focus ? "rw-title" : null);
 }
@@ -1259,7 +1262,9 @@ function renderBday(celebrate, focus) {
   $("bd-sofar").lastChild.textContent = money(soFar("bonus"));
   $("bd-open").hidden = !!S.rv.bonus;
   $("bd-finish").hidden = true;
-  if (S.rv.bonus) mountGift($("bd-gift"), "bonus", "Birthday bonus · " + money(CONFIG.bonusAmount), function () { $("bd-finish").hidden = false; }); else $("bd-gift").hidden = true;
+  if (S.rv.bonus) mountGift($("bd-gift"), "bonus", "Birthday bonus · " + money(CONFIG.bonusAmount),
+    function () { $("bd-finish").hidden = false; $("bd-finish").textContent = "Finish 🎉"; },
+    function () { $("bd-finish").hidden = false; $("bd-finish").textContent = "Skip for now → Finish"; }); else $("bd-gift").hidden = true;
   var said = [S.egg.b, S.egg.c].filter(Boolean);
   $("bd-echo").textContent = said.length ? "Your review: “" + said.join(" / ") + "”. Noted. Bonus unchanged. 😌" : "";
   show("bday", focus ? "bd-title" : null);
@@ -1277,6 +1282,7 @@ function renderFin(celebrate, focus) {
   for (var j = 0; j < cs.length; j++) cs[j].classList.toggle("out", !!S.cake);
   $("fn-wish").innerHTML = S.cake ? 'Gotcha! 😜 No more money.<br>Just make a wish ✨' : "";
   $("fn-tip").hidden = !!S.cake;
+  $("fn-bonus").hidden = !!S.opened.bonus;
   show("fin", focus ? "fn-title" : null);
   if (celebrate && !reduced) { countUp(amt, total, 1600); confetti(110); balloonsRise(12); Sound.play("fanfare"); }
   else amt.textContent = money(total);
@@ -1290,7 +1296,7 @@ function renderHome(focus) {
     var rows = "";
     for (var j = 0; j < N; j++) {
       var isCur = j === S.i && S.phase === "stage", t = esc(STAGES[j].title);
-      if (solved(j)) rows += '<li><button type="button" class="prow" data-review="' + j + '"><span class="ic" aria-hidden="true">✓</span><span>Stage ' + ROMAN[j] + ' · ' + t + '<small>Solved · tap to review</small></span></button></li>';
+      if (solved(j)) rows += '<li><button type="button" class="prow" data-review="' + j + '"><span class="ic" aria-hidden="true">✓</span><span>Stage ' + ROMAN[j] + ' · ' + t + '<small>' + (S.opened[j + 1] ? "Solved · tap to review" : "Solved · gift still locked 🎁 tap to open") + '</small></span></button></li>';
       else if (isCur) rows += '<li><button type="button" class="prow cur" data-go="1"><span class="ic" aria-hidden="true">▶</span><span>Stage ' + ROMAN[j] + ' · ' + t + '<small>' + (missed(j) ? "Second chance · tap to continue" : "In progress · tap to continue") + '</small></span></button></li>';
       else if (missed(j)) rows += '<li><button type="button" class="prow miss" data-stage="' + j + '"><span class="ic" aria-hidden="true">↺</span><span>Stage ' + ROMAN[j] + ' · ' + t + '<small>Skipped · tap to try again</small></span></button></li>';
       else if (unlocked(j)) rows += '<li><button type="button" class="prow" data-stage="' + j + '"><span class="ic" aria-hidden="true">•</span><span>Stage ' + ROMAN[j] + ' · ' + t + '<small>Not tried yet · tap to start</small></span></button></li>';
@@ -1583,6 +1589,7 @@ $("bd-open").addEventListener("click", function () {
   S.rv.bonus = true; save(); Sound.play("tap"); renderBday(false, false);
   $("bd-gift").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
 });
+$("fn-bonus").addEventListener("click", function () { S.phase = "bday"; S.rv.bonus = true; save(); Sound.play("tap"); window.scrollTo(0, 0); renderBday(false, true); });
 $("bd-finish").addEventListener("click", function () {
   S.phase = "fin"; save(); window.scrollTo(0, 0); renderFin(true, true);
 });
