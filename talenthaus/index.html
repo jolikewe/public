@@ -156,6 +156,17 @@ html[data-lang="zh"] .total .big{font-family:var(--display)}
 .vcard h3{font-size:.92rem;font-family:var(--body);font-weight:700;line-height:1.35}
 html[data-lang="zh"] .vcard h3{font-family:"Noto Sans SC",var(--body)}
 
+/* faq */
+.faq{background:var(--ink)}
+.qa{display:grid;gap:12px;margin-top:36px;max-width:780px}
+.qa details{border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.qa details[open]{border-color:rgba(154,120,255,.45)}
+.qa summary{list-style:none;cursor:pointer;padding:18px 52px 18px 20px;font-weight:700;position:relative}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:1.4rem;font-weight:500;color:var(--muted)}
+.qa details[open] summary::after{content:"\2212"}
+.qa p{padding:0 20px 18px;color:var(--muted)}
+
 /* join */
 .join{background:radial-gradient(800px 500px at 50% 0%,rgba(79,140,255,.22),transparent 65%),var(--ink)}
 .jgrid{display:grid;gap:36px;align-items:center}
@@ -178,9 +189,8 @@ footer img{height:36px;width:auto;opacity:.95}
 .top-right{display:flex;align-items:center;gap:14px}
 .navlink{color:inherit;text-decoration:none;font-weight:600;font-size:.9rem;opacity:.85;padding:6px 4px}
 .navlink:hover,.navlink:focus-visible{opacity:1;text-decoration:underline;text-underline-offset:4px}
-footer .tools{font-size:.8rem;opacity:.7;text-decoration:none}
-footer .tools:hover,footer .tools:focus-visible{opacity:.9}
-footer .disc{flex-basis:100%;font-size:.82rem}
+.navlink.apply{display:none}
+@media(min-width:900px){.navlink.apply{display:inline-flex;align-items:center;min-height:34px;padding:0 16px;border-radius:999px;background:var(--grad);opacity:1}}
 
 /* sticky mobile CTA */
 .sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--ink) 40%);transform:translateY(120%);transition:transform .3s}
@@ -196,7 +206,8 @@ footer .disc{flex-basis:100%;font-size:.82rem}
 <header class="top">
   <a class="brand" href="#top" aria-label="talenthaus"><img src="assets/logo-white.png" alt="talenthaus" width="60" height="34"></a>
   <div class="top-right">
-  <a class="navlink" href="tools/"><span class="en">Tools</span><span class="zh">工具</span></a>
+  <a class="navlink" href="#faq"><span class="en">FAQ</span><span class="zh">常见问题</span></a>
+  <a class="navlink apply" href="#join"><span class="en">Apply</span><span class="zh">申请</span></a>
   <div class="lang" role="group" aria-label="Language / 语言">
     <button type="button" data-set="en" aria-pressed="true">EN</button>
     <button type="button" data-set="zh" aria-pressed="false" lang="zh">中文</button>
@@ -230,20 +241,20 @@ footer .disc{flex-basis:100%;font-size:.82rem}
     <div class="cards">
       <article class="card c-blue">
         <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3h11.6L23 9.2 12 21.5 1 9.2 6.2 3Zm1.4 2L4.4 8.8h4.2L9.9 5H7.6Zm4.4 0-1.4 3.8h2.8L12 5Zm2.1 0 1.3 3.8h4.2L16.4 5h-2.3ZM4.6 10.8 11 18.2 8.7 10.8H4.6Zm6.2 0L12 19l1.2-8.2h-2.4Zm4.5 0L13 18.2l6.4-7.4h-4.1Z"/></svg></div>
-        <h3><span class="en">Existing diamond revenue</span><span class="zh">直播钻石收益</span></h3>
+        <h3><span class="en">Your diamond revenue</span><span class="zh">直播钻石收益</span></h3>
         <p><span class="en">From gifts you receive on TikTok LIVE.</span><span class="zh">你原有的直播钻石收益。</span></p>
         <div class="tag"><span class="en">100% yours<small>We don't touch it.</small></span><span class="zh">100% 归你所有</span></div>
       </article>
       <article class="card c-gold">
         <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 1.8 3 6.4 7 .9-5.1 4.8 1.3 7-6.2-3.4-6.2 3.4 1.3-7L2 9.1l7-.9 3-6.4Z"/></svg></div>
         <h3><span class="en">Performance incentives</span><span class="zh">直播激励</span></h3>
-        <p><span class="en">Extra rewards from the agency based on your performance.</span><span class="zh">根据直播表现获得额外奖励。</span></p>
+        <p><span class="en">Extra rewards from us, based on how your LIVEs perform.</span><span class="zh">根据直播表现获得额外奖励。</span></p>
         <div class="tag"><span class="en">Additional</span><span class="zh">额外增加</span></div>
       </article>
       <article class="card c-violet">
-        <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.5a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Zm0 2c-3.6 0-7 1.7-7 4.6V20h14v-1.9c0-2.9-3.4-4.6-7-4.6Zm8.2-2a3.3 3.3 0 1 0-1.600-6.200 6 6 0 0 1 0 5.900c.5.200 1 .3 1.600.3Zm.8 2.200c1.800.6 4 2 4 4.300V20h-4v-1.900c0-1.700-.7-3.100-2-4.300.6-.2 1.300-.3 2-.3Z"/></svg></div>
+        <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.5a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Zm0 2c-3.6 0-7 1.7-7 4.6V20h14v-1.9c0-2.9-3.4-4.6-7-4.6Zm8.2-2a3.3 3.3 0 1 0-1.6-6.2 6 6 0 0 1 0 5.900c.5.2 1 .3 1.6.3Zm.8 2.200c1.8.6 4 2 4 4.300V20h-4v-1.900c0-1.7-.7-3.1-2-4.3.6-.2 1.3-.3 2-.3Z"/></svg></div>
         <h3><span class="en">Creator referral rewards</span><span class="zh">邀请达人奖励</span></h3>
-        <p><span class="en">Additional income by referring other creators to join our network.</span><span class="zh">邀请达人加入官方认证公会，获得额外奖励。</span></p>
+        <p><span class="en">Extra income when creators you refer join the network.</span><span class="zh">邀请达人加入官方认证公会，获得额外奖励。</span></p>
         <div class="tag"><span class="en">Additional</span><span class="zh">额外增加</span></div>
       </article>
     </div>
@@ -255,10 +266,9 @@ footer .disc{flex-basis:100%;font-size:.82rem}
       <path d="M250 0V22Q250 40 200 48Q160 54 150 70" stroke="url(#gv)"/>
     </svg>
     <div class="total">
-      <div class="t"><span class="en">Total earnings</span><span class="zh">总收益</span></div>
-      <div class="k"><span class="en">Up to</span><span class="zh">最高可提升</span></div>
-      <div class="big"><span class="en">100%</span><span class="zh">100%+</span>*</div>
-      <div class="t"><span class="en">more earnings</span><span class="zh">&nbsp;</span></div>
+      <div class="k"><span class="en">Up to</span><span class="zh">总收益最高可提升</span></div>
+      <div class="big">100%*</div>
+      <div class="t"><span class="en">more in total earnings</span><span class="zh">额外收益</span></div>
     </div>
     <p class="fine"><span class="en">*Results vary based on individual performance and engagement.</span><span class="zh">* 实际奖励金额将根据活动规则及达人表现而定。</span></p>
   </div>
@@ -268,13 +278,13 @@ footer .disc{flex-basis:100%;font-size:.82rem}
   <div class="wrap">
     <h2><span class="en">Support that goes beyond going live.</span><span class="zh">不只是开播，更有全程支持。</span></h2>
     <div class="bgrid">
-      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 7 4.500 4L12 4l4.500 7L21 7l-2 11H5L3 7Zm2.400 13h13.200v2H5.400v-2Z"/></svg></div>
+      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 7 4.5 4L12 4l4.5 7L21 7l-2 11H5L3 7Zm2.4 13h13.200v2H5.400v-2Z"/></svg></div>
         <div><h3><span class="en">Exclusive opportunities</span><span class="zh">专属成长机会</span></h3><p><span class="en">Exclusive PK battles and campaigns.</span><span class="zh">专属 PK 机会与专属活动。</span></p></div></div>
-      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2.500c-4.400 0-8 2.200-8 5V22h16v-2.500c0-2.800-3.600-5-8-5Z"/></svg></div>
+      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2.500c-4.4 0-8 2.2-8 5V22h16v-2.500c0-2.8-3.6-5-8-5Z"/></svg></div>
         <div><h3><span class="en">Coaching &amp; support</span><span class="zh">直播运营指导</span></h3><p><span class="en">Onboarding, an engagement plan and gifting strategy.</span><span class="zh">入驻指导、互动运营规划、礼物运营策略。</span></p></div></div>
-      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-2 14.500v-9l7.500 4.500L10 16.500Z"/></svg></div>
+      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-2 14.500v-9l7.5 4.500L10 16.500Z"/></svg></div>
         <div><h3><span class="en">Content optimisation</span><span class="zh">内容优化</span></h3><p><span class="en">Short-video boosting to draw in more followers.</span><span class="zh">优质内容曝光，吸引更多潜在粉丝。</span></p></div></div>
-      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 11a3.500 3.500 0 1 0 0-7 3.500 3.500 0 0 0 0 7Zm8.500 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM8 13c-3 0-6 1.500-6 4v2h12v-2c0-2.500-3-4-6-4Zm8.500 0c-.500 0-1 0-1.500.100 1.200.900 2 2.100 2 3.900v2h5v-2c0-2.200-2.700-4-5.500-4Z"/></svg></div>
+      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm8.5 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM8 13c-3 0-6 1.5-6 4v2h12v-2c0-2.5-3-4-6-4Zm8.5 0c-.5 0-1 0-1.5.1 1.2.9 2 2.1 2 3.900v2h5v-2c0-2.2-2.7-4-5.5-4Z"/></svg></div>
         <div><h3><span class="en">Community &amp; resources</span><span class="zh">达人社群与专属资源</span></h3><p><span class="en">A creator community and exclusive resources, from Day 1.</span><span class="zh">从第一天开始，加入达人社群并获取专属资源。</span></p></div></div>
     </div>
   </div>
@@ -298,8 +308,8 @@ footer .disc{flex-basis:100%;font-size:.82rem}
       <div class="slide zh"><img src="assets/earn-zh-1.webp" width="960" height="1720" alt="TikTok 主播究竟赚多少？" loading="lazy"></div>
       <div class="slide zh"><img src="assets/earn-zh-2.webp" width="960" height="1720" alt="第一月、第二月、第三月。最大的优势？免费加入。" loading="lazy"></div>
       <div class="slide zh"><img src="assets/earn-zh-3.webp" width="960" height="1720" alt="三个月成长计划" loading="lazy"></div>
-      <div class="slide zh"><img src="assets/earn-zh-4.webp" width="960" height="1720" alt="你的优势哪里？普通主播与 talenthaus 主播" loading="lazy"></div>
-      <div class="slide zh"><img src="assets/earn-zh-5.webp" width="960" height="1720" alt="talenthaus 从第一天开始提供于主播成长的资源与机会" loading="lazy"></div>
+      <div class="slide zh"><img src="assets/earn-zh-4.webp" width="960" height="1720" alt="你的优势在哪里？普通主播与 talenthaus 主播" loading="lazy"></div>
+      <div class="slide zh"><img src="assets/earn-zh-5.webp" width="960" height="1720" alt="talenthaus 从第一天开始提供助力主播成长的资源与机会" loading="lazy"></div>
     </div>
     <div class="dots" id="dots" aria-hidden="true"></div>
     <p class="swipe"><span class="en">Swipe to see more</span><span class="zh">左右滑动查看更多</span></p>
@@ -310,16 +320,33 @@ footer .disc{flex-basis:100%;font-size:.82rem}
 <section class="videos">
   <div class="wrap">
     <h2><span class="en">Watch before you apply.</span><span class="zh">申请前，先看看我们。</span></h2>
-    <p class="lede"><span class="en">Tap a video to play. Sound is off until you start it.</span><span class="zh">点击视频即可播放。</span></p>
+    <p class="lede"><span class="en">Short videos on how a Creator Network works and what you get.</span><span class="zh">几段短视频，了解公会如何运作以及你能获得什么。</span></p>
     <div class="vgrid">
-      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-3way.jpg" aria-label="The 3-way partnership video"><source src="assets/v-3way.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.500-15-8.500Z"/></svg></span></button></div>
+      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-3way.jpg" aria-label="The 3-way partnership video"><source src="assets/v-3way.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.5-15-8.500Z"/></svg></span></button></div>
         <h3><span class="en">The 3-way partnership: creator, agency and TikTok</span><span class="zh">三方合作：主播、公会与 TikTok</span></h3></div>
-      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-benefits.jpg" aria-label="Benefits of joining a creator network video"><source src="assets/v-benefits.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.500-15-8.500Z"/></svg></span></button></div>
+      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-benefits.jpg" aria-label="Benefits of joining a creator network video"><source src="assets/v-benefits.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.5-15-8.500Z"/></svg></span></button></div>
         <h3><span class="en">Benefits of joining a creator network</span><span class="zh">加入公会的好处</span></h3></div>
-      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-intro1.jpg" aria-label="talenthaus intro video"><source src="assets/v-intro1.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.500-15-8.500Z"/></svg></span></button></div>
+      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-intro1.jpg" aria-label="talenthaus intro video"><source src="assets/v-intro1.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.5-15-8.500Z"/></svg></span></button></div>
         <h3><span class="en">Meet talenthaus</span><span class="zh">认识 talenthaus</span></h3></div>
-      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-intro2.jpg" aria-label="talenthaus intro video 2"><source src="assets/v-intro2.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.500-15-8.500Z"/></svg></span></button></div>
-        <h3><span class="en">More from talenthaus</span><span class="zh">更多 talenthaus</span></h3></div>
+      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-intro2.jpg" aria-label="talenthaus intro video 2"><source src="assets/v-intro2.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.5-15-8.500Z"/></svg></span></button></div>
+        <h3><span class="en">Life at talenthaus</span><span class="zh">走进 talenthaus</span></h3></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <h2><span class="en">New to Creator Networks?</span><span class="zh">第一次了解公会？</span></h2>
+    <p class="lede"><span class="en">The questions creators ask us most.</span><span class="zh">主播们最常问的问题。</span></p>
+    <div class="qa">
+      <details><summary><span class="en">What is a TikTok Creator Network?</span><span class="zh">什么是 TikTok Creator Network（公会）？</span></summary>
+        <p><span class="en">It's an agency officially partnered with TikTok to help LIVE creators grow. You keep going live on your own account. The network adds coaching, campaigns and extra incentives on top.</span><span class="zh">公会是与 TikTok 官方合作、帮助直播主播成长的机构。你依然用自己的账号开播，公会在此基础上提供运营指导、专属活动和额外激励。</span></p></details>
+      <details><summary><span class="en">Does it cost anything to join?</span><span class="zh">加入需要付费吗？</span></summary>
+        <p><span class="en">No. Joining talenthaus is free.</span><span class="zh">不需要。加入 talenthaus 完全免费。</span></p></details>
+      <details><summary><span class="en">Do you take a share of my diamonds?</span><span class="zh">公会会抽取我的钻石收益吗？</span></summary>
+        <p><span class="en">No. 100% of your diamond revenue stays yours. Performance incentives and referral rewards are paid on top of it.</span><span class="zh">不会。你的直播钻石收益 100% 归你所有，直播激励和邀请奖励都是额外增加的。</span></p></details>
+      <details><summary><span class="en">What happens when I scan the QR code?</span><span class="zh">扫描二维码后会发生什么？</span></summary>
+        <p><span class="en">TikTok shows you information about the Creator Network so you can look it over. You only join if you choose to apply.</span><span class="zh">TikTok 会显示公会的相关信息供你查看。只有在你选择申请后才会加入。</span></p></details>
     </div>
   </div>
 </section>
@@ -334,14 +361,15 @@ footer .disc{flex-basis:100%;font-size:.82rem}
       <h2><span class="en">Apply to join talenthaus.</span><span class="zh">申请加入 talenthaus。</span></h2>
       <p class="lede"><span class="en">Scan the QR code to learn about the Creator Network and apply to join. It's free to join.</span><span class="zh">扫描二维码，了解公会信息并申请加入。免费加入。</span></p>
       <ol class="steps">
-        <li><div><b><span class="en">Download and save the image locally</span><span class="zh">下载图片并保存到本地</span></b></div></li>
+        <li><div><b><span class="en">Save the QR image to your phone</span><span class="zh">将二维码图片保存到手机</span></b></div></li>
         <li><div><b><span class="en">Open TikTok &gt; Profile &gt; Add friends &gt; Scan</span><span class="zh">打开 TikTok &gt;【主页】&gt;【添加好友】&gt;【扫描】</span></b></div></li>
+        <li><div><b><span class="en">Tap the photo icon and choose the saved image</span><span class="zh">点击相册图标，选择刚保存的图片</span></b></div></li>
       </ol>
       <div class="actions">
-        <a class="btn en" href="assets/qr-en.webp" download="talenthaus-apply-qr.webp">Download the QR image</a>
-        <a class="btn zh" href="assets/qr-zh.webp" download="talenthaus-apply-qr-zh.webp">下载二维码图片</a>
+        <a class="btn en" href="assets/qr-en.webp" download="talenthaus-apply-qr.webp">Save the QR image</a>
+        <a class="btn zh" href="assets/qr-zh.webp" download="talenthaus-apply-qr-zh.webp">保存二维码图片</a>
       </div>
-      <p class="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"/></svg><span class="en">Scanning the QR code is only for viewing information about the Creator Network.</span><span class="zh">扫描二维码仅用于查看公会相关信息。</span></p>
+      <p class="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"/></svg><span class="en">Scanning only shows you information about the Creator Network. Nothing is signed until you choose to apply.</span><span class="zh">扫描二维码仅用于查看公会相关信息，在你决定申请之前不会有任何签约。</span></p>
     </div>
   </div>
 </section>
@@ -351,8 +379,6 @@ footer .disc{flex-basis:100%;font-size:.82rem}
   <div class="wrap">
     <img src="assets/logo-white.png" alt="talenthaus" width="62" height="36">
     <span><span class="en">talenthaus · An official TikTok Creator Network</span><span class="zh">talenthaus · TikTok Creator Network 官方认证公会</span></span>
-    <a class="tools" href="tools/">Tools</a>
-    <p class="disc"><span class="en">*Results vary based on individual performance and engagement.</span><span class="zh">* 实际奖励金额将根据活动规则及达人表现而定。</span></p>
   </div>
 </footer>
 
@@ -381,9 +407,8 @@ footer .disc{flex-basis:100%;font-size:.82rem}
   }
   function upd(){
     var s=slides();if(!s.length)return;
-    var c=rail.scrollLeft+rail.clientWidth/2-s[0].offsetLeft,idx=0,best=1e9;
-    s.forEach(function(el,i){var d=Math.abs(el.offsetLeft-s[0].offsetLeft+el.offsetWidth/2-(rail.scrollLeft+rail.clientWidth/2-s[0].offsetLeft)-0);
-      d=Math.abs((el.offsetLeft+el.offsetWidth/2)-(rail.scrollLeft+rail.clientWidth/2));if(d<best){best=d;idx=i}});
+    var mid=rail.scrollLeft+rail.clientWidth/2,idx=0,best=1e9;
+    s.forEach(function(el,i){var d=Math.abs(el.offsetLeft+el.offsetWidth/2-mid);if(d<best){best=d;idx=i}});
     if(rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-4)idx=s.length-1;
     Array.prototype.forEach.call(dots.children,function(d,i){d.classList.toggle('on',i===idx)});
   }
