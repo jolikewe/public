@@ -103,22 +103,51 @@
   .diag-samples{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:3px}
   footer{margin-top:40px;color:var(--faint);font-size:11.5px;font-family:var(--mono);line-height:1.7}
   @media (max-width:560px){ h1{font-size:23px} body{padding:28px 16px 60px} }
+
+  .grab{margin:8px 0 18px}.grab h2{font-size:17px;margin:0 0 10px}
+  .where{border:1px solid var(--border);border-radius:12px;padding:12px 16px;background:var(--bg-2);margin-bottom:14px}
+  .where p{margin:6px 0;font-size:13.5px;line-height:1.55}
+  .steps{padding-left:20px;margin:0 0 10px}.steps li{margin:8px 0;font-size:14px;line-height:1.55}
+  .bm{display:inline-block;margin:4px 6px;padding:7px 14px;border-radius:10px;background:var(--amber);color:#111;font-weight:700;text-decoration:none;cursor:grab}
+  .mini{display:block;color:var(--faint);font-size:12.5px;margin-top:4px}
+  .linkbtn{all:unset;cursor:pointer;color:var(--amber);text-decoration:underline}
+  .loaded{border:1px solid var(--amber);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:13.5px}
 </style>
 </head>
 <body>
   <header>
     <div class="sig" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <div class="head-txt">
-      <p class="eyebrow">Local · offline · nothing leaves this page</p>
+      <p class="eyebrow">Local · runs in your browser</p>
       <h1>TikTok Campaign Username Extractor</h1>
-      <p class="sub">Paste the leaderboard data you copied from your browser's Network tab. It pulls out every display name and @username (linked to their TikTok profile), sorted by score. Runs entirely in your browser — it only reads what you give it and never contacts TikTok.</p>
+      <p class="sub">Get every display name and @username from a TikTok LIVE campaign leaderboard, sorted by score. Use the one-click bookmark below, or paste data copied from your browser’s Network tab. Runs entirely in your browser.</p>
     </div>
   </header>
 
   <div class="rule"></div>
 
+
+  <section class="grab" aria-labelledby="grabTitle">
+    <h2 id="grabTitle">One-click grab from a TikTok campaign page</h2>
+    <div class="where">
+      <p><b>Where the usernames come from:</b> the <b>leaderboard of a TikTok LIVE campaign / event page</b> on <code>tiktok.com</code> that you have open in your own browser and are logged into, e.g. the ranking tabs of a campaign (Star Legend, Rising Star, Star Seeker…).</p>
+      <p><b>What it reads:</b> only the leaderboard data that page loads: display name, @username, rank and score of the creators listed on it. If no leaderboard data has loaded, it falls back to the @profile links visible on the page.</p>
+      <p><b>What it doesn't do:</b> it runs only when you click it, only on the tab you're viewing. It doesn't read cookies, passwords, messages or anything outside that leaderboard, and sends nothing to any server. The data goes straight from your TikTok tab to this page in your browser.</p>
+    </div>
+    <ol class="steps">
+      <li><b>Install once:</b> drag this button to your bookmarks bar →
+        <a id="bm" class="bm" href="javascript:!function(){var t=%22https://jolikewe.github.io%22,e=/%22(handle_name|handleName|unique_id|uniqueId|nickname|display_name)%22%5Cs*:/;if(/(%5E|%5C.)tiktok%5C.com$/.test(location.hostname))if(window.__thGrab)window.__thGrab.show();else{var n=[],o={},a=window.fetch;window.fetch=function(){return a.apply(this,arguments).then(function(t){try{t.clone().text().then(d,function(){})}catch(t){}return t})};XMLHttpRequest.prototype.open;var r=XMLHttpRequest.prototype.send;XMLHttpRequest.prototype.send=function(){return this.addEventListener(%22load%22,function(){try{%22%22===this.responseType||%22text%22===this.responseType?d(this.responseText):%22json%22===this.responseType&&this.response&&d(JSON.stringify(this.response))}catch(t){}}),r.apply(this,arguments)};var i=document.createElement(%22div%22);i.setAttribute(%22style%22,%22position:fixed;z-index:2147483647;right:16px;bottom:16px;width:300px;padding:14px 16px;border-radius:14px;background:%2314131f;color:%23eceaf5;font:13px/1.45 system-ui,-apple-system,sans-serif;box-shadow:0 10px 40px rgba(0,0,0,.5);border:1px solid %232a2840%22),i.innerHTML='<div style=%22display:flex;justify-content:space-between;align-items:center;margin-bottom:6px%22><b style=%22font-size:14px%22>Grab usernames</b><button data-a=%22x%22 style=%22all:unset;cursor:pointer;opacity:.6;font-size:16px%22 aria-label=%22Close%22>%C3%97</button></div><div data-s style=%22color:%239a97b0;margin-bottom:8px%22>Starting%E2%80%A6</div><div style=%22color:%239a97b0;font-size:12px;margin-bottom:10px%22>Tip: click through each leaderboard tab and scroll to the bottom. New data is added automatically.</div><button data-a=%22o%22 style=%22all:unset;cursor:pointer;display:block;text-align:center;padding:9px;border-radius:10px;background:%2325f4ee;color:%230b0b12;font-weight:700;margin-bottom:6px%22>Open in extractor</button><button data-a=%22c%22 style=%22all:unset;cursor:pointer;display:block;text-align:center;padding:8px;border-radius:10px;border:1px solid %232a2840%22>Copy data instead</button>',document.body.appendChild(i);var s=i.querySelector(%22[data-s]%22);i.addEventListener(%22click%22,function(e){var n=e.target.getAttribute(%22data-a%22);if(%22x%22===n)i.style.display=%22none%22;else if(%22c%22===n){var o=u();if(!o)return void l(%22Nothing found yet. Open a leaderboard tab first.%22);navigator.clipboard.writeText(o).then(function(){l(%22Copied. Paste it into the extractor.%22)},function(){l(%22Copy blocked by the browser. Use Open in extractor.%22)})}else if(%22o%22===n){var a=u();if(!a)return void l(%22Nothing found yet. Open a leaderboard tab first.%22);var r=window.open(%22https://jolikewe.github.io/public/talenthaus/tools/username-extractor/%23from=bookmarklet%22,%22_blank%22);if(!r)return void l(%22Pop-up blocked. Allow pop-ups for tiktok.com, or use Copy.%22);var s=!1;window.addEventListener(%22message%22,function e(n){n.origin===t&&n.data&&%22extractor-ready%22===n.data.type&&!s&&(s=!0,window.removeEventListener(%22message%22,e),r.postMessage({type:%22tiktok-campaign-data%22,payload:a,page:location.href},t),l(%22Sent to the extractor tab.%22))})}}),window.__thGrab={show:function(){i.style.display=%22block%22}},function(){for(var t={},e=performance.getEntriesByType(%22resource%22),n=0;n<e.length;n++){var o=e[n];if(%22fetch%22===o.initiatorType||%22xmlhttprequest%22===o.initiatorType){try{if(!/(%5E|%5C.)tiktok(v)?%5C.com$|(%5E|%5C.)tiktokv%5C.us$/.test(new URL(o.name).hostname))continue}catch(t){continue}t[o.name]=1}}var r=Object.keys(t);return l(%22Checking %22+r.length+%22 data requests%E2%80%A6%22),Promise.all(r.map(function(t){return a(t,{credentials:%22include%22}).then(function(t){return t.ok?t.text():%22%22}).then(d,function(){}).then(function(){0})}))}().then(function(){n.length?c():l(p()?%22No leaderboard data yet; found profile links on the page. Open a leaderboard tab for full scores.%22:%22No leaderboard data yet. Open a leaderboard tab.%22)})}else alert(%22Open the TikTok campaign page first, then click this bookmark.%22);function d(t){if(!(%22string%22!=typeof t||t.length<20||t.length>8e6)){var a=t.trim();%22{%22!==a[0]&&%22[%22!==a[0]||e.test(a)&&!o[a]&&(o[a]=1,n.push(a),c())}}function p(){for(var t=[],e={},n=document.querySelectorAll('a[href*=%22/%40%22]'),o=0;o<n.length;o++){var a=n[o].href.match(/%5C/%40([A-Za-z0-9._]+)/);a&&!e[a[1]]&&(e[a[1]]=1,t.push({user:{handle_name:a[1],nickname:(n[o].innerText||%22%22).trim().split(%22%5Cn%22)[0]}}))}return t.length?JSON.stringify({source:%22page_links%22,data:{rankings:t}}):%22%22}function l(t){s.textContent=t}function c(){l(n.length+%22 leaderboard response%22+(1===n.length?%22%22:%22s%22)+%22 captured.%22)}function u(){return n.length?n.join(%22%5Cn%5Cn%22):p()}}();" title="Drag me to your bookmarks bar">Grab usernames</a>
+        <span class="mini">(On a phone or if dragging doesn't work: <button type="button" class="linkbtn" id="copyBm">copy the bookmark code</button>, create any bookmark, and paste it as the bookmark's URL.)</span></li>
+      <li><b>Open the campaign page</b> on tiktok.com while logged in.</li>
+      <li><b>Click the "Grab usernames" bookmark.</b> A small panel appears. Click through each leaderboard tab and scroll to the bottom so every rank loads; the count goes up as data arrives.</li>
+      <li><b>Click "Open in extractor"</b>. This page opens with the data loaded and the usernames extracted.</li>
+    </ol>
+    <p class="mini">Only use it on campaigns you take part in or manage, and in line with TikTok's terms. If TikTok changes its page and nothing is found, use the manual method below.</p>
+  </section>
+
+  <div class="rule"></div>
   <details class="help">
-    <summary>How to get the data to paste</summary>
+    <summary>Manual method: copy the data from the Network tab</summary>
     <div class="body">
       <ol>
         <li>Open the campaign page while logged in, press <code>F12</code>, open the <b>Network</b> tab, filter by <code>Fetch/XHR</code>.</li>
@@ -170,7 +199,7 @@ Paste several responses back-to-back, or a whole .har file.'></textarea>
   </section>
 
   <footer>
-    Data stays on your machine. No requests are made to any server.<br>
+    Data stays on your machine. This page and the bookmark make no requests to any server of ours; the bookmark only re-reads data from the TikTok tab you click it on.<br>
     Extraction is deterministic: it scans the whole payload for name/handle fields — no AI, no guessing at runtime.
   </footer>
 
@@ -575,6 +604,31 @@ Paste several responses back-to-back, or a whole .har file.'></textarea>
     flash(e.pageX,e.pageY);
     // for the username <a>, do not preventDefault so the profile still opens in a new tab
   });
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  var bm=document.getElementById("bm");
+  document.getElementById("copyBm").addEventListener("click",function(){
+    var b=this; navigator.clipboard.writeText(bm.getAttribute("href")).then(function(){b.textContent="copied";},function(){b.textContent="copy failed: drag the button instead";});
+  });
+  bm.addEventListener("click",function(e){ e.preventDefault(); alert("Drag this button to your bookmarks bar, then click it on a TikTok campaign page."); });
+  if(!/from=bookmarklet/.test(location.hash)||!window.opener) return;
+  var TIKTOK=/^https:\/\/([a-z0-9-]+\.)*tiktok\.com$/;
+  window.addEventListener("message",function(e){
+    if(!TIKTOK.test(e.origin)||!e.data||e.data.type!=="tiktok-campaign-data"||typeof e.data.payload!=="string") return;
+    var input=document.getElementById("input"); input.value=e.data.payload;
+    var note=document.createElement("div"); note.className="loaded";
+    var host=""; try{ host=new URL(e.data.page).hostname+new URL(e.data.page).pathname; }catch(x){}
+    note.textContent="Loaded from your TikTok tab"+(host?" ("+host+")":"")+". Extracting…";
+    input.parentNode.insertBefore(note,document.querySelector("label.field"));
+    history.replaceState(null,"",location.pathname);
+    document.getElementById("extract").click();
+    note.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+  window.opener.postMessage({type:"extractor-ready"},"*");
 })();
 </script>
 </body>
