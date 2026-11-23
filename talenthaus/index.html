@@ -146,6 +146,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radiu
 .lines small{display:block;color:var(--muted);font-size:.8rem}
 .lines b{font-variant-numeric:tabular-nums}
 .dot{width:12px;height:12px;border-radius:4px}
+.hint{display:block;color:var(--muted);font-size:.8rem;margin-top:8px}
 .calc-note{color:var(--muted);font-size:.8rem;margin-top:18px;line-height:1.5}
 .fine{color:var(--muted);font-size:.85rem;margin-top:22px;text-align:center}
 
@@ -266,7 +267,7 @@ footer img{height:36px;width:auto;opacity:.95}
       <ul class="facts">
         <li><b><span class="en">Free</span><span class="zh">免费</span></b><span class="en">to join</span><span class="zh">加入</span></li>
         <li><b>100%</b><span class="en">of your diamonds stay yours</span><span class="zh">钻石收益归你</span></li>
-        <li><b><span class="en">Up to 2×</span><span class="zh">最高 2 倍</span></b><span class="en">total earnings*</span><span class="zh">总收益*</span></li>
+        <li><b>+<span class="en">Bonus</span><span class="zh">奖金</span></b><span class="en">and referral rewards on top</span><span class="zh">及邀请奖励</span></li>
       </ul>
     </div>
     <div class="poster">
@@ -323,23 +324,33 @@ footer img{height:36px;width:auto;opacity:.95}
             </div>
             <span class="val small"><b id="goalD">40K</b> 💎 <span class="en">a month</span><span class="zh">每月</span></span>
           </div>
+          <div class="field">
+            <span class="q"><span class="en">Creator friends you could refer</span><span class="zh">你可以邀请的达人朋友</span></span>
+            <div class="chips" id="refs" role="group">
+              <button type="button" data-r="0"><span class="en">None</span><span class="zh">暂无</span></button>
+              <button type="button" data-r="1">1</button>
+              <button type="button" data-r="3">3</button>
+              <button type="button" data-r="5">5</button>
+            </div>
+            <span class="hint"><span class="en">Assumes each earns about what you earn now. Referral rewards last 6 months per creator.</span><span class="zh">假设每位与你目前收益相近。每位被邀请达人的奖励为期 6 个月。</span></span>
+          </div>
         </div>
         <div class="out" aria-live="polite">
-          <div class="k"><span class="en">With talenthaus, up to</span><span class="zh">加入 talenthaus，每月最高可达</span></div>
+          <div class="k"><span class="en">If you hit your goal with talenthaus</span><span class="zh">若你与 talenthaus 一起达成目标</span></div>
           <div class="big" id="total">RM1,600</div>
-          <div class="k2"><span class="en">a month*</span><span class="zh">*</span> <span id="mult" class="mult"></span></div>
+          <div class="k2"><span class="en">a month, up to*</span><span class="zh">每月，最高*</span> <span id="mult" class="mult"></span></div>
           <div class="bars">
             <div class="bar-row"><span class="lbl"><span class="en">Today</span><span class="zh">目前</span></span><div class="track"><i class="seg s-now" id="bNow"></i></div><span class="num" id="nNow"></span></div>
-            <div class="bar-row"><span class="lbl"><span class="en">With us</span><span class="zh">加入后</span></span><div class="track"><i class="seg s-dia" id="bDia"></i><i class="seg s-inc" id="bInc"></i></div><span class="num" id="nTot"></span></div>
+            <div class="bar-row"><span class="lbl"><span class="en">With us</span><span class="zh">加入后</span></span><div class="track"><i class="seg s-dia" id="bDia"></i><i class="seg s-inc" id="bInc"></i><i class="seg s-ref" id="bRef"></i></div><span class="num" id="nTot"></span></div>
           </div>
           <ul class="lines">
             <li><i class="dot s-dia"></i><span><span class="en">Diamond revenue at your goal</span><span class="zh">目标钻石收益</span><small><span class="en">100% yours</span><span class="zh">100% 归你</span></small></span><b id="lDia"></b></li>
-            <li><i class="dot s-inc"></i><span><span class="en">Performance incentives</span><span class="zh">直播激励</span><small><span class="en">up to, based on performance</span><span class="zh">最高，依表现而定</span></small></span><b id="lInc"></b></li>
-            <li><i class="dot s-ref"></i><span><span class="en">Referral rewards</span><span class="zh">邀请奖励</span><small><span class="en">for each creator you bring in</span><span class="zh">每邀请一位达人</span></small></span><b><span class="en">Extra</span><span class="zh">额外</span></b></li>
+            <li><i class="dot s-inc"></i><span><span class="en">Performance incentives</span><span class="zh">直播激励</span><small><span class="en">bonus on your diamonds, up to 4%</span><span class="zh">钻石收益奖金，最高 4%</span></small></span><b id="lInc"></b></li>
+            <li><i class="dot s-ref"></i><span><span class="en">Referral rewards</span><span class="zh">邀请奖励</span><small><span class="en">up to 6% of each referral's diamonds, for 6 months</span><span class="zh">每位被邀请达人钻石收益的最高 6%，为期 6 个月</span></small></span><b id="lRef"></b></li>
           </ul>
         </div>
       </div>
-      <p class="calc-note"><span class="en">*Estimate only, not a guarantee. 1 diamond ≈ US$0.005 (about 200 diamonds = US$1); TikTok sets the actual value. Incentives depend on campaign rules and your performance, and "up to" is the maximum. Exchange rates are approximate.</span><span class="zh">*仅为估算，并非保证。1 钻石 ≈ 0.005 美元（约 200 钻石 = 1 美元），实际价值以 TikTok 为准。激励金额根据活动规则及达人表现而定，“最高”为上限。汇率为近似值。</span></p>
+      <p class="calc-note"><span class="en">*Estimate only, not a guarantee. 1 diamond ≈ US$0.005 (about 200 diamonds = US$1); TikTok sets the actual value. Bonus and referral rewards depend on campaign rules and performance; "up to" is the maximum. The biggest lever is growing your diamonds, which is what our coaching is for. Exchange rates are approximate.</span><span class="zh">*仅为估算，并非保证。1 钻石 ≈ 0.005 美元（约 200 钻石 = 1 美元），实际价值以 TikTok 为准。奖金与邀请奖励根据活动规则及表现而定，“最高”为上限。最大的提升来自钻石收益的增长，这正是我们指导的重点。汇率为近似值。</span></p>
     </div>
 
   </div>
@@ -509,16 +520,20 @@ footer img{height:36px;width:auto;opacity:.95}
   // earnings calculator
   var STEPS=[1e3,2e3,5e3,1e4,2e4,3e4,5e4,75e3,1e5,15e4,2e5,3e5,5e5,75e4,1e6,15e5,2e6];
   var USD_PER_DIAMOND=0.005;        // ~200 diamonds = US$1 (TikTok does not publish an official rate)
-  var INCENTIVE_UP_TO=1.0;          // performance incentives: up to +100% of diamond revenue (page claim)
+  // From the talenthaus "Creator Earnings" model: the network earns 10-20% commission on a creator's
+  // production; the creator gets 20% of that on their own diamonds, and 30% of it on each referred creator (6 months).
+  var MAX_COMMISSION=0.20, OWN_SHARE=0.20, REF_SHARE=0.30, REF_MONTHS=6;
+  var INCENTIVE_UP_TO=MAX_COMMISSION*OWN_SHARE;   // up to 4% of your diamond revenue
+  var REFERRAL_UP_TO=MAX_COMMISSION*REF_SHARE;    // up to 6% of each referred creator's diamond revenue
   var FX={USD:{r:1,p:'US$'},MYR:{r:4,p:'RM'},SGD:{r:1.28,p:'S$'},PHP:{r:59,p:'₱'}}; // approx, Nov 2026
-  var nowR=document.getElementById('nowR'),goal=document.getElementById('goal'),curBox=document.querySelector('.cur');
-  var cur,x=2,$=function(id){return document.getElementById(id)};
+  var refBox=document.getElementById('refs'),nowR=document.getElementById('nowR'),goal=document.getElementById('goal'),curBox=document.querySelector('.cur');
+  var cur,x=2,refs=0,$=function(id){return document.getElementById(id)};
   try{cur=localStorage.getItem('th-cur')}catch(e){}
   if(!FX[cur])cur=/^zh|^ms|-MY$/i.test(navigator.language||'')?'MYR':/-SG$/i.test(navigator.language||'')?'SGD':/-PH$|^fil|^tl/i.test(navigator.language||'')?'PHP':'MYR';
   function kd(n){return n>=1e6?(+(n/1e6).toFixed(2))+'M':n>=1e3?(+(n/1e3).toFixed(1))+'K':String(n)}
   function money(d){var v=d*USD_PER_DIAMOND*FX[cur].r;return FX[cur].p+Math.round(v).toLocaleString('en-US')}
   function calc(){
-    var now=STEPS[+nowR.value],tgt=now*x,inc=tgt*INCENTIVE_UP_TO,tot=tgt+inc;
+    var now=STEPS[+nowR.value],tgt=now*x,inc=tgt*INCENTIVE_UP_TO,ref=refs*now*REFERRAL_UP_TO,tot=tgt+inc+ref;
     nowR.style.setProperty('--p',(nowR.value/(STEPS.length-1)*100)+'%');
     $('nowD').textContent=kd(now);$('nowM').textContent=money(now);
     $('goalD').textContent=kd(tgt);
@@ -527,11 +542,13 @@ footer img{height:36px;width:auto;opacity:.95}
     $('lDia').textContent=money(tgt);$('lInc').textContent='+'+money(inc);
     var m=now?tot/now:0;
     $('mult').textContent=m>=1.05?(root.dataset.lang==='zh'?'目前的 '+(+m.toFixed(1))+' 倍':(+m.toFixed(1))+'× today'):'';
-    $('bNow').style.width=(now/tot*100)+'%';$('bDia').style.width=(tgt/tot*100)+'%';$('bInc').style.width=(inc/tot*100)+'%';
+    $('bNow').style.width=(now/tot*100)+'%';$('bDia').style.width=(tgt/tot*100)+'%';$('bInc').style.width=(inc/tot*100)+'%';$('bRef').style.width=(ref/tot*100)+'%';$('lRef').textContent=refs?'+'+money(ref):(root.dataset.lang==='zh'?'额外':'Extra');
     goal.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',+b.dataset.x===x)});
+    refBox.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',+b.dataset.r===refs)});
     curBox.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.cur===cur)});
   }
   nowR.addEventListener('input',calc);
+  refBox.addEventListener('click',function(e){var b=e.target.closest('button');if(b){refs=+b.dataset.r;calc()}});
   goal.addEventListener('click',function(e){var b=e.target.closest('button');if(b){x=+b.dataset.x;calc()}});
   curBox.addEventListener('click',function(e){var b=e.target.closest('button');if(b){cur=b.dataset.cur;try{localStorage.setItem('th-cur',cur)}catch(_){}calc()}});
   window.thCalc=calc;
